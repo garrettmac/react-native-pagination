@@ -1,4 +1,8 @@
-const ListItems=[{"id":1,"name":"Bernie Sanders"},{"id":2,"name":"Al Frankin"},{"id":3,"name":"Elizabeth Warren"},{"id":4,"name":"Cory Booker"}]
+
+import faker from 'faker';
+console.log(" faker: ",faker);
+import _ from 'lodash';
+// const ListItems=[{"id":1,"name":"Bernie Sanders"},{"id":2,"name":"Al Frankin"},{"id":3,"name":"Elizabeth Warren"},{"id":4,"name":"Cory Booker"}]
 
 // // fetch('https://jsonplaceholder.typicode.com/posts')
 // async function getMoviesFromApi() {
@@ -10,6 +14,17 @@ const ListItems=[{"id":1,"name":"Bernie Sanders"},{"id":2,"name":"Al Frankin"},{
 //     console.error(error);
 //   }
 // }
+let PersonList = new _.times(15,(i)=>{
+  return {
+    index:i,
+    key:i,
+    name:faker.name.findName(),
+    avatar:faker.internet.avatar(),
+    group:_.sample(["Work","Friend","Acquaintance","Other"]),
+    email:faker.internet.email(),
+  }
+})
 
-export default ListItems
+// export default {PersonList}
+export  {PersonList}
 // export {getMoviesFromApi}

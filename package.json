@@ -1,32 +1,6 @@
 {
-  "name": "react-native-pagination",
-  "version": "1.0.0",
-  "description": "Animated Pagination For React Native's ListView, FlatList, and SectionList",
-  "main": "index.js",
-  "scripts": {
-    "test": "npm test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/garrettmac/react-native-pagination.git"
-  },
-  "keywords": [
-    "react-native",
-    "pagination",
-    "react",
-    "native",
-    "listview",
-    "flatlist",
-    "sectionlist",
-    "react-component",
-    "react-native-component",
-    "list",
-    "ui"
-  ],
-  "author": "Garrett Mac <garrett@vyga.io> (http://vyga.io)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/garrettmac/react-native-pagination/issues"
-  },
-  "homepage": "https://github.com/garrettmac/react-native-pagination#readme"
+  "dependencies": {
+    "faker": "^4.1.0",
+    "react-native-vector-icons": "^4.2.0"
+  }
 }

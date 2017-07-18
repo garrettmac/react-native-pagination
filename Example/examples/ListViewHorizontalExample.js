@@ -10,7 +10,7 @@ import {
   Dimensions,
 } from 'react-native';
 const {width, height} = Dimensions.get('window');
-import ListItems from './ListItems';
+import {PersonList} from './ListItems';
 let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 export default class ListViewHorizontalExample extends Component {
   render() {
@@ -28,7 +28,7 @@ export default class ListViewHorizontalExample extends Component {
       //renderScrollComponent={this._renderScrollComponent}
       //scrollRenderAheadDistance={this._scrollRenderAheadDistance}
       //enableEmptySections={true}
-      dataSource={ds.cloneWithRows(ListItems)}
+      dataSource={ds.cloneWithRows(PersonList)}
       renderRow={(o,i) =>
       <TouchableOpacity key={`sectionlist-item-${i}`} onPress={()=>(o.onPress)?o.onPress:alert("pressed item")}><Text style={{color:'rgba(0,0,0,0.5)',fontSize: 20,textAlign: "center",margin: 10,}}>{(o.name)?o.name:"no name attrabute"}</Text></TouchableOpacity>
       }/>
