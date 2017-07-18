@@ -272,54 +272,39 @@ componentWillMount() {
 
 }
 componentWillReceiveProps() {
-  let activeGroup=[]
-  // if(_.isArray(pages[indexOfHighestActiveIndex]))activeGroup=pages[indexOfHighestActiveIndex]
-  // console.log(" activeGroup: ",activeGroup);
-  // //active group v2
-  // console.log(" Array.min(arrayOfchangedRows): ",Array.min(arrayOfchangedRows));
-  // console.log(" last): ",last);
-  let ACTIVE=this.props.visibleRows.map((item) => {
-  return _.defaultsDeep(item.item,{isViewable:item.isViewable})
-})
-let highestActiveItem=_.maxBy(this.props.visibleRows, 'key')
-let lowestActiveItem=_.minBy(this.props.visibleRows, 'key')
-
-let min=_.get(lowestActiveItem, "key",0)-4
-
-let max=_.get(highestActiveItem, "key",0)+4
-console.log("99999 min: ",min);
-console.log("99999 max: ",max);
-  // let min=Array.min(ACTIVE)-2
-  // let max=Array.max(ACTIVE)+2
-  if(min<0)min=0
-  if(max<ACTIVE.length)max=ACTIVE.length
-
-console.log(" this.props.visibleRows: ",this.props.visibleRows);
-   let kkkeys=_.values(this.props.visibleRows).map(i =>i.key)
-   console.log(" kkkeys: ",kkkeys);
-let dddd=this.props.data.map((item) => {
-   console.log(" item: ",item);
-  console.log(" _.includes(kkkeys,{key:item.key}): ",_.includes(kkkeys,item.key));
-if(_.includes(kkkeys,item.key)){
-return _.defaultsDeep({isViewable:true},item)
- }else{
- return _.defaultsDeep({isViewable:false},item)
-}
-})
-  console.log(" dddd: ",dddd);
-  // arrayOfchangedRows
-  // arrayOfIndexesSeen
-  // if(max>arrayOfIndexesSeen.length){
-  //   max-1
-  // }
-  // if(max>arrayOfIndexesSeen.length){
-  //   max-1
-  // }
-  // activeGroup=[...this.props.data,...ACTIVE].slice(min,max);
-  activeGroup=dddd.slice(min,max);
-  if(this.state.activeGroup!==activeGroup)this.setState({activeGroup})
-  console.log("99999 ACTIVE: ",ACTIVE);
-console.log("99999 activeGroup: ",activeGroup);
+//   let activeGroup=[]
+//   let ACTIVE=this.props.visibleRows.map((item) => {
+//   return _.defaultsDeep(item.item,{isViewable:item.isViewable})
+// })
+// let highestActiveItem=_.maxBy(this.props.visibleRows, 'key')
+// let lowestActiveItem=_.minBy(this.props.visibleRows, 'key')
+//
+// let min=_.get(lowestActiveItem, "key",0)-4
+//
+// let max=_.get(highestActiveItem, "key",0)+4
+// console.log("99999 min: ",min);
+// console.log("99999 max: ",max);
+//   if(min<0)min=0
+//   if(max<ACTIVE.length)max=ACTIVE.length
+//
+// console.log(" this.props.visibleRows: ",this.props.visibleRows);
+//    let kkkeys=_.values(this.props.visibleRows).map(i =>i.key)
+//    console.log(" kkkeys: ",kkkeys);
+// let mergedData=this.props.data.map((item) => {
+//    console.log(" item: ",item);
+//   console.log(" _.includes(kkkeys,{key:item.key}): ",_.includes(kkkeys,item.key));
+// if(_.includes(kkkeys,item.key)){
+// return _.defaultsDeep({isViewable:true},item)
+//  }else{
+//  return _.defaultsDeep({isViewable:false},item)
+// }
+// })
+//   console.log(" mergedData: ",mergedData);
+//
+//   activeGroup=mergedData.slice(min,max);
+  // if(this.state.activeGroup!==activeGroup)this.setState({activeGroup})
+  // console.log("99999 ACTIVE: ",ACTIVE);
+// console.log("99999 activeGroup: ",activeGroup);
 
 }
   render() {
@@ -364,7 +349,34 @@ console.log("99999 activeGroup: ",activeGroup);
   else if(iconFamily==="Octicons")Icon=Octicons
   else if(iconFamily==="Zocial")Icon=Zocial
   else Icon=MaterialCommunityIcons
+  let activeGroup=[]
 
+  let ACTIVE=this.props.visibleRows.map((item) => {
+  return _.defaultsDeep(item.item,{isViewable:item.isViewable})
+})
+let highestActiveItem=_.maxBy(this.props.visibleRows, 'key')
+let lowestActiveItem=_.minBy(this.props.visibleRows, 'key')
+let min=_.get(lowestActiveItem, "key",0)-4
+let max=_.get(highestActiveItem, "key",0)+4
+
+  if(min<0)min=0
+  if(max<ACTIVE.length)max=ACTIVE.length
+
+console.log(" this.props.visibleRows: ",this.props.visibleRows);
+   let kkkeys=_.values(this.props.visibleRows).map(i =>i.key)
+   console.log(" kkkeys: ",kkkeys);
+let mergedData=this.props.data.map((item) => {
+   console.log(" item: ",item);
+  console.log(" _.includes(kkkeys,{key:item.key}): ",_.includes(kkkeys,item.key));
+if(_.includes(kkkeys,item.key)){
+return _.defaultsDeep({isViewable:true},item)
+ }else{
+ return _.defaultsDeep({isViewable:false},item)
+}
+})
+  console.log(" mergedData: ",mergedData);
+
+  activeGroup=mergedData.slice(min,max);
 let paginationItems=data
 let PaginationContainerStyle=null;
 console.log(" horizontal: ",horizontal);
@@ -385,7 +397,7 @@ else PaginationContainerStyle={backgroundColor:"blue",height,alignItems:"center"
 
 {this.renderPreviousTouchable()}
 {/* {//this.pagination().map((o,i) => { */}
-{this.state.activeGroup.map((o,i) => {
+{activeGroup.map((o,i) => {
   // console.log(" o: ",o);
   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
   // console.log(" o.item: ",o.item);
@@ -395,7 +407,9 @@ else PaginationContainerStyle={backgroundColor:"blue",height,alignItems:"center"
     return  (<TouchableOpacity key={i} onPress={()=>{alert(`pressed ${i}`)}}
      style={[dotStyle,{alignItems:'center',flexDirection:(horizontal===true)?"column":"row",}]}>
      <Text style={[{textAlign: "center",fontWeight:"600",fontSize:9,flexDirection:(horizontal===true)?"row":"column"},textStyle]}>  {o.key}</Text>
-   <Icon name={this.Name(o.name)} size={(o.isViewable===true)?30:20} color={this.Color(o.name)}/>
+   <Icon name={(o.isViewable===false)?this.props.newIconName:this.props.defaultIconName} size={(o.isViewable===true)?30:20} color={this.Color(o.name)}/>
+   {/* <Icon name={this.Name(o.name)} size={(o.isViewable===true)?30:20} color={this.Color(o.name)}/> */}
+
 
 
 </TouchableOpacity>)
