@@ -2,7 +2,7 @@
   <img alt="react-native-pagination" src="images/react-native-pagination.jpg" width="208">
 
 </p>
-
+  
 <p align="center">
   The best Pagination component for React Native.
 </p>
