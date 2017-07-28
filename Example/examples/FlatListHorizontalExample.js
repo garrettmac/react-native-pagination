@@ -48,7 +48,7 @@
      super(props);
       this.state = {
         isLoading:false,
-        activeId:0,
+        activeId:null,
         activeItem:null,
         // FlatListItems:[],
         FlatListItems:FakePersonArray,
@@ -61,6 +61,7 @@
   this.getFlatListItems=this.getFlatListItems.bind(this)
   this.scrollToEnd=this.scrollToEnd.bind(this)
   this.scrollTo=this.scrollTo.bind(this)
+  this.renderItem=this.renderItem.bind(this)
     }
 
 
@@ -102,46 +103,38 @@
   });
 }
   setItemAsActive(activeItem){
-  console.log(" setItemAsActive: item ",activeItem);
+  // console.log(" setItemAsActive: item ",activeItem);
   this.setState({scrollToItemRef:activeItem})
-  this.setState({activeItem:activeItem.item})
+  this.setState({activeId:activeItem.index, activeItem:activeItem.item})
   }
      renderItem(o,i){
        return (<View style={{flex: 1,height,justifyContent: "center",alignItems: "center",}}>
 
-         <TouchableOpacity onPress={()=>this.setItemAsActive(o)} style={[s.renderItem,
-           // (activeId===o.item.id)?{backgroundColor:"#488aff"}
-           (this.state.activeId===o.item.id)?{backgroundColor:"blue"}
-                                       :{backgroundColor:"red"},
-           (this.state.activeId!==o.item.id)?{borderColor: 'rgba(0,0,0,.3)',shadowColor: 'rgba(0,0,0,.3)'}
-                                       :{borderColor: 'rgba(255,255,255,1)',shadowColor: 'rgba(255,255,255,1)'}
+         <TouchableOpacity onPress={()=>this.setItemAsActive(o)}
+           style={[
+             s.renderItem,
+             (this.state.activeId===_.get(o,"item.id",false))?{backgroundColor:"#01a699"}:{backgroundColor:"#ff5b5f"},
            ]}>
          <Image resizeMode="center" style={s.image} source={{uri:`https://robohash.org/${o.item.name}?size=350x350&set=set1`}}/>
-       <Text style={[s.name,
-         (this.state.activeId===o.item.id)?{color:"#fff"}
-                                     :{color:"green"},
-           ]}>{(o.item.name)?o.item.name:"no name attrabute"}</Text>
+       <Text style={[
+                s.name,
+                (this.state.activeId===o.item.id)?{color:"#01a699"}:{color:"#ff5b5f"},
+           ]}>
+           {(o.item.name)?o.item.name:"no name attrabute"}</Text>
        </TouchableOpacity>
      </View>)
 
      }
-     clearList(){
-       this.setState({
-         FlatListItems:[]
-       })
-     }
 
-  onEndReached(o){
+  clearList(){this.setState({FlatListItems:[]})}
+  onEndReached(o){}
 
-  }
 
+
+
+  // scrolling
   scrollTo(ref="FlatListRef",x=0,y=0){
-  // console.log(" this.refs: ",this.refs[ref]);
-  console.log(" this.state.scrollToItemRef: ",this.state.scrollToItemRef);
-  // try {this.refs[ref].scrollToIndex({x:0,y:0,amimated:true})} catch (e) {console.log(" e: ",e);}
-  // try {this.refs[ref].scrollToIndex(1)} catch (e) {console.log(" e: ",e);}
   try {this.refs[ref].scrollToItem(this.state.scrollToItemRef)} catch (e) {console.log(" e: ",e);}
-  // try {this.refs[ref].scrollToOffset({x:0,y:1000,amimated:true})} catch (e) {console.log(" e: ",e);}
   }
   scrollToStart(ref="FlatListRef",x=0,y=0){
   try {this.refs[ref].scrollToOffset({x,y,amimated:true})} catch (e) {console.log(" e: ",e);}
@@ -149,14 +142,18 @@
   scrollToEnd(ref="FlatListRef"){
   try {this.refs[ref].scrollToEnd()} catch (e) {console.log(" e: ",e);}
   }
+
+
   onViewableItemsChanged = ({ viewableItems, changed }) => {
    //  console.warn(" viewableItems: ",viewableItems);
    this.setState({viewableItems,changed})
  };
+
+
   render() {
   return (<View style={[s.container]}>
   <View style={{flex: 1,height,width,justifyContent: "center",alignItems: "center",
-  backgroundColor: "green",}}>
+  backgroundColor: "#01a699",}}>
 
 
 
@@ -165,11 +162,11 @@
           {!this.state.activeItem
               ?(
               <View style={{justifyContent: 'center',alignItems: "center",flex: 1,}}>
-  <Text style={{textAlignVertical: "center", textAlign: "center",fontSize: 20,}}>No Active Item</Text>
+  <Text style={{textAlignVertical: "center",color:"rgba(0,0,0,.4)", textAlign: "center",fontWeight:"400",fontSize: 15,}}>Make a Selection!</Text>
               </View>
               )
               : (<TouchableOpacity onPress={()=>this.setItemAsActive(o)} style={[s.renderItem,
-                {borderColor: 'rgba(255,255,255,1)',shadowColor: 'rgba(255,255,255,1)'}
+                {borderColor: 'rgba(255,255,255,1)',backgroundColor:"#f5fcff", shadowColor: 'rgba(255,255,255,1)'}
                   ]} onPress={()=>alert(JSON.stringify(this.state.activeItem))}>
                 <Image resizeMode="center" style={s.image} source={{uri:`https://robohash.org/${_.get(this.state.activeItem,"name","default")}?size=350x350&set=set1`}}/>
               <Text style={[s.name,{color:"#fff"}]}>
@@ -179,7 +176,7 @@
               </TouchableOpacity>)
           }
   <TouchableOpacity onPress={()=>this.clearList()}
-      style={{position:"absolute",backgroundColor:"red",right:0,bottom:0,margin:10,zIndex:3,height:35,alignItems:"center",justifyContent:"center",backgroundColor:"transparent"}}>
+      style={{position:"absolute",backgroundColor:"#ff5b5f",right:0,bottom:0,margin:10,zIndex:3,height:35,alignItems:"center",justifyContent:"center",backgroundColor:"transparent"}}>
       <Ionicons name={"ios-trash-outline"} size={25} color="rgba(0,0,0,0.5)"/>
 
   </TouchableOpacity>
@@ -197,14 +194,9 @@
            {length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index}
           )}
          //onEndReached={this._onEndReached}
-         //onRefresh={this._onRefresh}
          onRefresh={(o)=>alert("onRefresh:",o)}
          initialScrollIndex={0}
-
          refreshing={this.state.isLoading}
-         //initialScrollIndex={_.chain(ARRAY).map("key").indexOf("value").value()}
-         //initialScrollIndex={_.indexOf(ARRAY,_.find(ARRAY,(o)=>o.id===SOMEID}))}
-         //getItemLayout={(data, index) => ({length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index})}
           onEndReached={(o)=>this.onEndReached}
           keyExtractor={(o, i) => o.id}
         data={this.state.FlatListItems}
@@ -214,18 +206,19 @@
         onViewableItemsChanged={this.onViewableItemsChanged.bind(this)}
 
       />
+      <TouchableOpacity onPress={()=>this.clearList()}
+              style={{position:"absolute",backgroundColor:"ff5b5f",right:35,top:0,margin:10,zIndex:3,height:35,alignItems:"center",justifyContent:"center",backgroundColor:"transparent"}}>
+              <Ionicons name={"ios-refresh-outline"} size={25} color="rgba(0,0,0,0.5)"/>
+      </TouchableOpacity>
+    <TouchableOpacity onPress={()=>this.clearList()}
+              style={{position:"absolute",backgroundColor:"ff5b5f",right:0,top:0,margin:10,zIndex:3,height:35,alignItems:"center",justifyContent:"center",backgroundColor:"transparent"}}>
+              <Ionicons name={"ios-trash-outline"} size={25} color="rgba(0,0,0,0.5)"/>
+      </TouchableOpacity>
+
       <Pagination
       horizontal
       listRef={this.refs.flatListRef}
-  // containerStyle={{backgroundColor:"red",width,position:"absolute", right:0,left:0,bottom:7,padding:10,flex:1,justifyContent:"center",alignItems:'center',flexDirection:"row",}}
-  //textStyle={}
-  // seenIconComponent={}
-  // selectedIconComponent={}
-  // untouchedIconComponent={}
-  // selectedCustomAttr="has_seen"
-  // bindToState={this.bindToState.bind(this)}
-  // onPressIconComponent={}
-  // initialPage={0}
+   containerStyle={{backgroundColor:"rgba(0,0,0,0)",width,position:"absolute", right:0,left:0,bottom:7,padding:0,flex:1,justifyContent:"center",alignItems:'center',flexDirection:"row",}}
   onItemSelected={this.onItemUpdate.bind(this)}
   visible={this.state.viewableItems}
   changed={this.state.changed}
@@ -233,6 +226,15 @@
   // onPressForward={}
   // onPressBack={}
   startIndex={0}
+  offScreenIconName={"account-outline"}
+placeholderIconName={"account-off"}
+  offScreenIconSize={27}
+  onScreenIconSize={20}
+  onScreenIconName={"account-settings"}
+//iconColorhasNotSeen={"red"}
+activeItemIndex={1}
+
+
 
 
   // endIndex={}
@@ -242,14 +244,7 @@
   //startIndex={}
   //endIndex={}
 />
-      <TouchableOpacity onPress={()=>this.clearList()}
-                style={{position:"absolute",backgroundColor:"red",right:35,top:0,margin:10,zIndex:3,height:35,alignItems:"center",justifyContent:"center",backgroundColor:"transparent"}}>
-                <Ionicons name={"ios-refresh-outline"} size={25} color="rgba(0,0,0,0.5)"/>
-        </TouchableOpacity>
-      <TouchableOpacity onPress={()=>this.clearList()}
-                style={{position:"absolute",backgroundColor:"red",right:0,top:0,margin:10,zIndex:3,height:35,alignItems:"center",justifyContent:"center",backgroundColor:"transparent"}}>
-                <Ionicons name={"ios-trash-outline"} size={25} color="rgba(0,0,0,0.5)"/>
-        </TouchableOpacity>
+
     {/* onPress={()=>this.scrollToStart("FlatListRef",0,0) */}
     {/* onPress={()=>{if(this.refs.FlatListRef.scrollToEnd)this.refs.FlatListRef.scrollToEnd()}} */}
     {/* onPress={()=>{if(this.refs.FlatListRef.scrollToIndex)this.refs.FlatListRef.scrollToIndex(4)}} */}
@@ -276,7 +271,7 @@
   },
   renderItem:{
   width:ITEM_HEIGHT,
-
+borderColor: 'rgba(0,0,0,.3)',shadowColor: 'rgba(0,0,0,.3)',
   height:ITEM_HEIGHT,
   margin:10,
   justifyContent:"center",
@@ -292,12 +287,12 @@
   },
   name:{
   position:"absolute",
-  bottom:-20,left:0,right:0,
+  bottom:-34,left:0,right:0,
   backgroundColor:"transparent",
   fontSize: 12,
   width:100,
   textAlign: "center",
-  fontWeight:"500",
+  fontWeight:"600",
 
   },
   image:{

@@ -73,21 +73,22 @@ export default class Pagination extends Component {
       let has_seen=_.get(item,"user_has_seen",false)
       let has_read=_.get(item,"user_has_read",false)
 
-      if(!has_seen)name= this.props.newIconName
-      else name= this.props.defaultIconName
+      if(!has_seen)name= this.props.offScreenIconName
+      else name= this.props.onScreenIconName
       if(has_read)name= this.props.didActionIconName
 
       return name
   }
    Color = (item) => {
+
      if(this.props.iconColor)return this.props.iconColor
       let color=null;
-      let has_seen=_.get(item,"user_has_seen",false)
-      let has_read=_.get(item,"user_has_read",false)
+      let hasSeen=_.get(item,"isViewable",false)
+      // let isActive=this.props.activeItemIndex===_.get(item,"index",false)
 
-      if(!has_seen)color=this.props.iconColorhasSeen
-      else color=this.props.iconColorhasNotSeen
-      if(has_read)color=this.props.iconColorhasCompletedAction
+      if(!hasSeen)color=this.props.onScreenIconColor
+      else color=this.props.offScreenIconColor
+      // if(isActive)color=this.props.activeItemIndexColor
 
       return color
   }
@@ -314,7 +315,7 @@ else PaginationContainerStyle={backgroundColor:"blue",height,alignItems:"center"
     return  (<TouchableOpacity key={i} onPress={()=>this.scrollToStart()}
      style={[dotStyle,{alignItems:'center',flexDirection:(horizontal===true)?"column":"row",}]}>
      <Text style={[{textAlign: "center",fontWeight:"600",fontSize:9,flexDirection:(horizontal===true)?"row":"column"},textStyle]}>  {_.isNumber(o.key)?o.key+1:o.key}</Text>
-   <Icon name={(o.isViewable===false)?(o.index===undefined)?"sim-off":this.props.newIconName:this.props.defaultIconName} size={(o.isViewable===true)?30:20} color={this.Color(o.name)}/>
+   <Icon name={(o.isViewable===false)?(o.index===undefined)?this.props.placeholderIconName:this.props.offScreenIconName:this.props.onScreenIconName} size={(o.isViewable===true)?this.props.offScreenIconSize:this.props.onScreenIconSize} color={this.Color(o)}/>
    {/* <Icon name={this.Name(o.name)} size={(o.isViewable===true)?30:20} color={this.Color(o.name)}/> */}
 
 
@@ -345,17 +346,11 @@ else PaginationContainerStyle={backgroundColor:"blue",height,alignItems:"center"
   }
   renderNextTouchable(){
     const {dotStyle,data,textStyle,nextStyle,nextComponent,changed,horizontal} = this.props
-
-  if(nextComponent)return this.props.nextComponent
-  else return (<TouchableOpacity onPress={()=>this.scrollToEnd()}  style={[dotStyle,nextStyle,{alignItems:'center',flexDirection:(horizontal===false)?"column":"row",}]}>
-         {/* <Text style={[{textAlign:'center',flexDirection:(horizontal===false)?"row":"column"},textStyle]}> {(data.length-Array.min(changed))+1}</Text> */}
-       <Text style={[{textAlign:'center',flexDirection:(horizontal===false)?"row":"column"},textStyle]}>  {(horizontal===false)?"↓":"→"}</Text>
-       </TouchableOpacity>)
-
-
-
-
-}
+    if(nextComponent)return this.props.nextComponent
+    else return (<TouchableOpacity onPress={()=>this.scrollToEnd()}  style={[dotStyle,nextStyle,{alignItems:'center',flexDirection:(horizontal===false)?"column":"row",}]}>
+                    <Text style={[{textAlign:'center',flexDirection:(horizontal===false)?"row":"column"},textStyle]}>  {(horizontal===false)?"↓":"→"}</Text>
+                </TouchableOpacity>)
+    }
   }
 
 
@@ -370,7 +365,7 @@ Pagination.defaultProps={
 // containerStyle:{flex: 1,backgroundColor:"red",width,height:null},
 containerStyle:null,
 // textStyle:{fontSize: 10,width:50,color:"white",textAlign: "center",},
-textStyle:{color:"white",textAlign: "center",},
+textStyle:{color:"rgba(0,0,0,0.5)",textAlign: "center",},
 dotStyle:{flex:1,backgroundColor:'rgba(0,0,0,0)',justifyContent:"center",alignItems:'center',},
 // dotStyle:{flex:1,backgroundColor:'rgba(0,0,0,0)',},
 nextStyle:{flex:1},
@@ -387,14 +382,19 @@ totalCount             : 50,//array.length
 horizontal             : false,
 pageRangeDisplayed    : 10,
 marginPagesDisplayed  : 0,//show end items
-newIconName:"new-box",
-defaultIconName:"newspaper",
-didActionIconName:"read",
-iconColorhasSeen:"rgba(255,255,255,1)",
-iconColorhasNotSeen:"rgba(0,0,0,.5)",
-iconColorhasCompletedAction:"rgba(0,189,110,.5)",
+offScreenIconName:"checkbox-blank-circle-outline",
+placeholderIconName:"close",
+offScreenIconSize:20,
+onScreenIconName:"checkbox-blank-circle",
+onScreenIconSize:10,
 
 
+offScreenIconColor:"rgba(0,0,0,.5)",
+onScreenIconColor:"rgba(0,0,0,.3)",
+onPressedIconColor:"rgba(0,189,110,.5)",
+activeItemIndexColor:"rgba(activeItemIndex,166,153,.6)",
+activeItemIndex:null,
+// didActionIconName:"read",
 }
 
 Pagination.PropTypes={
@@ -406,6 +406,9 @@ Pagination.PropTypes={
 
 
 /*
+
+// TODO persistants
+
 let arrayOfchangedRows= _.keys(changed.s1).map(i =>parseInt(i))
 let arrayOfIndexesSeen= _.keys(visible.s1).map(i =>parseInt(i))
 //console.log(" arrayOfIndexesSeen: ",arrayOfIndexesSeen);
