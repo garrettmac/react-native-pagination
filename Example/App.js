@@ -13,6 +13,10 @@ import FlatListHorizontalExample from './examples/FlatListHorizontalExample';
 import ListViewHorizontalExample from './examples/ListViewHorizontalExample';
 import SectionListHorizontalExample from './examples/SectionListHorizontalExample';
 
+import FlatListVerticalExample from './examples/FlatListVerticalExample';
+import ListViewVerticalExample from './examples/ListViewVerticalExample';
+import SectionListVerticalExample from './examples/SectionListVerticalExample';
+
 
 
 
