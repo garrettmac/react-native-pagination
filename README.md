@@ -18,6 +18,8 @@
 
 # react-native-pagination
 
+[![Join the chat at https://gitter.im/garrettmac/react-native-pagination](https://badges.gitter.im/garrettmac/react-native-pagination.svg)](https://gitter.im/garrettmac/react-native-pagination?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 
 
 ## Show Cases
