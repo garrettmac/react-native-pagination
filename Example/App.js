@@ -25,8 +25,9 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      Component: FlatListHorizontalExample,
-      // Component: null,
+      // Component: FlatListHorizontalExample,
+      Component: null,
+      showHeader:true,
     };
   }
 
@@ -46,9 +47,9 @@ export default class App extends Component {
     return (
       <TouchableOpacity
         style={styles.back}
-        onPress={() => this.setState({ Component: null })}
+        onPress={() => this.setState({ showHeader:true,Component: null })}
       >
-        <Text style={{ fontSize: 15 }}>← Back</Text>
+        <Text style={{ fontSize: 15,backgroundColor:"transparent" }}>← Back</Text>
       </TouchableOpacity>
     );
   }
@@ -67,37 +68,31 @@ export default class App extends Component {
       }
         {Component && this.renderBackButton()}
         {!Component &&
+          <View style={{height,width, backgroundColor: "#F5FCFF",}}>
+        <View style={{marginTop:50,padding:5}}>
+          <Text style={{fontSize: 25,color: '#444',margin: 5,fontWeight: '700'}}>
+            React Native Pagination
+          </Text>
+          <Text style={{fontSize: 18,color: '#a4a6a6',margin: 5,fontWeight: '400'}}>
+            Example Application
+          </Text>
+          <View style={{width: 50,borderBottomWidth: 1,borderColor: '#e3e3e3',margin: 5,marginTop: 5,marginBottom: 30}}/>
+      </View>
           <ScrollView
-            style={StyleSheet.absoluteFill}
+            style={{}}
             contentContainerStyle={styles.scrollview}
             showsVerticalScrollIndicator={false}
           >
             {examples.map(example => this.renderExample(example))}
           </ScrollView>
+          </View>
         }
       </View>
     );
   }
 
   render() {
-    return(<View style={{flex: 1,height,width,backgroundColor: "#F5FCFF",}}>
-            {/* Heading */}
-              <View style={{marginTop:50,padding: 10}}>
-                <Text style={{fontSize: 25,color: '#444',margin: 5,fontWeight: '700'}}>
-                  React Native Pagination
-                </Text>
-                <Text style={{fontSize: 18,color: '#a4a6a6',margin: 5,fontWeight: '400'}}>
-                  Example Application
-                </Text>
-                <View style={{width: 50,borderBottomWidth: 1,borderColor: '#e3e3e3',margin: 5,marginTop: 5,marginBottom: 30}}/>
-            </View>
-
-
-            {/* Body */}
-<View style={{flex: 1,marginTop:-50,height,width,justifyContent: "center",alignItems: "center",}}>
-
-
-     {this.renderExamples([
+    return this.renderExamples([
       // [<component>, <component title>,<color>]
       [FlatListHorizontalExample, 'Horizontal FlatList Example',"rgba(0,166,155,.8)"],
       [ListViewHorizontalExample, 'Horizontal ListView Example',"rgba(0,136,155,.8)"],
@@ -106,9 +101,7 @@ export default class App extends Component {
       [ListViewVerticalExample , 'Vertical ListView Example',"rgba(166,0,125,.8)"],
       [SectionListVerticalExample , 'Vertical SectionList Example',"rgba(166,0,95,.8)"],
     ]
-    )}
-    </View>
-  </View>)
+    )
   }
 }
 

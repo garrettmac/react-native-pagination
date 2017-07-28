@@ -57,7 +57,6 @@
       // this.ListHeaderComponent=this.ListHeaderComponent.bind(this)
   // this.ListFooterComponent=this.ListFooterComponent.bind(this)
   this.ListEmptyComponent=this.ListEmptyComponent.bind(this)
-  this.ItemSeparatorComponent=this.ItemSeparatorComponent.bind(this)
   this.renderItem=this.renderItem.bind(this)
   this.getFlatListItems=this.getFlatListItems.bind(this)
   this.scrollToEnd=this.scrollToEnd.bind(this)
