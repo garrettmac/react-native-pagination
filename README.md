@@ -26,7 +26,11 @@
 
 ### [examples/FlatListHorizontalExample.js](https://github.com/garrettmac/react-native-pagination/blob/master/examples/components/Basic)
 
-![](images/react-native-pagination.gif=300x)
+
+
+<p align="center">
+  <img alt="react-native-pagination" src="images/react-native-pagination.gif" width="308">
+</p>
 
 
 ## Getting Started
