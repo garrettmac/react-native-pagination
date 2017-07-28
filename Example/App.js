@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   ScrollView,
   Text,
-  Switch,
+  Dimensions,
 } from 'react-native';
-
+const {width, height} = Dimensions.get('window');
 import FlatListHorizontalExample from './examples/FlatListHorizontalExample';
 import ListViewHorizontalExample from './examples/ListViewHorizontalExample';
 import SectionListHorizontalExample from './examples/SectionListHorizontalExample';
@@ -26,17 +26,18 @@ export default class App extends Component {
 
     this.state = {
       Component: FlatListHorizontalExample,
+      // Component: null,
     };
   }
 
-  renderExample([Component, title]) {
+  renderExample([Component, title,backgroundColor]) {
     return (
       <TouchableOpacity
         key={title}
-        style={styles.button}
+        style={[styles.button,{backgroundColor}]}
         onPress={() => this.setState({ Component })}
       >
-        <Text>{title}</Text>
+        <Text style={{color:"white",fontWeight:"500"}}>{title}</Text>
       </TouchableOpacity>
     );
   }
@@ -79,13 +80,35 @@ export default class App extends Component {
   }
 
   render() {
-    return this.renderExamples([
-      // [<component>, <component title>]
-      [FlatListHorizontalExample, 'Horizontal FlatList Example'],
-      [ListViewHorizontalExample, 'Horizontal ListView Example'],
-      [SectionListHorizontalExample , 'Horizontal SectionList Example'],
+    return(<View style={{flex: 1,height,width,backgroundColor: "#F5FCFF",}}>
+            {/* Heading */}
+              <View style={{marginTop:50,padding: 10}}>
+                <Text style={{fontSize: 25,color: '#444',margin: 5,fontWeight: '700'}}>
+                  React Native Pagination
+                </Text>
+                <Text style={{fontSize: 18,color: '#a4a6a6',margin: 5,fontWeight: '400'}}>
+                  Example Application
+                </Text>
+                <View style={{width: 50,borderBottomWidth: 1,borderColor: '#e3e3e3',margin: 5,marginTop: 5,marginBottom: 30}}/>
+            </View>
+
+
+            {/* Body */}
+<View style={{flex: 1,marginTop:-50,height,width,justifyContent: "center",alignItems: "center",}}>
+
+
+     {this.renderExamples([
+      // [<component>, <component title>,<color>]
+      [FlatListHorizontalExample, 'Horizontal FlatList Example',"rgba(0,166,155,.8)"],
+      [ListViewHorizontalExample, 'Horizontal ListView Example',"rgba(0,136,155,.8)"],
+      [SectionListHorizontalExample , 'Horizontal SectionList Example',"rgba(0,106,155,.8)"],
+      [FlatListVerticalExample , 'Vertical FlatList Example',"rgba(166,0,155,.8)"],
+      [ListViewVerticalExample , 'Vertical ListView Example',"rgba(166,0,125,.8)"],
+      [SectionListVerticalExample , 'Vertical SectionList Example',"rgba(166,0,95,.8)"],
     ]
-    );
+    )}
+    </View>
+  </View>)
   }
 }
 
@@ -102,7 +125,6 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     marginTop: 10,
-    backgroundColor: 'rgba(220,220,220,0.7)',
     paddingHorizontal: 18,
     paddingVertical: 12,
     borderRadius: 5,

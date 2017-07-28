@@ -54,8 +54,8 @@
         FlatListItems:FakePersonArray,
       };
 
-      this.ListHeaderComponent=this.ListHeaderComponent.bind(this)
-  this.ListFooterComponent=this.ListFooterComponent.bind(this)
+      // this.ListHeaderComponent=this.ListHeaderComponent.bind(this)
+  // this.ListFooterComponent=this.ListFooterComponent.bind(this)
   this.ListEmptyComponent=this.ListEmptyComponent.bind(this)
   this.ItemSeparatorComponent=this.ItemSeparatorComponent.bind(this)
   this.renderItem=this.renderItem.bind(this)
@@ -81,9 +81,8 @@
   <Text style={{color:'rgba(0,0,0,0.5)',fontSize: 15,textAlign: "center",}}>Try Again?</Text>
   </TouchableOpacity></View>)}
 
-  ItemSeparatorComponent = () => {return (<View style={{height: 1,width: "86%",backgroundColor: "#CED0CE",marginLeft: "14%"}}/>)}
 
-   ListHeaderComponent=(heading="Heading")=>{return (<View style={{padding: 10}}><Text style={{fontSize: 35,color: '#444',margin: 5,fontWeight: '700'}}>{heading}</Text><View style={{width: 50,borderBottomWidth: 1,borderColor: '#e3e3e3',margin: 5,marginTop: 5,marginBottom: 30}}/></View>)}
+
    ListFooterComponent = () => {
      // if (!this.state.isLoading) return null;
      if (!this.state.isLoading){
@@ -191,11 +190,8 @@
 
   <FlatList
 
-    ref={"FlatListRef"}
-         //ListHeaderComponent={this.ListHeaderComponent}
-         //ListFooterComponent={this.ListFooterComponent}
+    ref={"flatListRef"}
          ListEmptyComponent={this.ListEmptyComponent}
-        //ItemSeparatorComponent={this.ItemSeparatorComponent}
         //  initialNumToRender={5}
          horizontal
          getItemLayout={(data, index) => (
@@ -221,6 +217,7 @@
       />
       <Pagination
       horizontal
+      listRef={this.refs.flatListRef}
   // containerStyle={{backgroundColor:"red",width,position:"absolute", right:0,left:0,bottom:7,padding:10,flex:1,justifyContent:"center",alignItems:'center',flexDirection:"row",}}
   //textStyle={}
   // seenIconComponent={}

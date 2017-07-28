@@ -1,5 +1,6 @@
 /* @flow */
 
+
 import React, { Component } from 'react';
 import {
   View,
@@ -27,17 +28,14 @@ const {width, height} = Dimensions.get('window');
 import PropTypes from 'prop-types';
 
 //helper functions
-Number.prototype.between = function (min, max) {
-    return this > min && this < max;
-};
-
+let showComments=false
 Array.min = function( array ){
     return Math.min.apply( Math, array );
 };
 Array.max = function( array ){
     return Math.max.apply( Math, array );
 };
-Array.prototype.first = function () {
+/*Array.prototype.first = function () {
     return this[0]||{};
 };
 Array.prototype.last = function () {
@@ -55,7 +53,7 @@ Array.prototype.move = function (old_index, new_index) {
     }
     this.splice(new_index, 0, this.splice(old_index, 1)[0]);
     return this; // for testing purposes
-};
+};*/
 
 export default class Pagination extends Component {
   constructor(props) {
@@ -71,8 +69,6 @@ export default class Pagination extends Component {
     };
   }
    Name = (item) => {
-
-
       let name=null;
       let has_seen=_.get(item,"user_has_seen",false)
       let has_read=_.get(item,"user_has_read",false)
@@ -108,16 +104,7 @@ if(this.props.onPressForward){
 }
   }
 
-  isElementIndexActive(i) {
-    // console.log(" visible: ",this.props.visible);
-    // console.log("####  viewableItems #### ");
-    // console.log(viewableItems.map((item) => item.key));
-    // this.setState({viewableItems,changed})
-    // console.log("#### changed #### ");
-    // changed.map((item) => console.log(`[${item.key}] isViewable = ${item.isViewable}`));
 
-    return _.includes(this.props.visible.map((item) => item.key),i)
-  }
 
   pagination = () => {
     const {iconFamily,data} = this.props
@@ -134,30 +121,30 @@ if(this.props.onPressForward){
   else if(iconFamily==="Octicons")Icon=Octicons
   else if(iconFamily==="Zocial")Icon=Zocial
   else Icon=MaterialCommunityIcons
-
-
-
-
-
-
-
-
-
 };
 
+scrollTo(ref="FlatListRef",x=0,y=0){
+// console.log(" this.refs: ",this.refs[ref]);
+console.log(" this.state.scrollToItemRef: ",this.state.scrollToItemRef);
+// try {this.refs[ref].scrollToIndex({x:0,y:0,amimated:true})} catch (e) {console.log(" e: ",e);}
+// try {this.refs[ref].scrollToIndex(1)} catch (e) {console.log(" e: ",e);}
+try {this.props.listRef.scrollToItem(this.state.scrollToItemRef)} catch (e) {console.warn(" e: ",e);}
+// try {this.refs[ref].scrollToOffset({x:0,y:1000,amimated:true})} catch (e) {console.log(" e: ",e);}
+}
 
+
+scrollToStart(ref="FlatListRef",x=0,y=0){
+  console.log(" this.props.listRefs: ",this.props.listRefs);
+try {this.props.listRef.scrollToOffset({x,y,amimated:true})} catch (e) {console.warn(" e: ",e);}
+}
+scrollToEnd(ref="FlatListRef"){
+try {this.props.listRef.scrollToEnd()} catch (e) {console.warn(" e: ",e);}
+}
 componentWillMount() {
-  this.pagination()
+  // this.pagination()
 }
 componentWillReceiveProps() {}
   render() {
-
-    // if(nextProps!==this.state.nextProps)//this.pagination()
-
-
-
-
-
     const {
       pageSize,
       onPressBack,
@@ -173,7 +160,7 @@ componentWillReceiveProps() {}
       backStyle,
       nextText,
       nextStyle,
-paginationItems,
+      paginationItems,
       visible,
       changed,
     arrayOfChanged,
@@ -193,10 +180,13 @@ paginationItems,
   else if(iconFamily==="Octicons")Icon=Octicons
   else if(iconFamily==="Zocial")Icon=Zocial
   else Icon=MaterialCommunityIcons
+
+  /*
+  TODO/WIP add normal pagination (without scroll)
+
 let maxsize=10
   _page = Math.abs(parseInt(page) || 1)
 
-  console.log(" _page: ",_page);
   //results to return
   _pageSize = parseInt(pageSize) || 10
 //cannot go above 50
@@ -204,8 +194,6 @@ if(_pageSize > maxsize)_pageSize=maxsize
 
 // limits payload size
 let total= (data.length)
-// let lastPage=  Math.ceil((µœ.data.length)/_pageSize)
-// let lastPage= (_pageSize*_page)-total
 let lastPage= Math.ceil(total/_pageSize)
 
 let start = (_page - 1) * _pageSize + 1
@@ -217,46 +205,57 @@ let start = (_page - 1) * _pageSize + 1
      end = total;
    }
  }
+let µœ=_.slice(data,start-1,end)
+let statusString=start + '-' + end + ' of ' + total + ' items'
+//let s=`start:${start-1}-${end}\n\n`
+console.log(statusString);
+
+*/
+
+
 
  let aia=data.map(i=>i.id)
-
  let via=visible.map(i=>i.index)
  let cia=changed.map(i=>i.index)
- // [1, 2, 3].move(0, 1) >>
- // let µœ=_.slice(data,start-1,end)
- // let µœ=_.slice(changed,start-1,end)
 
-let fillIndexes=[
-  Array.min(via)-1,
-  Array.min(via)-2,
-  Array.min(via)-3,
-  Array.max(via)+1,
-  Array.max(via)+2,
-  Array.max(via)+3,
-]
-// let fillr=visible.map(o=>{
-// console.log(" o: ",o);
-// // var {index,item,isViewable}=o
-//   return ...o
-// })
+
+
+
+
+
+let padSize=3
+let fillIndexes=[..._.times(padSize,i=>Array.min(via)-(i+1)),..._.times(padSize,i=>Array.max(via)+(i+1))]
+/*
+same as
+ let fillIndexes=[
+   Array.min(via)-1,
+   Array.min(via)-2,
+   Array.min(via)-3,
+   Array.max(via)+1,
+   Array.max(via)+2,
+   Array.max(via)+3,
+ ]
+*/
 
 fillIndexes=fillIndexes.map((num,i) => {
-  if(num < 0){
-    //is neg
-
-    return Array.max(fillIndexes)+(num*= -1)
-  }else{
-    return num
-  }
+  /*
+  *   if number is less than 0 when dont want it in the render array.
+  *  instead we want [-2,-1,0,1,2] to look like [0,1,2,3,4]
+  *  this does the following:
+  *  var arr = [-2,-1,0,1,2]
+  *  var max = Array.max(arr) === 2 (largest in array)
+  *  and (num*= -1) flips if negative. so -2 is now 2. now add this to the max
+  *  and arr went from [-2,-1,0,1,2] to [4,-1,0,1,2] and so on.
+  */
+  if(num < 0)return Array.max(fillIndexes)+(num*= -1)
+  else return num
 })
+
+//create new items
 let fill=fillIndexes.map((i) => {
-  // return data[i]
-  // console.log(" data: ",data);
-// if(!_.get(data,`[${i}].id`))return
   return {index:_.get(data,`[${i}].id`),key:_.get(data,`[${i}].id`),item:data[i],isViewable:false}
 })
-console.log(" visible: ",visible);
- // let µœ=_.sortedUniq(pad_array(visible,fill,10))
+// console.log(" visible: ",visible);
  let µœ=_.sortBy([...visible,...fill],'index')
 
  let vmin=Array.min(visible.map(i=>i.index))
@@ -264,30 +263,25 @@ console.log(" visible: ",visible);
 
  // let µœ=[data]//.move(0, 1)
   let pia=µœ.map(i=>i.id)
- // if(strictCategories===true)return (_.intersection(o.categories,categories).length)?o:null
-changed.map((item) => {
-//arr.fill(value, start, end)
-  _.includes([1, 2, 3], 1, 2)
 
-})
-let f=`\n`
-let o=`\n`
+function showLog(){
+    let f=`\n`
+    let o=`\n`
 
-let s=`start:${start-1}-${end}\n\n`
 
-let x=`same (p,v):  ${_.intersection(pia,via)}\n`//only merge what they have in common
-let l=`visible:     ${via} |min: ${vmin},max: ${vmax}\n`
-let p=`page:        ${pia} \n`
-let pr=`µœ:        ${µœ} \n`
-let c=`changed:     ${cia} \n`
-let fi=`fill:     ${fill} \n`
-let a=`all:         ${aia} \n`
- console.log('\n\n'+s,f,o,x,pr,l,fi,p,c,a);
- // console.log(${changed: ",changed.map(i=>i.key));}`
- // console.log(" stack: ",);
- let statusString=start + '-' + end + ' of ' + total + ' items'
-console.log(statusString);
- // filter if nessisary
+
+    let x=`same (p,v):  ${_.intersection(pia,via)}\n`//only merge what they have in common
+    let l=`visible:     ${via} |min: ${vmin},max: ${vmax}\n`
+    let p=`page:        ${pia} \n`
+    let pr=`µœ:        ${µœ} \n`
+    let c=`changed:     ${cia} \n`
+    let fi=`fill:     ${fill} \n`
+    let a=`all:         ${aia} \n`
+    console.log('\n\n'+s,f,o,x,pr,l,fi,p,c,a);
+
+}
+if(showComments)showLog()
+
 
 
  // this.setState({paginationItems:µœ})
@@ -317,7 +311,7 @@ else PaginationContainerStyle={backgroundColor:"blue",height,alignItems:"center"
   // console.log(" o: ",o.isViewable);
       // return (<View style={{flex:1}}
       //   key={o.key}>{o.item}</View>)
-    return  (<TouchableOpacity key={i} onPress={()=>{alert(`pressed ${i}`)}}
+    return  (<TouchableOpacity key={i} onPress={()=>this.scrollToStart()}
      style={[dotStyle,{alignItems:'center',flexDirection:(horizontal===true)?"column":"row",}]}>
      <Text style={[{textAlign: "center",fontWeight:"600",fontSize:9,flexDirection:(horizontal===true)?"row":"column"},textStyle]}>  {_.isNumber(o.key)?o.key+1:o.key}</Text>
    <Icon name={(o.isViewable===false)?(o.index===undefined)?"sim-off":this.props.newIconName:this.props.defaultIconName} size={(o.isViewable===true)?30:20} color={this.Color(o.name)}/>
@@ -343,7 +337,7 @@ else PaginationContainerStyle={backgroundColor:"blue",height,alignItems:"center"
     const {dotStyle,backButtonStyle,textStyle,backComponent,horizontal,backwardStyle,changed} = this.props
 
      if(backComponent)return backComponent
-     else return (<TouchableOpacity onPress={this.onPressForward.bind(this)}  style={[dotStyle,backwardStyle,backButtonStyle,{alignItems:'center',flexDirection:(horizontal===false)?"column":"row",}]}>
+     else return (<TouchableOpacity onPress={()=>this.scrollToStart()}  style={[dotStyle,backwardStyle,backButtonStyle,{alignItems:'center',flexDirection:(horizontal===false)?"column":"row",}]}>
           <Text style={[{textAlign:"center",flexDirection:(horizontal===false)?"row":"column"},textStyle]}>  {(horizontal===false)?"↑":"←"}</Text>
         {/* <Text style={[{textAlign:"center",flexDirection:(horizontal===false)?"row":"column"},textStyle]}>  {Array.min(changed)}</Text> */}
         </TouchableOpacity>)
@@ -353,7 +347,7 @@ else PaginationContainerStyle={backgroundColor:"blue",height,alignItems:"center"
     const {dotStyle,data,textStyle,nextStyle,nextComponent,changed,horizontal} = this.props
 
   if(nextComponent)return this.props.nextComponent
-  else return (<TouchableOpacity onPress={this.props.onPressBack}  style={[dotStyle,nextStyle,{alignItems:'center',flexDirection:(horizontal===false)?"column":"row",}]}>
+  else return (<TouchableOpacity onPress={()=>this.scrollToEnd()}  style={[dotStyle,nextStyle,{alignItems:'center',flexDirection:(horizontal===false)?"column":"row",}]}>
          {/* <Text style={[{textAlign:'center',flexDirection:(horizontal===false)?"row":"column"},textStyle]}> {(data.length-Array.min(changed))+1}</Text> */}
        <Text style={[{textAlign:'center',flexDirection:(horizontal===false)?"row":"column"},textStyle]}>  {(horizontal===false)?"↓":"→"}</Text>
        </TouchableOpacity>)
