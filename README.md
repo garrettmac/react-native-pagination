@@ -95,17 +95,6 @@ $ react-native init myproject
 
 ### Methods
 
-#### scrollBy(index, animated)
-
-Scroll by relative index.
-
-Parameters:
-
-| Name  | Type     | default | Description |
-| :---- | :------: | :------: | :--- |
-| index | `number`   | `undefined` | offset index |
-| animated | `bool`   | `true` | offset index |
-
 ### Examples
 
 ```bash
