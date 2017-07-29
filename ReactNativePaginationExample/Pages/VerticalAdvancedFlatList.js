@@ -20,7 +20,7 @@ import Pagination from '../react-native-pagination';
 
 
 
-import ListItem from './widgets/ListItem';
+import ContactItem from './widgets/ContactItem';
 export default class VerticalAdvancedFlatList extends Component {
 
 
@@ -43,7 +43,7 @@ export default class VerticalAdvancedFlatList extends Component {
 
   _renderItem = ({item}) => {
     // console.log(" item: ",item);
-  return (<ListItem
+  return (<ContactItem
        index={item.id}
        id={item.key}
        onPressItem={this._onPressItem}

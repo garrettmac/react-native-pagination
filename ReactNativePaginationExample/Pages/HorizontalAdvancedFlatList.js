@@ -28,10 +28,6 @@ import Pagination from '../react-native-pagination';
 
 
 
-
-
-
-  import ListItem from './widgets/ListItem';
   export default class HorizontalAdvancedFlatList extends Component {
 constructor(props){
    super(props);

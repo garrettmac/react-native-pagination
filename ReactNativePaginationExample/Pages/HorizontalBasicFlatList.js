@@ -8,7 +8,7 @@
 import React, { Component } from 'react';
 import {AppRegistry,StyleSheet,Text,View,FlatList,} from 'react-native';
 //get here [TODO ADD URL]
-import ListItem from './widgets/ListItem';
+import ContactItem from './widgets/ContactItem';
 import Pagination from '../react-native-pagination';
 import faker from 'faker';//assuming you have this.
 import _ from 'lodash';// if you dont have this then gtfo
@@ -26,7 +26,7 @@ let PersonList = new _.times(35,(i)=>{
 
 
 
-export default class ReactNativePaginationExample extends Component {
+export default class HorizontalBasicFlatList extends Component {
 
   constructor(props){
      super(props);
@@ -37,7 +37,7 @@ export default class ReactNativePaginationExample extends Component {
     }
   //render list seen here [TODO ADD URL]
   _renderItem = ({item}) => {
-    return (<ListItem
+    return (<ContactItem
        index={item.id}
        id={item.id}
        onPressItem={this._onPressItem}
@@ -62,12 +62,15 @@ render() {
   return (
     <View style={[s.container]}>
       <FlatList
+        horizontal
+         pagingEnabled
         data={this.state.items}
         keyExtractor={this._keyExtractor}//map your keys to whatever unique ids the have (mine is a "id" prop)
         renderItem={this._renderItem}
         onViewableItemsChanged={this.onViewableItemsChanged.bind(this)}//need this
       />
       <Pagination
+        horizontal
         // dotThemeLight //<--use with backgroundColor:"grey"
         listRef={this.refs}//to allow React Native Pagination to scroll to item when clicked  (so add "ref={r=>this.refs=r}" to your list)
         visible={this.state.viewableItems}//needs to track what the user sees
@@ -81,6 +84,6 @@ render() {
 const s = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor:"grey",//<-- use with "dotThemeLight"
+    backgroundColor:"grey",//<-- use with "dotThemeLight"
   },
 });

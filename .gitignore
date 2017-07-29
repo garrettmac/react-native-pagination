@@ -1,0 +1,22 @@
+
+.DS_Store
+logs
+*.log
+pids
+*.pid
+*.seed
+lib-cov
+coverage
+.lock-wscript
+node_modules
+res
+dist/test/
+coverage/
+ReactNativePaginationExample/node_modules
+
+
+#build tools
+.travis.yml
+.jenkins.yml
+
+#linters

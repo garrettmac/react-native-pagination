@@ -4,6 +4,7 @@
   "description": "The best Pagination component for React Native.",
   "main": "src/index.js",
   "dependencies": {
+    "randomcolor": "^0.5.3",
     "react-native-vector-icons": "^4.2.0"
   },
   "devDependencies": {},

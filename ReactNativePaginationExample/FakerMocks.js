@@ -26,7 +26,21 @@ let MockRobotsList = new _.times(15,(i)=>{
     email:faker.internet.email(),
   }
 })
+let MockJobsList = new _.times(15,(i)=>{
+  return {
+    id:i,
+    index:i,
+    key:i,
+    title:faker.name.jobTitle(),
+    city:faker.address.city(),
+    type:faker.name.jobType(),
+    color:faker.internet.color(),
+    description:faker.lorem.sentence(),
+    // image:faker.image.business(),
+    image:"https://lorempixel.com/500/500/business",
+  }
+})
 
 
 
-export  {MockPersonList,MockRobotsList}
+export  {MockPersonList,MockRobotsList,MockJobsList}

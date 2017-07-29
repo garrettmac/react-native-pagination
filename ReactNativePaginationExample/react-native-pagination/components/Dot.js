@@ -171,7 +171,7 @@ if(horizontal==true){
 
       <TouchableOpacity onPress={()=>(onPress)?onPress(item):""}
        style={[{flex:1,flexDirection:(horizontal==(dotSwapAxis)?true:false)?"column":"row",justifyContent: "center",alignItems: "center"},dotStyle,]}>
-       <View style={{flexDirection:(horizontal!==(dotSwapAxis)?true:false)?"row":"column"}}>
+       <View style={{flexDirection:(horizontal!==(dotSwapAxis)?true:false)?"row":"column",backgroundColor:"transparent",}}>
 
          {(!dotIconHide && dotPositionIconBeforeText) &&
            icon(item)
@@ -238,6 +238,8 @@ dotSwapAxis:false,
 dotIconHide:false,
 // dotPositionIconBeforeText:true,
 dotPositionIconBeforeText:false,
+// startDotStyle:{alignItems:"center"},
+// endDotStyle:{alignItems:"center"},
 
 }
 
