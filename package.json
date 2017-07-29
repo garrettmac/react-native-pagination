@@ -1,0 +1,41 @@
+{
+  "name": "react-native-pagination",
+  "version": "1.0.3",
+  "description": "The best Pagination component for React Native.",
+  "main": "src/index.js",
+  "dependencies": {
+    "react-native-vector-icons": "^4.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/garrettmac/react-native-pagination.git"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "pagination",
+    "scroll",
+    "tabs",
+    "list",
+    "flatlist",
+    "native",
+    "listview",
+    "flatlist",
+    "sectionlist",
+    "react-component",
+    "react-native-component",
+    "list",
+    "ui",
+    "profile-page"
+  ],
+  "author": "Garrett Mac <garrett@vyga.io> (http://vyga.io)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/garrettmac/react-native-pagination/issues"
+  },
+  "homepage": "https://github.com/garrettmac/react-native-pagination#readme"
+}
