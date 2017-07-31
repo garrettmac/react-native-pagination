@@ -6,12 +6,13 @@ node_modules
 
 ReactNativePaginationExample/react-native-pagination
 ReactNativePaginationExample/node_modules
+ReactNativePaginationExample/ios
+ReactNativePaginationExample/android
 coverage/
 .coveralls.yml
 .travis.yml
 
 images
-node_modules
 
 
 #tests
