@@ -30,7 +30,7 @@ let lightColor="white"
 
 
 
-export default class JobItem extends Component {
+export default class Tweet extends Component {
   render() {
 
 
@@ -66,7 +66,7 @@ const {
         <View style={[{height:20,},s.badgeSection]}>
               <View style={[s.badgeSlug, {backgroundColor: "white"}]}>
                 <Text style={[s.badgeText,{color: 'rgba(0,0,0,.6)',}]}>
-                  ({index}) in {city} 
+                  ({index}) in {city}
                 </Text>
               </View>
             </View>
@@ -195,7 +195,7 @@ position:"absolute",
 
 
 
-JobItem.PropTypes={
+Tweet.PropTypes={
   id:PropTypes.number,
     index:PropTypes.number,
     key:PropTypes.number,
@@ -206,7 +206,7 @@ JobItem.PropTypes={
     description:PropTypes.string,
     image:PropTypes.string,
 }
-JobItem.DefaultProps={
+Tweet.DefaultProps={
   // title:PropTypes.string,
   // image:PropTypes.string,
   // tag:"",

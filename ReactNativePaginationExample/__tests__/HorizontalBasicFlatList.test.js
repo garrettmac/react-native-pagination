@@ -1,7 +1,7 @@
 import 'react-native';
 import {View,FlatList} from 'react-native';
 import React from 'react';
-// import Pagination from '../react-native-pagination';
+// import Pagination from 'react-native-pagination';
 import HorizontalBasicFlatList from '../Pages/HorizontalBasicFlatList';
 
 // Note: test renderer must be required after react-native.
@@ -80,9 +80,9 @@ import renderer from 'react-test-renderer';
   });
 
 
-// var Icon=require('../react-native-pagination/components/Icon')
-// var sum=require('../react-native-pagination/components/sum').default
-// import sum from '../react-native-pagination/components/sum';
+// var Icon=require('react-native-pagination/components/Icon')
+// var sum=require('react-native-pagination/components/sum').default
+// import sum from 'react-native-pagination/components/sum';
 
 
 

@@ -8,28 +8,28 @@
 import React, { Component } from 'react';
 import {AppRegistry,StyleSheet,Text,View,FlatList,} from 'react-native';
 //get here [TODO ADD URL]
-import JobItem from './widgets/JobItem';
-import Pagination from '../react-native-pagination';
+import TweetItem from './widgets/TweetItem';
+import Pagination from 'react-native-pagination';
 
 import _ from 'lodash';// if you dont have this then gtfo
 
-import {MockJobsList} from '../FakerMocks';
+import {MockTweetList} from '../FakerMocks';
 
 
 
 
-export default class HorizontalBasicFlatList extends Component {
+export default class HorizontalPagedFlatListExample extends Component {
 
   constructor(props){
      super(props);
       this.state = {
-        items: MockJobsList,
+        items: MockTweetList,
         // selected: (new Map(): Map<string, boolean>),
       };
     }
   //render list seen here [TODO ADD URL]
   _renderItem = ({item}) => {
-    return (<JobItem
+    return (<TweetItem
        index={item.id}
        id={item.id}
        onPressItem={this._onPressItem}
@@ -42,7 +42,7 @@ export default class HorizontalBasicFlatList extends Component {
      />)
  };
 
- //map to some key. We use the "id" attribute of each item in our list created in our MockJobsList
+ //map to some key. We use the "id" attribute of each item in our list created in our MockTweetList
   _keyExtractor = (item, index) => item.id
 
 // REQUIRED for ReactNativePagination to work correctly

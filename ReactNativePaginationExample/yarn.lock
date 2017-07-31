@@ -3236,7 +3236,7 @@ react-devtools-core@2.3.1:
 "react-native-pagination@file:../src":
   version "0.0.0"
 
-react-native-vector-icons@^4.2.0:
+react-native-vector-icons@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.3.0.tgz#49eab845fbcde6354cb3dbcb62c1abd1f6abc866"
   dependencies:

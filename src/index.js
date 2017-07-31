@@ -26,7 +26,9 @@ import PropTypes from 'prop-types';
 //helper functions
 
 
-export default class Pagination extends Component {
+
+// export default class Pagination extends Component {
+class Pagination extends Component {
 
 
   onPressBack(){
@@ -47,17 +49,17 @@ if(this.props.onPressForward){
 
 
 scrollTo(ref="FlatListRef",x=0,y=0){
-// console.log(" this.refs: ",this.refs[ref]);
-console.log(" this.state.scrollToItemRef: ",this.state.scrollToItemRef);
-// try {this.refs[ref].scrollToIndex({x:0,y:0,amimated:true})} catch (e) {console.log(" e: ",e);}
-// try {this.refs[ref].scrollToIndex(1)} catch (e) {console.log(" e: ",e);}
+// //console.log(" this.refs: ",this.refs[ref]);
+//console.log(" this.state.scrollToItemRef: ",this.state.scrollToItemRef);
+// try {this.refs[ref].scrollToIndex({x:0,y:0,amimated:true})} catch (e) {//console.log(" e: ",e);}
+// try {this.refs[ref].scrollToIndex(1)} catch (e) {//console.log(" e: ",e);}
 try {this.props.listRef.scrollToItem(this.state.scrollToItemRef)} catch (e) {console.warn(" e: ",e);}
-// try {this.refs[ref].scrollToOffset({x:0,y:1000,amimated:true})} catch (e) {console.log(" e: ",e);}
+// try {this.refs[ref].scrollToOffset({x:0,y:1000,amimated:true})} catch (e) {//console.log(" e: ",e);}
 }
 
 
 scrollToStart(ref="FlatListRef",x=0,y=0){
-  console.log("this.props.listRefs: ",this.props.listRefs);
+  //console.log("this.props.listRefs: ",this.props.listRefs);
 try {this.props.listRef.scrollToOffset({x:0,y:0,amimated:true})} catch (e) {console.warn(" e: ",e);}
 }
 scrollToEnd(ref="FlatListRef"){
@@ -71,22 +73,20 @@ componentWillMount() {
 
 
 /**
-same as
-let paginationVisibleItems=[
-  _.min(paginationVisibleItemsIndexList)-1,
-  _.min(paginationVisibleItemsIndexList)-2,
-  _.min(paginationVisibleItemsIndexList)-3,
-  _.max(paginationVisibleItemsIndexList)+1,
-  _.max(paginationVisibleItemsIndexList)+2,
-  _.max(paginationVisibleItemsIndexList)+3,
-]
+
    * @method _createPaginationVisableItemsIndexArray
-   * @param  {Object[]} employees - The employees who are responsible for the project.
-   * @param {string} employees[].name - The name of an employee.
-   * @param {string} employees[].department - The department of an employee.
-   * @param {(string|string[])} [somebody=John Doe] - Somebody's name, or an array of names.
-   * @param {requestCallback} callback - The callback that handles the response.
-   * @return {bool} some bool
+   * @param
+   * @return
+   .....
+   same as
+   let paginationVisibleItems=[
+     _.min(paginationVisibleItemsIndexList)-1,
+     _.min(paginationVisibleItemsIndexList)-2,
+     _.min(paginationVisibleItemsIndexList)-3,
+     _.max(paginationVisibleItemsIndexList)+1,
+     _.max(paginationVisibleItemsIndexList)+2,
+     _.max(paginationVisibleItemsIndexList)+3,
+   ]
  */
 //sould look something like [0, -1, -2, 2, 3, 4] if [0,1] are viewable and paginationItemPadSize is 3
 
@@ -106,7 +106,7 @@ let uniquePaddedIndexList= preIniquePaddedIndexList.map((num,i) => {
    if(num < 0)return _.max(paginationVisibleItemsIndexList)+(num*= -1)
    else return num
   })
-  // console.log(" uniquePaddedIndexList: ",uniquePaddedIndexList);
+  // //console.log(" uniquePaddedIndexList: ",uniquePaddedIndexList);
   return _.uniq(uniquePaddedIndexList)
 
 }
@@ -165,14 +165,18 @@ if(!reactNativeListComponentType)reactNativeListComponentType="FlatList"
 paginationItems=paginationItems.map((item,i) => {
 
   item.paginationIndexId=i
+  item.index=i
   item.paginationHasSeenItem=false
   item.paginationHasPressedItem=false
   item.paginationSelectedItem=false
   return item
 })
-console.log("Index: ",paginationVisibleItems);
+console.log(" paginationItems: ",paginationItems);
+//console.log("Index: ",paginationVisibleItems);
 // paginationVisibleItemsIndexList this list of index that you want to remove or you'll see two active icon buttons
  let paginationVisibleItemsIndexList=paginationVisibleItems.map(i=>i.index)
+ console.log(" paginationVisibleItemsIndexList: ",paginationVisibleItemsIndexList);
+ // let paginationVisibleItemsIndexList=paginationVisibleItems.map(i=>i.paginationItems)
  // if(pagingEnabled)paginationVisibleItemsIndexList=[_.max(paginationVisibleItemsIndexList)]
 
 
@@ -181,19 +185,18 @@ console.log("Index: ",paginationVisibleItems);
    if(paginationVisibleItemsIndexList.length>1){
    paginationVisibleItems=paginationVisibleItems.map((o) => {
      if(o.index===_.min(paginationVisibleItemsIndexList)){return {index:_.get(o,`index`),key:_.get(o,`key`),item:_.get(o,`item`,{}),isViewable:false}}
-    //  if(o.index===_.min(paginationVisibleItemsIndexList)){console.log(" o: ",o);return o}
+    //  if(o.index===_.min(paginationVisibleItemsIndexList)){//console.log(" o: ",o);return o}
      else return o
    })
   //  paginationVisibleItemsIndexList=[_.min(paginationVisibleItemsIndexList)]
+  // ver aa=[_.max(paginationVisibleItemsIndexList)]
   }
  }
 
 
- // _createPaginationVisableItemsIndexArray(paginationVisibleItems,paginationVisibleItemsIndexList, paginationItemPadSize){
-// ver aa=[_.max(paginationVisibleItemsIndexList)]
-// paginationVisibleItemsIndexList
+
+
  let paginationVisableItemsIndexArray=this._createPaginationVisableItemsIndexArray(paginationVisibleItems,paginationVisibleItemsIndexList,paginationItemPadSize)
-// console.log(" _createPaginationVisableItemsIndexArray:output ",paginationVisibleItems);
 console.log(" paginationVisableItemsIndexArray: ",paginationVisableItemsIndexArray);
 
 let paginationVisiblePadItems= paginationVisableItemsIndexArray.map((o,i) => {
@@ -203,7 +206,6 @@ let paginationVisiblePadItems= paginationVisableItemsIndexArray.map((o,i) => {
 
 
  let flatListPaginationItems=_.sortBy([...paginationVisibleItems,...paginationVisiblePadItems],"index")
-console.log(" flatListPaginationItems: ",flatListPaginationItems);
 
 if(debugMode){
     console.log("paginationVisibleItemsIndexList",paginationVisibleItemsIndexList)
@@ -216,23 +218,12 @@ if(debugMode){
 
 
 
-
-
- // this.setState({paginationItems:flatListPaginationItems})
-
-// console.log(" horizontal: ",horizontal);
-// let horizontalStyle={width,position:"absolute", right:0,left:0,bottom:5,padding:5,flex:1,justifyContent:"center",alignItems:'center',flexDirection:"row",}
 let verticalStyle={height,alignItems:"center", justifyContent: 'space-between', position:"absolute",top:0,margin:0,bottom:0,right:0,bottom:0,padding:0,flex:1,}
 let horizontalStyle={width,alignItems:"center", justifyContent: 'space-between', position:"absolute",margin:0,bottom:10,left:0,right:0,padding:0,flex:1,}
 
 if(horizontal===true)PaginationContainerStyle=horizontalStyle
 else if(paginationStyle)PaginationContainerStyle=paginationStyle
 else PaginationContainerStyle=verticalStyle
-// console.warn(" s: ",PaginationContainerStyle===verticalStyle);
-// console.warn(" s: ",PaginationContainerStyle===paginationStyle);
-// console.warn(" s: ",horizontal);
-//if(hideEmptyDots)
-// flatListPaginationItems=flatListPaginationItems.map(o=>_.compactObject(o))
 
     return (
       <View style={[PaginationContainerStyle,containerStyle]}>
@@ -255,7 +246,7 @@ else PaginationContainerStyle=verticalStyle
     <Dot jumpItems={flatListPaginationItems} endingJumpSize={(endingJumpSize)?endingJumpSize:5} {...this.props} styles={[dotStyle,endDotStyle]}/>
   }
   {flatListPaginationItems.map((item,i) => {
-  // console.log(" o: ",o);
+  // console.log(" item: ",item);
 
   LayoutAnimation.configureNext(dotAnimation)
       return (<View style={{flex:1}} key={i}>
@@ -279,7 +270,7 @@ else PaginationContainerStyle=verticalStyle
   }
   _showDebuggerModeLog(paginationItems,flatListPaginationItems,paginationVisiblePadItems,paginationVisibleItemsIndexList,mapWithItemProperty){
   // Naming Convention: X _ Indexs ([x]ai)
-  // flatListPaginationItems.map(console.log)
+  // flatListPaginationItems.map(//console.log)
   let paginationItemsIndexList=paginationItems.map(i=>i[mapWithItemProperty])
   let allDotsIndexList=flatListPaginationItems.map(i=>i[mapWithItemProperty])
   let NOT_ACTIVE_DOTS_INDEXES=_.sortBy(paginationVisiblePadItems.map(i=>i[mapWithItemProperty]))
@@ -294,8 +285,8 @@ else PaginationContainerStyle=verticalStyle
       let ADI_ISVIEWABLE=`%c each "paginationVisibleItems dots" "isViewable" attribute:\n                      ${ALL_DOTS_INDEXES} \n`
       let AID=`%c all "paginationItems"'s':       ${paginationItemsIndexList} \n`
 
-      console.log('\n\n%cGarrett Mac\'s React Native Pagination'+"%c \ndebugMode: ON\n"+___+ADBY+ADI+ANDI+___+ADI_ISVIEWABLE+___+AID, 'color: #01a699','color: #f99137','color: #f99137','color: #a94920','color: #00a7f8','color: #3b539a','color: #32db64','color: #00c59e','color: #3b539a','color: #488aff');
-      // console.log('\n\n%c Garrett Mac\'s React Native Pagination\n'+);
+      //console.log('\n\n%cGarrett Mac\'s React Native Pagination'+"%c \ndebugMode: ON\n"+___+ADBY+ADI+ANDI+___+ADI_ISVIEWABLE+___+AID, 'color: #01a699','color: #f99137','color: #f99137','color: #a94920','color: #00a7f8','color: #3b539a','color: #32db64','color: #00c59e','color: #3b539a','color: #488aff');
+      // //console.log('\n\n%c Garrett Mac\'s React Native Pagination\n'+);
 
 
   }
@@ -357,7 +348,8 @@ Pagination.PropTypes={
 
 }
 
-
+export default Pagination
+export {Icon,Dot}
 
 
 

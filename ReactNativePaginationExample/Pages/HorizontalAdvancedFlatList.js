@@ -20,7 +20,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 
 import {MockRobotsList} from '../FakerMocks';
-import Pagination from '../react-native-pagination';
+import Pagination from 'react-native-pagination';
 
 
 
@@ -185,7 +185,7 @@ backgroundColor: "#01a699",}}>
         keyExtractor={(o, i) => o.key}
       data={this.state.items}
       // dotSwapAxis
-      // dotPositionIconBeforeText
+      // dotPositionSwap
       scrollRenderAheadDistance={width*2}
       //data={[{"id":1,"name":"Bernie Sanders"},{"id":2,"name":"Al Frankin"},{"id":3,"name":"Elizabeth Warren"},{"id":4,"name":"Cory Booker"}]}
       renderItem={this.renderItem}
@@ -207,15 +207,15 @@ backgroundColor: "#01a699",}}>
     horizontal
     // debugMode
     // dotSwapAxis
-    // dotPositionIconBeforeText
+    // dotPositionSwap
     dotIconNameNotActive={"account-outline"}
     dotIconNameEmpty={"account-off"}
+    dotIconNameActive={"account-settings"}
 dotTextHide
 
     dotIconSizeNotActive={20}
     dotIconSizeActive={27}
     dotIconSizeEmpty={27}
-    dotIconNameActive={"account-settings"}
   listRef={this.refs}//to allow React Native Pagination to scroll to item when clicked  (so add "ref={r=>this.refs=r}" to your list)
         paginationVisibleItems={this.state.viewableItems}//needs to track what the user sees
         paginationItems={this.state.items}//pass the same list as data

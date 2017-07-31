@@ -1,6 +1,6 @@
 {
   "name": "react-native-pagination",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "The best Pagination component for React Native.",
   "main": "src/index.js",
   "dependencies": {

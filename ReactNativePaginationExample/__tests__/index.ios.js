@@ -1,9 +1,9 @@
 import 'react-native';
 
 import React from 'react';
-import Pagination from '../react-native-pagination';
-import Icon from '../react-native-pagination/components/Icon';
-import Dot from '../react-native-pagination/components/Dot';
+import Pagination from 'react-native-pagination';
+import Icon from 'react-native-pagination/components/Icon';
+import Dot from 'react-native-pagination/components/Dot';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';

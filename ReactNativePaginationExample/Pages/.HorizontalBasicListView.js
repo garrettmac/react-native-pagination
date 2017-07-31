@@ -13,7 +13,7 @@ const {width, height} = Dimensions.get('window');
 import _ from 'lodash';
 import JobItem from './widgets/JobItem';
 import {MockJobsList} from '../FakerMocks';
-import Pagination from '../react-native-pagination';
+import Pagination from 'react-native-pagination';
 console.log(" Pagination: ",Pagination);
 import faker from 'faker';
 

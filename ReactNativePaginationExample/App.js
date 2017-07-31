@@ -11,14 +11,14 @@ import {
 const {width, height} = Dimensions.get('window');
 
   import HorizontalAdvancedFlatList from './Pages/HorizontalAdvancedFlatList';
-  import HorizontalBasicFlatList from './Pages/HorizontalBasicFlatList';
-  import HorizontalBasicListView from './Pages/HorizontalBasicListView';
-  import HorizontalBasicSectionList from './Pages/HorizontalBasicSectionList';
+  import HorizontalPagedFlatListExample from './Pages/HorizontalPagedFlatListExample';
+  // import HorizontalBasicListView from './Pages/HorizontalBasicListView';
+  // import HorizontalBasicSectionList from './Pages/HorizontalBasicSectionList';
 
   import VerticalAdvancedFlatList from './Pages/VerticalAdvancedFlatList';
   import VerticalBasicFlatList from './Pages/VerticalBasicFlatList';
-  import VerticalBasicListView from './Pages/VerticalBasicListView';
-  import VerticalBasicSectionList from './Pages/VerticalBasicSectionList';
+  // import VerticalBasicListView from './Pages/VerticalBasicListView';
+  // import VerticalBasicSectionList from './Pages/VerticalBasicSectionList';
 
 
 
@@ -29,7 +29,7 @@ export default class App extends Component {
 
     this.state = {
       // Component: HorizontalAdvancedFlatList,
-      // Component: HorizontalBasicFlatList,
+      // Component: HorizontalPagedFlatListExample,
       // Component: HorizontalBasicListView,
       Component: null,
       showHeader:true,
@@ -113,7 +113,7 @@ export default class App extends Component {
     return this.renderExamples([
       // [<component>, <component title>,<color>]
       [HorizontalAdvancedFlatList, 'Horizontal Advanced FlatList Example',"rgba(0,166,155,.8)"],
-      [HorizontalBasicFlatList, 'Horizontal Advanced Example \n        (Paging Enabled)',"rgba(0,136,155,.8)"],
+      [HorizontalPagedFlatListExample, 'Horizontal Paged Example',"rgba(0,136,155,.8)"],
       // [HorizontalBasicListView , 'Horizontal Basic ListView Example',"rgba(0,106,155,.8)"],
       // [HorizontalBasicSectionList , 'Horizontal Basic SectionList Example',"rgba(0,76,155,.8)"],
 

@@ -15,7 +15,7 @@ const {width, height} = Dimensions.get('window');
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import {MockPersonList} from '../FakerMocks';
-import Pagination from '../react-native-pagination';
+import Pagination from 'react-native-pagination';
 // import {getMoviesFromApi} from './ListItems';
 
 
@@ -55,31 +55,9 @@ export default class VerticalAdvancedFlatList extends Component {
        createTagColor
      />)
  };
- _renderIteme = ({item, separators}) => {
-   console.log(" item: ",item);
- return (
- <TouchableHighlight
-   onPress={() => this._onPress(item)}
-   onShowUnderlay={separators.highlight}
-   onHideUnderlay={separators.unhighlight}>
-   <View style={{backgroundColor: 'white'}}>
-     <Text>{item.title}}</Text>
-   </View>
- </TouchableHighlight>)
-}
- _bindToState(){
 
- }
- onItemUpdate(item,attr="seen"){
-   var data = _.map(this.state.data, function(q) {
-  return q.id === item.id ? {...item, [attr]: item[attr]!==item[attr]} : q;
-});
- this.setState({data})
-  //  let itemToUpdate=this.state.data.filter(o => o.id === item.id)
-  //  let itemToUpdate=
-  //  itemToUpdate[attr]=!itemToUpdate[attr]
 
- }
+
  //need this
  onViewableItemsChanged = ({ viewableItems, changed }) => {
   this.setState({viewableItems,changed})
@@ -101,29 +79,17 @@ export default class VerticalAdvancedFlatList extends Component {
             onViewableItemsChanged={this.onViewableItemsChanged.bind(this)}//need this
           />
     <Pagination
-      // horizontal
-      // dotThemeLight
-      // dotIconSizeActive
-    //  dotIconSizeNotActive
-      // startDotIconSize={30}
-      // endDotIconStyle={{height:30,flex:1,justifyContent:"flex-end", backgroundColor:"red",width:10}}
-      // startDotIconStyle={{height:30,flex:1,justifyContent:"flex-start", backgroundColor:"red",width:10}}
-      // endDotIconSize={30}
-      // mapPaginationItemsBy
-      // mapWithItemProperty="id"
 
-// dotIconNameNotActive={"account-outline"}
-// dotIconNameEmpty={"account-off"}
-dotIconNameActive={"contacts"}
-dotTextColor={"red"}
-dotSwapAxis
-      dotPositionIconBeforeText
+      dotIconNameActive={"contacts"}
+      dotTextColor={"red"}
+      dotSwapAxis
+      dotPositionSwap
       dotTextColorActive={"green"}
-  dotTextColorNotActive={"red"}
-  dotTextColorEmpty={"blue"}
+      dotTextColorNotActive={"red"}
+      dotTextColorEmpty={"blue"}
       dotIconColorActive={"green"}
-  dotIconColorNotActive={"red"}
-  dotIconColorEmpty={"blue"}
+      dotIconColorNotActive={"red"}
+      dotIconColorEmpty={"blue"}
       // dotThemeLight //<--use with backgroundColor:"grey"
       listRef={this.refs}//to allow React Native Pagination to scroll to item when clicked  (so add "ref={r=>this.refs=r}" to your list)
       paginationVisibleItems={this.state.viewableItems}//needs to track what the user sees

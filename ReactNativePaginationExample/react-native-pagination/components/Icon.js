@@ -45,6 +45,8 @@ class Icon extends Component {
 
 Icon.defaultProps={
   iconFamily:"MaterialCommunityIcons",
+  color:"rgba(0,0,0,.5)",
+  size:20,
 }
 Icon.PropTypes={
     name:PropTypes.string,

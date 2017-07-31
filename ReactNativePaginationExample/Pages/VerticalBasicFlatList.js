@@ -15,7 +15,7 @@ const {width, height} = Dimensions.get('window');
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import {MockPersonList} from '../FakerMocks';
-import Pagination from '../react-native-pagination';
+import Pagination from 'react-native-pagination';
 // import {getMoviesFromApi} from './ListItems';
 
 
@@ -101,15 +101,16 @@ export default class VerticalBasicFlatList extends Component {
       dotThemeLight
 
 
-      // dotSwapAxis
+      dotSwapAxis
       dotIconFamily="FontAwesome"
       dotIconHame="FontAwesome"
 
 
 
-      // dotPositionIconBeforeText
+      // dotPositionSwap
 dotStyle={{marginRight:10}}
 dotEmptyHide
+dotIconHide
       // dotThemeLight //<--use with backgroundColor:"grey"
       listRef={this.refs}//to allow React Native Pagination to scroll to item when clicked  (so add "ref={r=>this.refs=r}" to your list)
       paginationVisibleItems={this.state.viewableItems}//needs to track what the user sees

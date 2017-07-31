@@ -46,7 +46,7 @@ export default class Dot extends Component {
         horizontal,
         dotIconFamily,startDotIconFamily,endDotIconFamily,
 
-        dotPositionIconBeforeText,startDotPositionIconBeforeText,endDotPositionIconBeforeText,
+        dotPositionSwap,startDotPositionSwap,endDotPositionSwap,
         //dot section visablity
         dotIconHide,startDotIconHide,endDotIconHide,
         dotTextHide,startDotTextHide,endDotTextHide,
@@ -118,14 +118,14 @@ if(!dotIconSizeEmpty)dotIconSizeEmpty=20
 
     dotSwapAxis=!dotSwapAxis
 if(horizontal==true){
-  dotPositionIconBeforeText=!dotPositionIconBeforeText
+  dotPositionSwap=!dotPositionSwap
 }
 
     if(StartDot){
       dotIconHide=false//reset
 
       //style
-      console.log(" horizontal: ",horizontal);
+      //console.log(" horizontal: ",horizontal);
       if(startDotStyle)dotStyle=startDotStyle
       if(startDotIconStyle)dotIconStyle=startDotIconStyle
 
@@ -144,7 +144,7 @@ if(horizontal==true){
       //positioning
       if(startDotIconHide)dotIconHide=true
       if(startDotSwapAxis)dotSwapAxis=!dotSwapAxis
-      if(startDotPositionIconBeforeText)dotPositionIconBeforeText=!dotPositionIconBeforeText
+      if(startDotPositionSwap)dotPositionSwap=!dotPositionSwap
 
       onPressDot = (item) => {
          if(!disableStartDotOnPressNavigation){try {this.props.listRef.scrollToOffset({x:0,y:0,amimated:true})} catch (e) {console.log(" e: ",e);}}
@@ -172,7 +172,7 @@ if(horizontal==true){
       //positioning
       if(endDotIconHide)dotIconHide=true
       if(endDotSwapAxis)dotSwapAxis=!dotSwapAxis
-      if(endDotPositionIconBeforeText)dotPositionIconBeforeText=!dotPositionIconBeforeText
+      if(endDotPositionSwap)dotPositionSwap=!dotPositionSwap
 
 
       // console.warn(" dotIconFamily: ",dotIconFamily);
@@ -191,6 +191,7 @@ if(horizontal==true){
     const text = (o) => {
 
       if(!o)return ""
+      if(_.has(o,'item.paginationDotText'))return o.item.paginationDotText
       // console.warn(_.isUndefined(o,'index'),_.get(o,'index'));
 
       //  if(StartDot)return startDotText
@@ -215,7 +216,7 @@ if(horizontal==true){
        style={[{flex:1,flexDirection:(horizontal==(dotSwapAxis)?true:false)?"column":"row",justifyContent: "center",alignItems: "center"},dotStyle,]}>
        <View style={{ flexDirection:(horizontal!==(dotSwapAxis)?true:false)?"row":"column",backgroundColor:"transparent",justifyContent: "center",alignItems: "center"}}>
 
-         {(!dotIconHide && dotPositionIconBeforeText) &&
+         {(!dotIconHide && dotPositionSwap) &&
            <View style={[dotIconStyle]}>
              {icon(item)}
              </View>
@@ -231,7 +232,7 @@ if(horizontal==true){
 </View>
 <View style={{flexDirection:(horizontal!==(dotSwapAxis)?true:false)?"row":"column"}}>
 
-{(!dotIconHide && !dotPositionIconBeforeText) &&
+{(!dotIconHide && !dotPositionSwap) &&
   <View style={[dotIconStyle]}>
     {icon(item)}
     </View>
@@ -290,8 +291,8 @@ dotStyle:{flex:1,backgroundColor:'rgba(0,0,0,0)',justifyContent:"center",alignIt
 dotSwapAxis:false,
 dotIconHide:false,
 dotIconStyle:{},
-// dotPositionIconBeforeText:true,
-dotPositionIconBeforeText:false,
+// dotPositionSwap:true,
+dotPositionSwap:false,
 // startDotStyle:{alignItems:"center"},
 // endDotStyle:{alignItems:"center"},
 
