@@ -75,6 +75,14 @@
 ## Installation
 
 ```bash
+$ npm i react-native -g
+```
+with yarn
+```bash
+$ yarn add react-native-pagination
+```
+or with npm
+```bash
 $ npm i react-native-pagination —save
 ```
 
@@ -82,9 +90,7 @@ $ npm i react-native-pagination —save
 
 - Install `react-native` first
 
-```bash
-$ npm i react-native -g
-```
+
 
 - Initialization of a react-native project
 
@@ -174,6 +180,7 @@ const s = StyleSheet.create({
 AppRegistry.registerComponent('ReactNativePaginationExample', () => App);
 ```
 
+Currently only supported for FlatList's 
 
 ## Properties
 All properties took text editors auto completion into consideration and follow the basic structure
