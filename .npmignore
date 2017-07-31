@@ -2,41 +2,28 @@
 .DS_Store
 logs
 *.log
-pids
-*.pid
-*.seed
-lib-cov
-coverage
-.lock-wscript
+
+
 build/Release
 node_modules
-res
-examples
-ReactNativePaginationExample
-src/
-dist/test/
+
+ReactNativePaginationExample/react-native-pagination
 coverage/
 .coveralls.yml
 .travis.yml
 .gitignore
 images
 node_modules
-Example/node_modules
+
 
 #tests
-test
-coverage
+
 
 #build tools
 .travis.yml
 .jenkins.yml
-.codeclimate.yml
 
 #linters
 .jscsrc
 .jshintrc
 .eslintrc*
-
-#editor settings
-.idea
-.editorconfig
