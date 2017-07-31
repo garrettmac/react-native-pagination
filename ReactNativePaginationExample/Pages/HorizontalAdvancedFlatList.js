@@ -10,7 +10,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import {MockRobotsList} from '../FakerMocks';
-import Pagination from '../react-native-pagination';
+import Pagination from 'react-native-pagination';
 
 
 const {width, height} = Dimensions.get('window');

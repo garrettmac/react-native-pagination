@@ -9,7 +9,7 @@ import React, { Component } from 'react';
 import {AppRegistry,StyleSheet,Text,View,FlatList,} from 'react-native';
 //get here [TODO ADD URL]
 import TweetItem from './widgets/TweetItem';
-import Pagination from '../react-native-pagination';
+import Pagination from 'react-native-pagination';
 import _ from 'lodash';// if you dont have this then gtfo
 import {MockTweetList} from '../FakerMocks';
 
