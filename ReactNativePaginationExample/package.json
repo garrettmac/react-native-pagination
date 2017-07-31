@@ -14,7 +14,7 @@
     "prop-types": "^15.5.10",
     "react": "16.0.0-alpha.12",
     "react-native": "0.46.3",
-    "react-native-pagination": "^1.2.1",
+    "react-native-pagination": "latest",
     "react-native-vector-icons": "^4.3.0"
   },
   "devDependencies": {
