@@ -1,17 +1,14 @@
 
 .DS_Store
 logs
-*.log
 
-
-build/Release
 node_modules
 
 ReactNativePaginationExample/react-native-pagination
 coverage/
 .coveralls.yml
 .travis.yml
-.gitignore
+
 images
 node_modules
 
@@ -22,7 +19,7 @@ node_modules
 #build tools
 .travis.yml
 .jenkins.yml
-
+package-lock.json
 #linters
 .jscsrc
 .jshintrc
