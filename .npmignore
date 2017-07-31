@@ -5,6 +5,7 @@ logs
 node_modules
 
 ReactNativePaginationExample/react-native-pagination
+ReactNativePaginationExample/node_modules
 coverage/
 .coveralls.yml
 .travis.yml
