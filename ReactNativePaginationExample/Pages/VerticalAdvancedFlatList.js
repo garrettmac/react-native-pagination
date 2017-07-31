@@ -29,7 +29,7 @@ export default class VerticalAdvancedFlatList extends Component {
     selected: (new Map(): Map<string, boolean>)
   };
 
-  _keyExtractor = (item, index) => item.key;
+  _keyExtractor = (item, index) => item.id;
 
   _onPressItem = (id: string) => {
     // updater functions are preferred for transactional updates
@@ -95,15 +95,41 @@ export default class VerticalAdvancedFlatList extends Component {
       <View style={[s.container]}>
         <FlatList
             data={this.state.items}
+              ref={r=>this.refs=r}
             keyExtractor={this._keyExtractor}//map your keys to whatever unique ids the have (mine is a "key" proptery)
             renderItem={this._renderItem}
             onViewableItemsChanged={this.onViewableItemsChanged.bind(this)}//need this
           />
     <Pagination
+      // horizontal
+      // dotThemeLight
+      // dotIconSizeActive
+    //  dotIconSizeNotActive
+      // startDotIconSize={30}
+      // endDotIconStyle={{height:30,flex:1,justifyContent:"flex-end", backgroundColor:"red",width:10}}
+      // startDotIconStyle={{height:30,flex:1,justifyContent:"flex-start", backgroundColor:"red",width:10}}
+      // endDotIconSize={30}
+      // mapPaginationItemsBy
+      // mapWithItemProperty="id"
+
+// dotIconNameNotActive={"account-outline"}
+// dotIconNameEmpty={"account-off"}
+dotIconNameActive={"contacts"}
+dotTextColor={"red"}
+dotSwapAxis
+      dotPositionIconBeforeText
+      dotTextColorActive={"green"}
+  dotTextColorNotActive={"red"}
+  dotTextColorEmpty={"blue"}
+      dotIconColorActive={"green"}
+  dotIconColorNotActive={"red"}
+  dotIconColorEmpty={"blue"}
+      // dotThemeLight //<--use with backgroundColor:"grey"
       listRef={this.refs}//to allow React Native Pagination to scroll to item when clicked  (so add "ref={r=>this.refs=r}" to your list)
-      visible={this.state.viewableItems}
-      data={this.state.items}
-      padSize={3}
+      paginationVisibleItems={this.state.viewableItems}//needs to track what the user sees
+      paginationItems={this.state.items}//pass the same list as data
+      paginationItemPadSize={3} //num of items to pad above and bellow your visable items
+      // totalDots={6}
       // totalDots={6}
     />
 

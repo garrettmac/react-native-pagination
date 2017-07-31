@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`React Native Pagination Tests HorizontalBasicFlatList Components Flat List Visable 1`] = `
+<View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+    >
+      I'm the Pagination component
+    </Text>
+  </View>
+</View>
+`;

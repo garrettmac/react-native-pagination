@@ -42,8 +42,9 @@ const {name,avatar,color,seen,selected,key,id,tag,onPressItem,description} = thi
 let TagColor="#33333"
   if(color)TagColor=color;
   if(!color&&tag)TagColor=this.stringToHex(this.props.tag)
-    return ( <TouchableOpacity onPress ={(item) =>onPressItem(item)}>
-      <View style= {{margin:50,paddingTop:5,flex: 1,width, flexDirection:'row', borderBottomWidth:1,opacity:0.5, borderColor:'#e3e3e3'}}>
+    return ( <TouchableOpacity style={[{flex:1,justifyContent: "center",alignItems: "center",},]} onPress ={(item) =>onPressItem(item)}>
+
+      <View style= {{paddingBottom:15,paddingTop:15,flex: 1,width, flexDirection:'row', borderBottomWidth:1,opacity:0.5, borderColor:'#e3e3e3'}}>
 <View style={{alignSelf:'center', justifyContent:'center',}}>
   <View style={{borderRadius:5,borderWidth:1,borderColor:TagColor,backgroundColor:TagColor,alignSelf:'center', justifyContent:'center'}}>
         <Text style={{padding:1, textAlign:"center",fontWeight:'400', color:'#fff', fontSize:10}}>{tag}</Text>
@@ -54,10 +55,10 @@ let TagColor="#33333"
     </View>
       <View style={{alignSelf:'center', justifyContent:'center'}}>
       <View style = {{flexDirection:'row', justifyContent:'space-between', width:210}}>
-      <Text style={{fontWeight:'600', color:'#333'}}>{name}</Text>
+      <Text style={{fontWeight:'600', color:TagColor}}>{name}</Text>
       </View>
       {description &&
-        <Text style ={{height:35, fontSize:12,fontWeight:'300', color:'#333'}}>{id} - {description}</Text>
+        <Text style ={{height:35, fontSize:12,fontWeight:'300', color:TagColor}}> {description}</Text>
       }
       </View>
       </View>

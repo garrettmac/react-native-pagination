@@ -35,8 +35,8 @@ constructor(props){
       isLoading:false,
       activeId:null,
       activeItem:null,
-      // FlatListItems:[],
-      FlatListItems:MockRobotsList,
+      // items:[],
+      items:MockRobotsList,
     };
 
     // this.ListHeaderComponent=this.ListHeaderComponent.bind(this)
@@ -56,8 +56,8 @@ LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
 setTimeout(function() {
 this.setState({
   isLoading:false,
-  // FlatListItems:[{"id":1,"name":"Bernie Sanders"},{"id":2,"name":"Al Frankin"},{"id":3,"name":"Elizabeth Warren"},{"id":4,"name":"Cory Booker"}]
-  FlatListItems:MockRobotsList
+  // items:[{"id":1,"name":"Bernie Sanders"},{"id":2,"name":"Al Frankin"},{"id":3,"name":"Elizabeth Warren"},{"id":4,"name":"Cory Booker"}]
+  items:MockRobotsList
 })
 }.bind(this), 2000);
 }
@@ -111,7 +111,7 @@ this.setState({activeId:activeItem.index, activeItem:activeItem.item})
 
    }
 
-clearList(){this.setState({FlatListItems:[]})}
+clearList(){this.setState({items:[]})}
 onEndReached(o){}
 
 
@@ -170,11 +170,10 @@ backgroundColor: "#01a699",}}>
 
 
 <FlatList
-
-  ref={"flatListRef"}
        ListEmptyComponent={this.ListEmptyComponent}
       //  initialNumToRender={5}
        horizontal
+          ref={r=>this.refs=r}
        getItemLayout={(data, index) => (
          {length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index}
         )}
@@ -184,7 +183,7 @@ backgroundColor: "#01a699",}}>
        refreshing={this.state.isLoading}
         onEndReached={(o)=>this.onEndReached}
         keyExtractor={(o, i) => o.key}
-      data={this.state.FlatListItems}
+      data={this.state.items}
       // dotSwapAxis
       // dotPositionIconBeforeText
       scrollRenderAheadDistance={width*2}
@@ -209,25 +208,20 @@ backgroundColor: "#01a699",}}>
     // debugMode
     // dotSwapAxis
     // dotPositionIconBeforeText
-    listRef={this.refs.flatListRef}
- // containerStyle={{backgroundColor:"rgba(0,0,0,0)",width,position:"absolute", right:0,left:0,bottom:7,padding:0,flex:1,justifyContent:"center",alignItems:'center',flexDirection:"row",}}
-onItemSelected={this.onItemUpdate.bind(this)}
-visible={this.state.viewableItems}
-changed={this.state.changed}
-  data={this.state.FlatListItems}
-// onPressForward={}
-// onPressBack={}
-startIndex={0}
-offScreenIconName={"account-outline"}
-placeholderIconName={"account-off"}
-offScreenIconSize={27}
-onScreenIconSize={20}
-onScreenIconName={"account-settings"}
+    dotIconNameNotActive={"account-outline"}
+    dotIconNameEmpty={"account-off"}
+dotTextHide
+
+    dotIconSizeNotActive={20}
+    dotIconSizeActive={27}
+    dotIconSizeEmpty={27}
+    dotIconNameActive={"account-settings"}
+  listRef={this.refs}//to allow React Native Pagination to scroll to item when clicked  (so add "ref={r=>this.refs=r}" to your list)
+        paginationVisibleItems={this.state.viewableItems}//needs to track what the user sees
+        paginationItems={this.state.items}//pass the same list as data
+        paginationItemPadSize={3}
 //iconColorhasNotSeen={"red"}
-activeItemIndex={1}
-padSize={3}
-groupSize={8}
-pageSize={6}
+
 />
 
 

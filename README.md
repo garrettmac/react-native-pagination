@@ -289,3 +289,4 @@ AppRegistry.registerComponent('ReactNativePaginationExample', () => ReactNativeP
 |`dotIconHide` / `startDotIconHide` / `endDotIconHide` |false |`bool`| hide the dots icon |
 |`dotIconHide` / `startDotIconHide` / `endDotIconHide` |false|`bool`| hide the dots icon |
 |`dotTextHide` / `startDotTextHide` / `endDotTextHide` |false|`bool`| hide the dots text |
+|`dotEmptyHide`  |false|`bool`| hide the dots text |

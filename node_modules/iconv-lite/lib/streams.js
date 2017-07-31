@@ -1,7 +1,6 @@
-"use strict";
+"use strict"
 
-var Buffer = require("buffer").Buffer,
-    Transform = require("stream").Transform;
+var Transform = require("stream").Transform;
 
 
 // == Exports ==================================================================

@@ -84,10 +84,7 @@
       headers.forEach(function(value, name) {
         this.append(name, value)
       }, this)
-    } else if (Array.isArray(headers)) {
-      headers.forEach(function(header) {
-        this.append(header[0], header[1])
-      }, this)
+
     } else if (headers) {
       Object.getOwnPropertyNames(headers).forEach(function(name) {
         this.append(name, headers[name])
@@ -98,8 +95,12 @@
   Headers.prototype.append = function(name, value) {
     name = normalizeName(name)
     value = normalizeValue(value)
-    var oldValue = this.map[name]
-    this.map[name] = oldValue ? oldValue+','+value : value
+    var list = this.map[name]
+    if (!list) {
+      list = []
+      this.map[name] = list
+    }
+    list.push(value)
   }
 
   Headers.prototype['delete'] = function(name) {
@@ -107,8 +108,12 @@
   }
 
   Headers.prototype.get = function(name) {
-    name = normalizeName(name)
-    return this.has(name) ? this.map[name] : null
+    var values = this.map[normalizeName(name)]
+    return values ? values[0] : null
+  }
+
+  Headers.prototype.getAll = function(name) {
+    return this.map[normalizeName(name)] || []
   }
 
   Headers.prototype.has = function(name) {
@@ -116,15 +121,15 @@
   }
 
   Headers.prototype.set = function(name, value) {
-    this.map[normalizeName(name)] = normalizeValue(value)
+    this.map[normalizeName(name)] = [normalizeValue(value)]
   }
 
   Headers.prototype.forEach = function(callback, thisArg) {
-    for (var name in this.map) {
-      if (this.map.hasOwnProperty(name)) {
-        callback.call(thisArg, this.map[name], name, this)
-      }
-    }
+    Object.getOwnPropertyNames(this.map).forEach(function(name) {
+      this.map[name].forEach(function(value) {
+        callback.call(thisArg, value, name, this)
+      }, this)
+    }, this)
   }
 
   Headers.prototype.keys = function() {
@@ -306,7 +311,9 @@
     options = options || {}
     var body = options.body
 
-    if (input instanceof Request) {
+    if (typeof input === 'string') {
+      this.url = input
+    } else {
       if (input.bodyUsed) {
         throw new TypeError('Already read')
       }
@@ -321,8 +328,6 @@
         body = input._bodyInit
         input.bodyUsed = true
       }
-    } else {
-      this.url = String(input)
     }
 
     this.credentials = options.credentials || this.credentials || 'omit'
@@ -358,7 +363,7 @@
 
   function parseHeaders(rawHeaders) {
     var headers = new Headers()
-    rawHeaders.split(/\r?\n/).forEach(function(line) {
+    rawHeaders.split('\r\n').forEach(function(line) {
       var parts = line.split(':')
       var key = parts.shift().trim()
       if (key) {

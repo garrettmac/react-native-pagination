@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 
 
 
-export default class Icon extends Component {
+class Icon extends Component {
   render() {
     const {iconFamily,name,size,color} = this.props
 
@@ -51,3 +51,4 @@ Icon.PropTypes={
     size:PropTypes.number,
     color:PropTypes.string,
 }
+export default Icon

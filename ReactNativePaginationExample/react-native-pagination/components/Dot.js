@@ -10,29 +10,19 @@ import {
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import Icon from './Icon';
-class DotContents {
-  constructor() {
 
-  }
-  render(){
-    const {item,horizontal,textStyle} = this.props
 
-    return (<View style={[{},]}>
-    <Text style={[{textAlign: "center",fontWeight:"600",fontSize:9,flexDirection:(horizontal===true)?"row":"column"},textStyle]}>
-      {_.isNumber(item.key)?item.key+1:item.key}
-    </Text>
-    {/*! <Icon name={(item.isViewable===false)?(_.has(item,"index"))?this.props:this.props.offScreenIconName:this.props.onScreenIconName} size={(item.isViewable===true)?this.props.offScreenIconSize:this.props.onScreenIconSize} color={this.Color(o)}/> */}
-  </View>
-
-)
-  }
-}
 export default class Dot extends Component {
 
 
   render() {
     let {
-
+      disableDotOnPressNavigation,
+      disableStartDotOnPressNavigation,
+      disableEndDotOnPressNavigation,
+      dotOnPress,
+      startDotOnPress,
+      endDotOnPress,
         item,
         dotThemeLight,
         onPress,
@@ -42,6 +32,7 @@ export default class Dot extends Component {
         StartDot,EndDot,
         //dots styles
         dotStyle,startDotStyle,endDotStyle,
+        dotIconStyle,startDotIconStyle,endDotIconStyle,//add to docs
         //start/finish dot Icon
         startDotIconName,endDotIconName,
         startDotIconSize,endDotIconSize,
@@ -59,7 +50,7 @@ export default class Dot extends Component {
         //dot section visablity
         dotIconHide,startDotIconHide,endDotIconHide,
         dotTextHide,startDotTextHide,endDotTextHide,
-
+dotEmptyHide,
 
         //pagination dots only
         dotIconNameNotActive,dotIconNameActive,dotIconNameEmpty,
@@ -67,6 +58,11 @@ export default class Dot extends Component {
         dotIconColorNotActive,dotIconColorActive,dotIconColorEmpty,
         dotFontSizeNotActive,dotFontSizeActive,dotFontSizeEmpty,
         dotTextColorNotActive,dotTextColorActive,dotTextColorEmpty,
+
+        showStartingJumpDot,showEndingJumpDot,
+        jumpItems,
+    endingJumpSize,
+startingJumpSize,
       } = this.props
 
 
@@ -82,103 +78,152 @@ export default class Dot extends Component {
       dotTextColorEmpty="rgba(255,255,255,.2)"
     }
 
+
+    let onPressDot = (item) => {
+      if(!disableDotOnPressNavigation){try {this.props.listRef.scrollToItem(item)} catch (e) {console.log(" e: ",e)}}
+      if(dotOnPress)dotOnPress(item)
+    }
+
+if(!dotIconSizeNotActive)dotIconSizeNotActive=10
+if(!dotIconSizeActive)dotIconSizeActive=15
+if(!dotIconSizeEmpty)dotIconSizeEmpty=20
+
+
+// console.warn(_.get(item,"index",false));
     //setup dots icon
     if(_.get(item,'isViewable',false)===true)dotIconName=dotIconNameActive
     else dotIconName=dotIconNameNotActive
-    if(!_.has(item,"index"))dotIconName=dotIconNameEmpty
-
+    if(_.get(item,"index",true)===true){
+      dotIconHide=dotEmptyHide
+      dotIconName=dotIconNameEmpty
+  }
+    // if(dotTextHide)dotTextHide=true
+// console.warn(" item.index: ",_.has(item,"index"),_.has(item,"index"));
     if(_.get(item,'isViewable',false)===true)dotIconSize=dotIconSizeActive
     else dotIconSize=dotIconSizeNotActive
-    if(!_.has(item,"index"))dotIconSize=dotIconSizeEmpty
+    if(_.get(item,"index",true)===true)dotIconSize=dotIconSizeEmpty
 
     if(_.get(item,'isViewable',false)===true)dotIconColor=dotIconColorActive
     else dotIconColor=dotIconColorNotActive
-    if(!_.has(item,"index"))dotIconColor=dotIconColorEmpty
+    if(_.get(item,"index",true)===true)dotIconColor=dotIconColorEmpty
 
     //setup dots font
     if(_.get(item,'isViewable',false)===true)dotFontSize=dotFontSizeActive
     else dotFontSize=dotFontSizeNotActive
-    if(!_.has(item,"index"))dotFontSize=dotFontSizeEmpty
+    if(_.get(item,"index",true)===true)dotFontSize=dotFontSizeEmpty
 
     if(_.get(item,'isViewable',false)===true)dotTextColor=dotTextColorActive
     else dotTextColor=dotTextColorNotActive
-    if(!_.has(item,"index"))dotTextColor=dotTextColorEmpty
+    if(_.get(item,"index",true)===true)dotTextColor=dotTextColorEmpty
 
+    dotSwapAxis=!dotSwapAxis
 if(horizontal==true){
-  dotSwapAxis=!dotSwapAxis
   dotPositionIconBeforeText=!dotPositionIconBeforeText
 }
 
     if(StartDot){
+      dotIconHide=false//reset
+
       //style
       console.log(" horizontal: ",horizontal);
       if(startDotStyle)dotStyle=startDotStyle
+      if(startDotIconStyle)dotIconStyle=startDotIconStyle
+
 
       if(horizontal===true)dotIconName="chevron-left"
       if(horizontal===false)dotIconName="chevron-up"
       if(startDotIconName)dotIconName=startDotIconName
 
       if(startDotIconSize)dotIconSize=startDotIconSize
-      if(startDotIconFamily)iconFamily=startDotIconFamily
+      if(startDotIconFamily)dotIconFamily=startDotIconFamily
       if(startDotIconColor)dotIconColor=startDotIconColor
 
       if(startDotFontSize)dotFontSize=startDotFontSize
-      if(startDotTextHide)dotTextHide=!dotTextHide
+      if(startDotTextHide)dotTextHide=true
       if(startDotTextColor)dotTextColor=startDotTextColor
       //positioning
-      if(startDotIconHide)dotIconHide=!dotIconHide
+      if(startDotIconHide)dotIconHide=true
       if(startDotSwapAxis)dotSwapAxis=!dotSwapAxis
       if(startDotPositionIconBeforeText)dotPositionIconBeforeText=!dotPositionIconBeforeText
 
+      onPressDot = (item) => {
+         if(!disableStartDotOnPressNavigation){try {this.props.listRef.scrollToOffset({x:0,y:0,amimated:true})} catch (e) {console.log(" e: ",e);}}
+         if(startDotOnPress)startDotOnPress(item)
+
+       }
     }
     if(EndDot){
       if(endDotStyle)dotStyle=endDotStyle
-
-      if(endDotIconFamily)iconFamily=endDotIconFamily
+      if(!endDotText)dotTextHide=true
+      dotIconHide=false//reset
+      if(endDotIconStyle)dotIconStyle=endDotIconStyle
 
       if(horizontal===true)dotIconName="chevron-right"
       if(horizontal===false)dotIconName="chevron-down"
       if(endDotIconName)dotIconName=endDotIconName
 
-
+      if(endDotIconFamily)dotIconFamily=endDotIconFamily
       if(endDotIconSize)dotIconSize=endDotIconSize
       if(endDotIconColor)dotIconColor=endDotIconColor
 
-      if(endDotTextHide)dotTextHide=!dotTextHide
+      if(endDotTextHide)dotTextHide=true
       if(endDotFontSize)dotFontSize=endDotFontSize
       if(endDotTextColor)dotTextColor=endDotTextColor
       //positioning
-      if(endDotIconHide)dotIconHide=!dotIconHide
+      if(endDotIconHide)dotIconHide=true
       if(endDotSwapAxis)dotSwapAxis=!dotSwapAxis
       if(endDotPositionIconBeforeText)dotPositionIconBeforeText=!dotPositionIconBeforeText
 
+
+      // console.warn(" dotIconFamily: ",dotIconFamily);
+
+      onPressDot = (item) => {
+
+         this.props.listRef.scrollToEnd()
+
+// if(!disableEndDotOnPressNavigation){try {this.props.listRef.scrollToItem(jumpItems[1])} catch (e) {console.log(" e: ",e);}}
+
+
+       if(endDotOnPress)endDotOnPress(item)
+     }
     }
 
     const text = (o) => {
-       if(StartDot)return startDotText
-       else if(EndDot)return endDotText
-      else if(!_.has(o,'index'))return
-      return `${_.isNumber(o.index)?o.index+1:o.index} `
+
+      if(!o)return ""
+      // console.warn(_.isUndefined(o,'index'),_.get(o,'index'));
+
+      //  if(StartDot)return startDotText
+      //  else if(EndDot)return endDotText
+      //  else if(jumpItems)return 5
+      //  else if(showEndingJumpDot)return 5
+        if(_.isNumber(_.get(o,'index',false))) return ` ${o.index+1} `
+       else return ""
+
     }
     const icon = (o) => {
-      if((!_.has(o,'index'))&&!EndDot&&!StartDot)return
+      if((_.isUndefined(o,'index'))&&!EndDot&&!startingJumpSize&&!endingJumpSize&&!StartDot)return
       return <Icon name={dotIconName}  size={dotIconSize} color={dotIconColor} iconFamily={dotIconFamily}/>
     }
 
 
 
+
     return (
 
-      <TouchableOpacity onPress={()=>(onPress)?onPress(item):""}
+      <TouchableOpacity onPress={()=>onPressDot(item)}
        style={[{flex:1,flexDirection:(horizontal==(dotSwapAxis)?true:false)?"column":"row",justifyContent: "center",alignItems: "center"},dotStyle,]}>
-       <View style={{flexDirection:(horizontal!==(dotSwapAxis)?true:false)?"row":"column",backgroundColor:"transparent",}}>
+       <View style={{ flexDirection:(horizontal!==(dotSwapAxis)?true:false)?"row":"column",backgroundColor:"transparent",justifyContent: "center",alignItems: "center"}}>
 
          {(!dotIconHide && dotPositionIconBeforeText) &&
-           icon(item)
+           <View style={[dotIconStyle]}>
+             {icon(item)}
+             </View>
          }
     {!dotTextHide &&
       <Text style={[{textAlign: "center",
         fontWeight:(_.get(item,'isViewable',false)===true)?"600":"500",
+
         fontSize:dotFontSize},{color:dotTextColor},textStyle]}>
       {text(item)}
     </Text>
@@ -187,13 +232,20 @@ if(horizontal==true){
 <View style={{flexDirection:(horizontal!==(dotSwapAxis)?true:false)?"row":"column"}}>
 
 {(!dotIconHide && !dotPositionIconBeforeText) &&
-  icon(item)
+  <View style={[dotIconStyle]}>
+    {icon(item)}
+    </View>
 }
 </View>
 
 
   </TouchableOpacity>
     );
+  }
+  onPress(item,disableDotOnPressNavigation){
+    console.log(" item: ",item);
+    console.log(" this.props: ",this.props.listRef);
+  // scrollTo(ref="FlatListRef",x=0,y=0){
   }
 }
 
@@ -202,14 +254,13 @@ Dot.defaultProps={
   dotIconNameEmpty:"close",
   dotIconNameActive:"checkbox-blank-circle",
   dotIconNameNotActive:"checkbox-blank-circle-outline",
+  dotEmptyHide:false,
+  //
+  // dotIconSizeNotActive:10,
+  // dotIconSizeActive:15,
+  // dotIconSizeEmpty:20,
 
 
-  dotIconSizeNotActive:10,
-  dotIconSizeActive:15,
-  dotIconSizeEmpty:10,
-
-  startDotIconSize:15,
-  endDotIconSize:15,
 
   dotFontSizeNotActive:9,
   dotFontSizeActive:11,
@@ -229,13 +280,16 @@ Dot.defaultProps={
   dotThemeLight:false,
 
 //for start and finish dots
-
+// startDotStyle:{},
+// endDotStyle:{},
+dotStyle:{flex:1,backgroundColor:'rgba(0,0,0,0)',justifyContent:"center",alignItems:'center',},
 
 
 // startDotIconName:"chevron-up",
 // endDotIconName:"chevron-down",
 dotSwapAxis:false,
 dotIconHide:false,
+dotIconStyle:{},
 // dotPositionIconBeforeText:true,
 dotPositionIconBeforeText:false,
 // startDotStyle:{alignItems:"center"},
@@ -243,9 +297,9 @@ dotPositionIconBeforeText:false,
 
 }
 
-
-Dot.PropTypes={
-item:{
-  index:null
-}
-}
+//
+// Dot.PropTypes={
+// item:{
+//   index:null
+// }
+// }

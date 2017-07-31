@@ -9,7 +9,7 @@ let MockPersonList = new _.times(35,(i)=>{
     key:i,
     name:faker.name.findName(),
     avatar:faker.internet.avatar(),
-    group:_.sample(["Work","Friend","Acquaintance","Other"]),
+    group:_.sample(["Family","Friend","Acquaintance","Other"]),
     email:faker.internet.email(),
   }
 })

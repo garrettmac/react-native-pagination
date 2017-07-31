@@ -46,28 +46,27 @@ const {
   image,
 }=this.props
 
-console.warn(" image: ",image);
+// console.warn(" image: ",image);
     return (
       <View style={{
         flex: 1,
         // marginTop:40,
-        // hei:40,
           backgroundColor:color,
           opacity:0.9,
           width,
           // margin:5,
           borderRadius:5,
-
       }}>
 
-      <View style={{flexDirection: 'row'}}>
+      <View style={{
+          padding:5,marginTop:35,margin:5, flexDirection: 'row'}}>
             <Image style={s.profilePicture} source={{height: 80,width: 80,uri:image}}/>
 
-          <Text style={s.displayName}>{title}</Text>
-            <View style={s.badgeSection}>
+          <Text style={[s.displayName,{flex:1,}]}>{title}</Text>
+        <View style={[{height:20,},s.badgeSection]}>
               <View style={[s.badgeSlug, {backgroundColor: "white"}]}>
-                <Text style={[s.badgeText,{color: "red"}]}>
-                  ff{city}
+                <Text style={[s.badgeText,{color: 'rgba(0,0,0,.6)',}]}>
+                  ({index}) in {city} 
                 </Text>
               </View>
             </View>
@@ -90,13 +89,11 @@ console.warn(" image: ",image);
           >
             <Text style={[s.description, {
               textShadowColor: darkColor
-            }]}>
-              {city}- {description}
+            },{color: darkColor}]}>
+            {description}
             </Text>
           </TouchableHighlight>
-          <Text style={[s.footerText, {color: darkColor}]}>
-            {description}
-          </Text>
+
         </View>
       </View>
     );
@@ -131,10 +128,10 @@ const s = StyleSheet.create({
     fontSize: 10,
     padding: 15,
     color:"white",
-    textShadowRadius: 10,
+    textShadowRadius: 5,
     textShadowOffset: {
-      width: 5,
-      heigth: 5
+      width: 2,
+      heigth: 2
     },
   },
 
@@ -176,9 +173,11 @@ const s = StyleSheet.create({
     marginBottom: 5,
   },
   badgeSection: {
-    flex: 1,
-    alignItems: 'flex-end',
-    marginRight: 20,
+    // flex: 1,
+top:0,bottom:0,right:0,
+position:"absolute",
+    marginRight: 10,
+    // marginTop: 15,
     justifyContent: 'center'
   },
   badgeSlug: {

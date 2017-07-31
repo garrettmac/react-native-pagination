@@ -30,8 +30,8 @@ export default class App extends Component {
     this.state = {
       // Component: HorizontalAdvancedFlatList,
       // Component: HorizontalBasicFlatList,
-      Component: HorizontalBasicListView,
-      // Component: null,
+      // Component: HorizontalBasicListView,
+      Component: null,
       showHeader:true,
     };
   }
@@ -113,14 +113,14 @@ export default class App extends Component {
     return this.renderExamples([
       // [<component>, <component title>,<color>]
       [HorizontalAdvancedFlatList, 'Horizontal Advanced FlatList Example',"rgba(0,166,155,.8)"],
-      [HorizontalBasicFlatList, 'Horizontal Basic FlatList Example',"rgba(0,136,155,.8)"],
-      [HorizontalBasicListView , 'Horizontal Basic ListView Example',"rgba(0,106,155,.8)"],
-      [HorizontalBasicSectionList , 'Horizontal Basic SectionList Example',"rgba(0,76,155,.8)"],
+      [HorizontalBasicFlatList, 'Horizontal Advanced Example \n        (Paging Enabled)',"rgba(0,136,155,.8)"],
+      // [HorizontalBasicListView , 'Horizontal Basic ListView Example',"rgba(0,106,155,.8)"],
+      // [HorizontalBasicSectionList , 'Horizontal Basic SectionList Example',"rgba(0,76,155,.8)"],
 
-      [VerticalAdvancedFlatList , 'Vertical Advanced FlatList Example',"rgba(166,0,155,.8)"],
-      [VerticalBasicFlatList , 'Vertical Basic FlatList Example',"rgba(166,0,125,.8)"],
-      [VerticalBasicListView , 'Vertical Basic ListView Example',"rgba(166,0,95,.8)"],
-      [VerticalBasicSectionList , 'Vertical Basic SectionList Example',"rgba(166,0,65,.8)"],
+      [VerticalAdvancedFlatList , 'Vertical FlatList Example',"rgba(166,0,155,.8)"],
+      [VerticalBasicFlatList , 'Vertical FlatList Example \n     (Dots Light Theme)',"rgba(166,0,125,.8)"],
+      // [VerticalBasicListView , 'Vertical Basic ListView Example',"rgba(166,0,95,.8)"],
+      // [VerticalBasicSectionList , 'Vertical Basic SectionList Example',"rgba(166,0,65,.8)"],
     ]
     )
   }

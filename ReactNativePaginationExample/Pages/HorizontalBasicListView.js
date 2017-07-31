@@ -14,6 +14,7 @@ import _ from 'lodash';
 import JobItem from './widgets/JobItem';
 import {MockJobsList} from '../FakerMocks';
 import Pagination from '../react-native-pagination';
+console.log(" Pagination: ",Pagination);
 import faker from 'faker';
 
 
@@ -50,7 +51,9 @@ export default class HorizontalBasicListView extends Component {
    _keyExtractor = (item, index) => item.id
 
  // REQUIRED for ReactNativePagination to work correctly
-   onViewableItemsChanged = ({ viewableItems, changed }) => {
+   onChangeVisibleRows = ( viewableItems, changed ) => {
+     viewableItems=_.keys(viewableItems.s1).map(i =>parseInt(i))
+     console.log(" viewableItems: ",viewableItems);
      this.setState({viewableItems,changed})
    };
 
@@ -60,24 +63,27 @@ export default class HorizontalBasicListView extends Component {
         <ListView
           horizontal
            pagingEnabled
+
           dataSource={ds.cloneWithRows(this.state.items)}
           keyExtractor={this._keyExtractor}//map your keys to whatever unique ids the have (mine is a "id" prop)
           renderRow={this.renderRow}
-          onViewableItemsChanged={this.onViewableItemsChanged.bind(this)}//need this
+          onChangeVisibleRows={this.onChangeVisibleRows.bind(this)}//need this
         />
         <Pagination
           horizontal
+          debugMode
             startDotIconSize={25}
             endDotIconSize={25}
-            dotIconNameActive="city"
+            // dotIconNameActive="city"
             dotIconNameNotActive="city"
+            pagingEnabled
             dotTextHide
             dotIconSizeNotActive={24}
             dotIconSizeActive={30}
           // dotThemeLight //<--use with backgroundColor:"grey"
           listRef={this.refs}//to allow React Native Pagination to scroll to item when clicked  (so add "ref={r=>this.refs=r}" to your list)
-          visible={this.state.viewableItems}//needs to track what the user sees
-          data={this.state.items}//pass the same list as data
+          visablePaginationItems={this.state.viewableItems}//needs to track what the user sees
+          paginationItems={this.state.items}//pass the same list as data
           padSize={3} //num of items to pad above and bellow your visable items
           // totalDots={6}
         />

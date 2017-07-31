@@ -1,16 +1,13 @@
 {
   "name": "react-native-pagination",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "The best Pagination component for React Native.",
   "main": "src/index.js",
   "dependencies": {
-    "randomcolor": "^0.5.3",
-    "react-native-vector-icons": "^4.2.0"
+    "react-native-vector-icons": "^4.3.0"
   },
   "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/garrettmac/react-native-pagination.git"
