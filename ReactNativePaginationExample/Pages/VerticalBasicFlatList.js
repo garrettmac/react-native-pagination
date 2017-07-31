@@ -15,7 +15,7 @@ const {width, height} = Dimensions.get('window');
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import {MockPersonList} from '../FakerMocks';
-import Pagination from 'react-native-pagination';
+import Pagination from '../react-native-pagination';
 import ContactItem from './widgets/ContactItem';
 
 export default class VerticalBasicFlatList extends Component {

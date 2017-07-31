@@ -3233,12 +3233,6 @@ react-devtools-core@2.3.1:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
-react-native-pagination@latest:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/react-native-pagination/-/react-native-pagination-1.2.3.tgz#6530fd01fd8ffb0d6f0cf744e20328f356951eb7"
-  dependencies:
-    react-native-vector-icons "^4.3.0"
-
 react-native-vector-icons@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.3.0.tgz#49eab845fbcde6354cb3dbcb62c1abd1f6abc866"

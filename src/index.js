@@ -107,10 +107,6 @@ let paginationVisiblePadItems= paginationVisableItemsIndexArray.map((o,i) => {
  let flatListPaginationItems=_.sortBy([...paginationVisibleItems,...paginationVisiblePadItems],"index")
 
 if(debugMode){
-    // console.log("paginationVisibleItemsIndexList: ",paginationVisibleItemsIndexList)
-    // console.log("paginationVisibleItems: ",paginationVisibleItems)
-    // console.log("paginationVisiblePadItems: ",paginationVisiblePadItems)
-    // console.log("flatListPaginationItems: ",flatListPaginationItems)
   let paginationItemsIndexList=paginationItems.map(i=>i.index)
   let allDotsIndexList=flatListPaginationItems.map(i=>i.index)
   let NOT_ACTIVE_DOTS_INDEXES=_.sortBy(paginationVisiblePadItems.map(i=>i.index))
@@ -123,7 +119,6 @@ if(debugMode){
   let ADI_ISVIEWABLE=`%c each "paginationVisibleItems dots" "isViewable" attribute:\n                      ${ALL_DOTS_INDEXES} \n`
   let AID=`%c all "paginationItems"'s':       ${paginationItemsIndexList} \n`
   console.log('\n\n%cGarrett Mac\'s React Native Pagination'+"%c \ndebugMode: ON\n"+___+ADBY+ADI+ANDI+___+ADI_ISVIEWABLE+___+AID, 'color: #01a699','color: #f99137','color: #f99137','color: #a94920','color: #00a7f8','color: #3b539a','color: #32db64','color: #00c59e','color: #3b539a','color: #488aff');
-
 }
 
 
@@ -178,6 +173,7 @@ else PaginationContainerStyle=verticalStyle
     );
 
   }
+}
 
 
 

@@ -9,7 +9,7 @@ import React, { Component } from 'react';
 import {AppRegistry,StyleSheet,Text,View,FlatList,} from 'react-native';
 //get here [TODO ADD URL]
 import TweetItem from './widgets/TweetItem';
-import Pagination from 'react-native-pagination';
+import Pagination from '../react-native-pagination';
 import _ from 'lodash';// if you dont have this then gtfo
 import {MockTweetList} from '../FakerMocks';
 
@@ -56,7 +56,7 @@ render() {
         onViewableItemsChanged={this.onViewableItemsChanged.bind(this)}//need this
       />
       <Pagination
-        dotThemeLight
+        // dotThemeLight
         horizontal
         dotOnPress={(o)=>console.log(" clicked: ",o)}
         hideEmptyDots
@@ -65,11 +65,18 @@ render() {
         startDotIconName="ios-arrow-back"
         endDotIconFamily="Ionicons"
         endDotIconName="ios-arrow-forward"
-        // dotIconSizeActive={30}
+        dotIconName="ios-close"
+        hideEmptyDots
+        dotIconFamily="Ionicons"
+        dotIconNameNotActive={"logo-twitter"}
+        dotIconNameActive={"logo-twitter"}
+        dotEmptyHide
+        dotIconColorActive={"white"}
+        dotIconColorNotActive={"rgba(255,255,255,0.5)"}
+        // dotIconColorEmpty={"blue"}
+        dotIconSizeActive={25}
       //  dotIconSizeNotActive={10}
         // startDotIconSize={30}
-        // endDotIconStyle={{height:30,flex:1,justifyContent:"flex-end", backgroundColor:"red",width:10}}
-        // startDotIconStyle={{height:30,flex:1,justifyContent:"flex-start", backgroundColor:"red",width:10}}
         // endDotIconSize={30}
         listRef={this.refs}//to allow React Native Pagination to scroll to item when clicked  (so add "ref={r=>this.refs=r}" to your list)
         paginationVisibleItems={this.state.viewableItems}//needs to track what the user sees
