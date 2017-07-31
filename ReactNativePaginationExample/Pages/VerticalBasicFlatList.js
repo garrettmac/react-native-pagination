@@ -16,11 +16,8 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import {MockPersonList} from '../FakerMocks';
 import Pagination from 'react-native-pagination';
-// import {getMoviesFromApi} from './ListItems';
-
-
-
 import ContactItem from './widgets/ContactItem';
+
 export default class VerticalBasicFlatList extends Component {
 
 
@@ -67,14 +64,6 @@ export default class VerticalBasicFlatList extends Component {
    </View>
  </TouchableHighlight>)
 }
- _bindToState(){
-
- }
-//  onItemUpdate(item,attr="seen"){
-//    var data = _.map(this.state.data, function(q) {
-//   return q.id === item.id ? {...item, [attr]: item[attr]!==item[attr]} : q;
-// });
-
 
  //need this
  onViewableItemsChanged = ({ viewableItems, changed }) => {
@@ -99,48 +88,18 @@ export default class VerticalBasicFlatList extends Component {
     <Pagination
       // horizontal
       dotThemeLight
-
-
       dotSwapAxis
       dotIconFamily="FontAwesome"
       dotIconHame="FontAwesome"
-
-
-
       // dotPositionSwap
-dotStyle={{marginRight:10}}
-dotEmptyHide
-dotIconHide
-      // dotThemeLight //<--use with backgroundColor:"grey"
+      dotStyle={{marginRight:10}}
+      dotEmptyHide
+      dotIconHide
       listRef={this.refs}//to allow React Native Pagination to scroll to item when clicked  (so add "ref={r=>this.refs=r}" to your list)
       paginationVisibleItems={this.state.viewableItems}//needs to track what the user sees
       paginationItems={this.state.items}//pass the same list as data
       paginationItemPadSize={3} //num of items to pad above and bellow your visable items
-      // totalDots={6}
-      // totalDots={6}
     />
-
-{/* <FlatList style={{flex: 1,width,height,}}
-       ListFooterComponent={<View style={{flex: 1,height,width,justifyContent: "center",alignItems: "center",}}><TouchableOpacity onPress={()=>alert("pressed empty list")}><Text style={{color:'rgba(0,0,0,0.5)',fontSize: 20,textAlign: "center",margin: 10,}}>End Of List</Text></TouchableOpacity></View>}
-       ListEmptyComponent={<View style={{flex: 1,height,width,justifyContent: "center",alignItems: "center",}}><TouchableOpacity onPress={()=>alert("pressed empty list")}><Text style={{color:'rgba(0,0,0,0.5)',fontSize: 20,textAlign: "center",margin: 10,}}>List Is Empty</Text></TouchableOpacity></View>}
-       //horizontal
-       //enableEmptySections
-       //initialNumToRender={10}
-       //onEndReached={this._onEndReached}
-       //onRefresh={this._onRefresh}
-       //scrollToEnd={this.scrollToEnd}
-       //scrollToIndex={this.scrollToIndex}
-       //scrollToItem={this.scrollToItem}
-       //refreshing={false}
-       //initialScrollIndex={_.chain(ARRAY).map("key").indexOf("value").value()}
-       //initialScrollIndex={_.indexOf(ARRAY,_.find(ARRAY,(o)=>o.id===SOMEID}))}
-      //  getItemLayout={(data, index) => (
-      //    {length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index}
-      //  )}
-      data={MockPersonList}
-      renderItem={this._renderItem}
-      // renderItem={(o,i) =><TouchableOpacity key={`flatlist-item-${i}`} onPress={()=>alert("pressed item")}><Text style={{color:'rgba(0,0,0,0.5)',fontSize: 20,textAlign: "center",margin: 10,}}>{(o.name)?o.name:"no name attrabute"}</Text></TouchableOpacity>}/>
-/> */}
       </View>
     );
   }

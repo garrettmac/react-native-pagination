@@ -1,3 +1,5 @@
+mapWithItemProperty
+
 /**
    * @author garrettmac <garrett@vyga.io> (http://vyga.io)
    * @version 1.0.4
@@ -53,12 +55,13 @@ dotAnimation,
     paginationStyle,
     pagingEnabled,
     // showStartingJumpDot,showEndingJumpDot,endingJumpSize,startingJumpSize,
+
     hideEmptyDots,
     } = this.props
 
 
 
-if(!mapWithItemProperty)mapWithItemProperty="index"
+
 paginationItems=paginationItems.map((item,i) => {
   item.paginationIndexId=i
   item.index=i
@@ -108,7 +111,19 @@ if(debugMode){
     // console.log("paginationVisibleItems: ",paginationVisibleItems)
     // console.log("paginationVisiblePadItems: ",paginationVisiblePadItems)
     // console.log("flatListPaginationItems: ",flatListPaginationItems)
-  this._showDebuggerModeLog(paginationItems,flatListPaginationItems,paginationVisiblePadItems,paginationVisibleItemsIndexList,mapWithItemProperty)
+  let paginationItemsIndexList=paginationItems.map(i=>i.index)
+  let allDotsIndexList=flatListPaginationItems.map(i=>i.index)
+  let NOT_ACTIVE_DOTS_INDEXES=_.sortBy(paginationVisiblePadItems.map(i=>i.index))
+  let ALL_DOTS_INDEXES=flatListPaginationItems.map(i=>i.isViewable)
+  let ___=`%c __________________________________________\n`
+  let ADBY=`%c all paginationVisibleItems dots:              ${allDotsIndexList} \n`
+  let ADI=`%c active paginationVisibleItems dots:           ${paginationVisibleItemsIndexList} \n`
+  let ANDI=`%c not active dots: (padding):    ${NOT_ACTIVE_DOTS_INDEXES} \n`
+
+  let ADI_ISVIEWABLE=`%c each "paginationVisibleItems dots" "isViewable" attribute:\n                      ${ALL_DOTS_INDEXES} \n`
+  let AID=`%c all "paginationItems"'s':       ${paginationItemsIndexList} \n`
+  console.log('\n\n%cGarrett Mac\'s React Native Pagination'+"%c \ndebugMode: ON\n"+___+ADBY+ADI+ANDI+___+ADI_ISVIEWABLE+___+AID, 'color: #01a699','color: #f99137','color: #f99137','color: #a94920','color: #00a7f8','color: #3b539a','color: #32db64','color: #00c59e','color: #3b539a','color: #488aff');
+
 }
 
 
@@ -163,25 +178,7 @@ else PaginationContainerStyle=verticalStyle
     );
 
   }
-  _showDebuggerModeLog(paginationItems,flatListPaginationItems,paginationVisiblePadItems,paginationVisibleItemsIndexList,mapWithItemProperty){
-  // Naming Convention: X _ Indexs ([x]ai)
-  // flatListPaginationItems.map(//console.log)
-  let paginationItemsIndexList=paginationItems.map(i=>i[mapWithItemProperty])
-  let allDotsIndexList=flatListPaginationItems.map(i=>i[mapWithItemProperty])
-  let NOT_ACTIVE_DOTS_INDEXES=_.sortBy(paginationVisiblePadItems.map(i=>i[mapWithItemProperty]))
-  let ALL_DOTS_INDEXES=flatListPaginationItems.map(i=>i.isViewable)
 
-      let ___=`%c __________________________________________\n`
-      let ADBY=`%c all paginationVisibleItems dots:              ${allDotsIndexList} \n`
-      let ADI=`%c active paginationVisibleItems dots:           ${paginationVisibleItemsIndexList} \n`
-      let ANDI=`%c not active dots: (padding):    ${NOT_ACTIVE_DOTS_INDEXES} \n`
-
-      let ADI_ISVIEWABLE=`%c each "paginationVisibleItems dots" "isViewable" attribute:\n                      ${ALL_DOTS_INDEXES} \n`
-      let AID=`%c all "paginationItems"'s':       ${paginationItemsIndexList} \n`
-      console.log('\n\n%cGarrett Mac\'s React Native Pagination'+"%c \ndebugMode: ON\n"+___+ADBY+ADI+ANDI+___+ADI_ISVIEWABLE+___+AID, 'color: #01a699','color: #f99137','color: #f99137','color: #a94920','color: #00a7f8','color: #3b539a','color: #32db64','color: #00c59e','color: #3b539a','color: #488aff');
-  }
-
-  }
 
 
 const s = StyleSheet.create({
