@@ -1,23 +1,34 @@
-import React,{Component} from 'react';
-import {View,AppRegistry} from 'react-native';
-import Icon from './icon.js';
-// import App from './App.js';
-/* @flow */
+import React from 'react';
+import {AppRegistry} from 'react-native';
+import App from './App.js';
+AppRegistry.registerComponent('ReactNativePaginationExample', () => App);
 
-
-
-export default class MyComponent extends Component {
-  render() {
-    return (
-    <View style={{flex: 1,justifyContent: "center",alignItems: "center",backgroundColor: "#F5FCFF",}}>
-      <View style={{position:"absolute",top:25,right:10,flex:1,zIndex:3,width:35,height:35,alignItems:"center",justifyContent:"center",backgroundColor:"transparent"}}>
-              <Icon  size={25} color="rgba(256,256,256,0.5)"/>
-          </View>
-    </View>
-    );
-  }
-}
-
-
-
-AppRegistry.registerComponent('ReactNativePaginationExample', () => MyComponent);
+/*<Pagination
+            // dotThemeLight //<--use with backgroundColor:"grey"
+            listRef={this.refs}//to allow React Native Pagination to scroll to item when clicked  (so add "ref={r=>this.refs=r}" to your list)
+            paginationVisibleItems={this.state.viewableItems}//needs to track what the user sees
+            paginationItems={this.state.items}//pass the same list as data
+            paginationItemPadSize={3} //num of items to pad above and below your visable items
+            // more params you can play with
+            // hideEmptyDots
+            // pagingEnabled
+            // dotSwapAxis
+            // dotPositionSwap
+            // disableDotOnPressNavigation
+            // dotOnPress={(item)=>alert(JSON.stringify(item))}
+            // startDotOnPress={(item)=>alert("pressed startDotOnPress")}
+            // endDotOnPress={(item)=>alert("pressed endDotOnPress")}
+            // startDotIconFamily="Ionicons"
+            // startDotIconName="ios-arrow-back"
+            // endDotIconFamily="Ionicons"
+            // endDotIconName="ios-arrow-forward"
+            // dotIconNameActive={"contacts"}
+            // dotTextColor={"red"}
+            // dotTextColorActive={"green"}
+            // dotTextColorNotActive={"red"}
+            // dotTextColorEmpty={"blue"}
+            // dotIconColorActive={"green"}
+            // dotIconColorNotActive={"red"}
+            // dotIconColorEmpty={"blue"}
+      />
+*/
