@@ -17,8 +17,15 @@
   <a href="https://npmjs.org/package/react-native-pagination"><img alt="npm version" src="http://img.shields.io/npm/v/react-native-pagination.svg?style=flat-square"></a>
   <a href="https://npmjs.org/package/react-native-pagination"><img alt="npm version" src="http://img.shields.io/npm/dm/react-native-pagination.svg?style=flat-square"></a>
   <a href="https://github.com/garrettmac/react-native-pagination/pulls?q=is%3Apr+is%3Aclosed"><img alt="PR Stats" src="https://img.shields.io/issuestats/i/github/garrettmac/react-native-pagination.svg?style=flat-square"></a>
-  <a href="https://github.com/garrettmac/react-native-pagination/issues?q=is%3Aissue+is%3Aclosed"><img alt="Issue Stats" src="https://img.shields.io/issuestats/p/github/garrettmac/react-native-pagination.svg" style=flat-square"></a>
-  <a href="https://gitter.im/garrettmac/react-native-pagination?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img alt="Join the chat" src="https://badges.gitter.im/garrettmac/react-native-pagination.svg"></a>
+  <a href="https://github.com/garrettmac/react-native-pagination/issues?q=is%3Aissue+is%3Aclosed"><img alt="Issue Stats" src="https://img.shields.io/issuestats/p/github/garrettmac/react-native-pagination.svg" style=flat-square"></a>   
+ <a><img  src="https://img.shields.io/github/forks/garrettmac/react-native-pagination.svg"/></a>
+ <a><img  src="https://img.shields.io/github/stars/garrettmac/react-native-pagination.svg"/></a>
+ <a><img  src="https://img.shields.io/badge/license-MIT-blue.svg"/>
+ <a><img  src="https://img.shields.io/twitter/url/https/github.com/garrettmac/react-native-pagination.svg?style=social"></a>
+ <a href="https://gitter.im/garrettmac/react-native-pagination?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img alt="Join the chat" src="https://badges.gitter.im/garrettmac/react-native-pagination.svg"></a>
+    
+
+
 </p>
 
 # React Native Pagination
