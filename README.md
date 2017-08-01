@@ -11,7 +11,6 @@
 <p align="center">
   The best Pagination component for React Native.
 </p>
-	https://img.shields.io/github/downloads/atom/atom/latest/total.svg
 <p align="center">
   <a href="http://standardjs.com/"><img  src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square"></a>
   <a href="http://standardjs.com/"><img  src="	https://img.shields.io/github/downloads/atom/atom/latest/total.svg"></a>
@@ -22,10 +21,15 @@
   <a href="https://gitter.im/garrettmac/react-native-pagination?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img alt="Join the chat" src="https://badges.gitter.im/garrettmac/react-native-pagination.svg"></a>
 </p>
 
-# react-native-pagination
+# React Native Pagination
 
 
-## Show Cases
+
+## Roadmap
+
+> see: [ROADMAP.md](ROADMAP.md)
+
+
 ### Horizontal
 
 > To try these out yourself its prudy easy, Just open `examples/ios/*.xcodeproj` in Xcode, then press `Cmd + R`; you may edit `examples/index.ios.js` for switch cases.
@@ -45,7 +49,8 @@
 
 ## Getting Started
 
-- [react-native-pagination](#react-native-pagination)
+- [React Native Pagination](#react-native-pagination)
+  * [ROADMAP.md](#roadmap)
   * [Show Cases](#show-cases)
     + [Horizontal](#horizontal)
     + [Vertical](#vertical)
