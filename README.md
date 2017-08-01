@@ -90,8 +90,6 @@
 - Install `react-native` first
 ```bash
 $ npm i react-native -g
-```
-
 $ yarn add react-native-pagination
 $ cd ReactNativePaginationExample
 $ yarn install #(or with npm "npm i react-native-pagination —save")
