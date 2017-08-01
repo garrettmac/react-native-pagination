@@ -11,9 +11,10 @@
 <p align="center">
   The best Pagination component for React Native.
 </p>
-
+	https://img.shields.io/github/downloads/atom/atom/latest/total.svg
 <p align="center">
-  <a href="http://standardjs.com/"><img alt="JavaScript Style Guide" src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square"></a>
+  <a href="http://standardjs.com/"><img  src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square"></a>
+  <a href="http://standardjs.com/"><img  src="	https://img.shields.io/github/downloads/atom/atom/latest/total.svg"></a>
   <a href="https://npmjs.org/package/react-native-pagination"><img alt="npm version" src="http://img.shields.io/npm/v/react-native-pagination.svg?style=flat-square"></a>
   <a href="https://npmjs.org/package/react-native-pagination"><img alt="npm version" src="http://img.shields.io/npm/dm/react-native-pagination.svg?style=flat-square"></a>
   <a href="https://github.com/garrettmac/react-native-pagination/pulls?q=is%3Apr+is%3Aclosed"><img alt="PR Stats" src="https://img.shields.io/issuestats/i/github/garrettmac/react-native-pagination.svg?style=flat-square"></a>
@@ -23,9 +24,6 @@
 
 # react-native-pagination
 
-## Roadmap
-
-> see: [ROADMAP.md](ROADMAP.md)
 
 ## Show Cases
 ### Horizontal
@@ -47,14 +45,14 @@
 
 ## Getting Started
 
-
 - [react-native-pagination](#react-native-pagination)
-  * [Roadmap](#roadmap)
   * [Show Cases](#show-cases)
     + [Horizontal](#horizontal)
     + [Vertical](#vertical)
   * [Getting Started](#getting-started)
   * [Installation](#installation)
+    + [Example](#example)
+    + [Development](#development)
   * [Basic Usage](#basic-usage)
   * [Properties](#properties)
     + [Basic](#basic)
@@ -71,34 +69,62 @@
     + [Visibility](#visibility)
     + [Methods](#methods)
     + [Other](#other)
+  * [Components](#components)
+  * [Issues](#issues)
+
 
 ## Installation
 
+- Install `react-native` first
 ```bash
 $ npm i react-native -g
 ```
-with yarn
+
+$ yarn add react-native-pagination
+$ cd ReactNativePaginationExample
+$ yarn install #(or with npm "npm i react-native-pagination —save")
+$ react-native run-ios
+```
+- Initialization of a react-native project
+```bash
+$ react-native init myReactNativePaginationExample
+$ cd myReactNativePaginationExample
+$ yarn install #(or with npm "npm i && npm i react-native-pagination —save")
+$ yarn add react-native-pagination
+$ react-native link
+$ react-native run-ios
+```
+
+
+### Example
+or clone the repo and play with the example project
+
+```bash
+$ git clone https://github.com/garrettmac/react-native-pagination
+$ cd react-native-pagination/ReactNativePaginationExample
+$ yarn install
+$ react-native link
+$ react-native run-ios
+```
+one liner
+```bash
+git clone https://github.com/garrettmac/react-native-pagination && cd react-native-pagination/ReactNativePaginationExample && yarn install && react-native link && react-native run-ios
+```
+
+> Quick start with [ReactNativePaginationExample](https://github.com/garrettmac/react-native-pagination/tree/master/ReactNativePaginationExample/).
+
+### Development
+in your project
 ```bash
 $ yarn add react-native-pagination
+$ react-native link #this makes sure react-native-vector-icons load correctly
+$ react-native run-ios
 ```
-or with npm
-```bash
-$ npm i react-native-pagination —save
-```
+
+
 
 ## Basic Usage
-
-- Install `react-native` first
-
-
-
-- Initialization of a react-native project
-
-```bash
-$ react-native init myproject
-```
-
-- Then, edit `myproject/index.ios.js`, like this:
+- In your `myApp/index.ios.js`, use:
 
 ```jsx
 import React, { Component } from 'react';
@@ -180,7 +206,7 @@ const s = StyleSheet.create({
 AppRegistry.registerComponent('ReactNativePaginationExample', () => App);
 ```
 
-Currently only supported for FlatList's 
+Currently only supported for FlatList's
 
 ## Properties
 All properties took text editors auto completion into consideration and follow the basic structure
@@ -335,33 +361,6 @@ paginationItems=paginationItems.map(o=>{
 
 
 
-### Example
-
-```bash
-$ cd ReactNativePaginationExample
-$ yarn install / or npm
-$ react-native run-ios
-```
-
-> Quick start with [examples](https://github.com/garrettmac/react-native-swiper/tree/master/ReactNativePaginationExample/).
-
-### Development
-
-```bash
-$ cd ReactNativePaginationExample
-$ yarn install
-$ react-native link //this makes sure react-native-vector-icons load correctly
-$ react-native run-ios
-```
-
-Then launch simulator to preview. Note that you just need to edit the source file `src/Pages/[file].js`, the change will auto sync to examples.
-
-
-
-## Contribution
-
-- [@garrettmac](mailto:garrett@vyga.io) Just Me so far.
-
-## Questions
+## Issues
 
 Feel free to [contact me](mailto:garrett@vyga.io) or [create an issue](https://github.com/garrettmac/react-native-pagination/issues/new)
