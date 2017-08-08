@@ -1,4 +1,5 @@
-"use strict"
+"use strict";
+var Buffer = require("buffer").Buffer;
 
 // Export Node.js internal encodings.
 
@@ -12,6 +13,8 @@ module.exports = {
     utf16le: "ucs2",
 
     binary: { type: "_internal" },
+    iso88591: "binary",
+
     base64: { type: "_internal" },
     hex:    { type: "_internal" },
 
@@ -32,7 +35,7 @@ function InternalCodec(codecOptions, iconv) {
         this.encoder = InternalEncoderCesu8;
 
         // Add decoder for versions of Node not supporting CESU-8
-        if (new Buffer("eda080", 'hex').toString().length == 3) {
+        if (new Buffer('eda0bdedb2a9', 'hex').toString() !== '💩') {
             this.decoder = InternalDecoderCesu8;
             this.defaultCharUnicode = iconv.defaultCharUnicode;
         }

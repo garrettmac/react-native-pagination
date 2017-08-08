@@ -1,5 +1,5 @@
 // 20.2.2.22 Math.log2(x)
-var $export = require('./_export');
+var $export = require('./$.export');
 
 $export($export.S, 'Math', {
   log2: function log2(x){

@@ -1,9 +1,8 @@
 // 19.1.2.5 Object.freeze(O)
-var isObject = require('./_is-object')
-  , meta     = require('./_meta').onFreeze;
+var isObject = require('./$.is-object');
 
-require('./_object-sap')('freeze', function($freeze){
+require('./$.object-sap')('freeze', function($freeze){
   return function freeze(it){
-    return $freeze && isObject(it) ? $freeze(meta(it)) : it;
+    return $freeze && isObject(it) ? $freeze(it) : it;
   };
 });

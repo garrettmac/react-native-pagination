@@ -1,21 +1,18 @@
 'use strict';
-var global            = require('./_global')
-  , has               = require('./_has')
-  , cof               = require('./_cof')
-  , inheritIfRequired = require('./_inherit-if-required')
-  , toPrimitive       = require('./_to-primitive')
-  , fails             = require('./_fails')
-  , gOPN              = require('./_object-gopn').f
-  , gOPD              = require('./_object-gopd').f
-  , dP                = require('./_object-dp').f
-  , $trim             = require('./_string-trim').trim
-  , NUMBER            = 'Number'
-  , $Number           = global[NUMBER]
-  , Base              = $Number
-  , proto             = $Number.prototype
+var $           = require('./$')
+  , global      = require('./$.global')
+  , has         = require('./$.has')
+  , cof         = require('./$.cof')
+  , toPrimitive = require('./$.to-primitive')
+  , fails       = require('./$.fails')
+  , $trim       = require('./$.string-trim').trim
+  , NUMBER      = 'Number'
+  , $Number     = global[NUMBER]
+  , Base        = $Number
+  , proto       = $Number.prototype
   // Opera ~12 has broken Object#toString
-  , BROKEN_COF        = cof(require('./_object-create')(proto)) == NUMBER
-  , TRIM              = 'trim' in String.prototype;
+  , BROKEN_COF  = cof($.create(proto)) == NUMBER
+  , TRIM        = 'trim' in String.prototype;
 
 // 7.1.3 ToNumber(argument)
 var toNumber = function(argument){
@@ -50,20 +47,20 @@ if(!$Number(' 0o1') || !$Number('0b1') || $Number('+0x1')){
     return that instanceof $Number
       // check on 1..constructor(foo) case
       && (BROKEN_COF ? fails(function(){ proto.valueOf.call(that); }) : cof(that) != NUMBER)
-        ? inheritIfRequired(new Base(toNumber(it)), that, $Number) : toNumber(it);
+        ? new Base(toNumber(it)) : toNumber(it);
   };
-  for(var keys = require('./_descriptors') ? gOPN(Base) : (
+  $.each.call(require('./$.descriptors') ? $.getNames(Base) : (
     // ES3:
     'MAX_VALUE,MIN_VALUE,NaN,NEGATIVE_INFINITY,POSITIVE_INFINITY,' +
     // ES6 (in case, if modules with ES6 Number statics required before):
     'EPSILON,isFinite,isInteger,isNaN,isSafeInteger,MAX_SAFE_INTEGER,' +
     'MIN_SAFE_INTEGER,parseFloat,parseInt,isInteger'
-  ).split(','), j = 0, key; keys.length > j; j++){
-    if(has(Base, key = keys[j]) && !has($Number, key)){
-      dP($Number, key, gOPD(Base, key));
+  ).split(','), function(key){
+    if(has(Base, key) && !has($Number, key)){
+      $.setDesc($Number, key, $.getDesc(Base, key));
     }
-  }
+  });
   $Number.prototype = proto;
   proto.constructor = $Number;
-  require('./_redefine')(global, NUMBER, $Number);
+  require('./$.redefine')(global, NUMBER, $Number);
 }

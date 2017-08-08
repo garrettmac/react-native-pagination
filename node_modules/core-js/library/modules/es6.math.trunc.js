@@ -1,5 +1,5 @@
 // 20.2.2.34 Math.trunc(x)
-var $export = require('./_export');
+var $export = require('./$.export');
 
 $export($export.S, 'Math', {
   trunc: function trunc(it){

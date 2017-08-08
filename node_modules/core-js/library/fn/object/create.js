@@ -1,5 +1,4 @@
-require('../../modules/es6.object.create');
-var $Object = require('../../modules/_core').Object;
+var $ = require('../../modules/$');
 module.exports = function create(P, D){
-  return $Object.create(P, D);
+  return $.create(P, D);
 };

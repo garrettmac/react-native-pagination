@@ -46,20 +46,27 @@ class Pagination extends Component {
       paginationVisibleItems,
     paginationItems,
     horizontal,
-startDotStyle,
-    DotComponent,
+    startDotStyle,
     endDotStyle,
     debugMode,
-dotAnimation,
+    dotAnimation,
     paginationStyle,
     pagingEnabled,
+     onPressPaginationDot,
     // showStartingJumpDot,showEndingJumpDot,endingJumpSize,startingJumpSize,
-
+paginationDot,
     hideEmptyDots,
     } = this.props
-
-
-
+    // const Dot = this.props.paginationDot || Dot
+    let paginationDotCallback=this.props.paginationDotCallback||function(){}
+    let startDotCallback=this.props.startDotCallback||function(){}
+    let endDotCallback=this.props.endDotCallback||function(){}
+console.log(" this.props: ",this.props);
+console.log(" paginationVisibleItems: ",paginationVisibleItems);
+    const startPaginationDot=this.props.startPaginationDot||Dot
+    const startJumpPaginationDot=this.props.startJumpPaginationDot||Dot
+    const endPaginationDot=this.props.endPaginationDot||Dot
+    const viewablePaginationDot=this.props.viewablePaginationDot||Dot
 
 paginationItems=paginationItems.map((item,i) => {
   item.paginationIndexId=i
@@ -70,17 +77,22 @@ paginationItems=paginationItems.map((item,i) => {
   return item
 })
 // paginationVisibleItemsIndexList this list of index that you want to remove or you'll see two active icon buttons
- let paginationVisibleItemsIndexList=paginationVisibleItems.map(i=>i.index)
-
- if(pagingEnabled){
-   //fix issue where it says two visable list items are active when only one should be
-   if(paginationVisibleItemsIndexList.length>1){
-   paginationVisibleItems=paginationVisibleItems.map((o) => {
-     if(o.index===_.min(paginationVisibleItemsIndexList)){return {index:_.get(o,`index`),key:_.get(o,`key`),item:_.get(o,`item`,{}),isViewable:false}}
-     else return o
-   })
-  }
- }
+// let paginationVisibleItemsIndexList=[]
+//  if(pagingEnabled){
+//      let indexMap=paginationVisibleItems.map(i=>i.index)
+//    //fix issue where it says two visable list items are active when only one should be
+//    if(indexMap.length>1){
+//    paginationVisibleItems=paginationVisibleItems.map((o) => {
+//      if(o.index===_.min(indexMap)){return {index:_.get(o,`index`),key:_.get(o,`key`),item:_.get(o,`item`,{}),isViewable:false}}
+//      else return o
+//    })
+//   }
+//   paginationVisibleItemsIndexList=paginationVisibleItems
+// }else{
+//
+//   paginationVisibleItemsIndexList=paginationVisibleItems.map(i=>i.index)
+// }
+paginationVisibleItemsIndexList=paginationVisibleItems.map(i=>i.index)
 
 
  //gets max and min pads. should look something like [0, -1, -2, 2, 3, 4] if [0,1] are viewable and paginationItemPadSize is 3
@@ -104,7 +116,7 @@ let paginationVisiblePadItems= paginationVisableItemsIndexArray.map((o,i) => {
 
 
  let flatListPaginationItems=_.sortBy([...paginationVisibleItems,...paginationVisiblePadItems],"index")
-
+// console.log("flatListPaginationItems : ",flatListPaginationItems);
 if(debugMode){
   let paginationItemsIndexList=paginationItems.map(i=>i.index)
   let allDotsIndexList=flatListPaginationItems.map(i=>i.index)
@@ -129,6 +141,15 @@ if(horizontal===true)PaginationContainerStyle=horizontalStyle
 else if(paginationStyle)PaginationContainerStyle=paginationStyle
 else PaginationContainerStyle=verticalStyle
 
+
+// const childrenWithProps = React.Children.map(this.props.children,
+//     (child) => React.cloneElement(child, {
+//       doSomething: this.doSomething
+//     })
+//    );
+//
+//    return <div>{childrenWithProps}</div>
+
     return (
       <View style={[PaginationContainerStyle,containerStyle]}>
         <View style={[{
@@ -144,32 +165,54 @@ else PaginationContainerStyle=verticalStyle
 
 
 
-    <Dot StartDot {...this.props}  onPress={this.onStartDotPress} styles={[dotStyle,startDotStyle]}/>
+    {/* <Dot StartDot {...this.props}  onPress={this.onStartDotPress} styles={[dotStyle,startDotStyle]}/> */}
+      {startPaginationDot &&
+        startPaginationDot
+      }
+
+    {startJumpPaginationDot &&
+      startJumpPaginationDot
+    }
 
 {/* {showStartingJumpDot &&
     <Dot jumpItems={flatListPaginationItems} endingJumpSize={(endingJumpSize)?endingJumpSize:5} {...this.props} styles={[dotStyle,endDotStyle]}/>
   } */}
   {flatListPaginationItems.map((item,i) => {
-
-
+    console.log(" item: ",item);
   LayoutAnimation.configureNext(dotAnimation)
       return (<View style={{flex:1}} key={i}>
-            {!DotComponent &&
+
+
+
+{/*
+ React.Children.map(this.props.children, child =>  React.cloneElement(child, {  doSomething: this.doSomething})
+   */}
+   {item.isViewable &&
+        React.cloneElement(viewablePaginationDot, { onPress:()=>this.props.paginationDotCallback(item,i), item,i})
+   }
+{!item.isViewable &&
+     React.cloneElement(paginationDot, { onPress:()=>this.props.paginationDotCallback(item,i), item,i})
+}
+
+        {/*
+            {!paginationDot &&
                 <Dot {...this.props} item={item} key={`paginationDot${i}`}/>
             }
-            {DotComponent &&
-                <DotComponent {...this.props} key={`paginationDot${i}`}/>
-            }
+             */}
             </View>)
     })}
-    {/* {showEndingJumpDot &&
-      <Dot jumpItems={flatListPaginationItems} startingJumpSize={(startingJumpSize)?startingJumpSize:5} {...this.props} styles={[dotStyle,endDotStyle]}/>
-    } */}
-    <Dot EndDot  {...this.props} onPress={this.onEndDotPress} styles={[dotStyle,endDotStyle]}/>
+
+
+    {endPaginationDot &&
+      endPaginationDot
+    }
+    {/* <Dot EndDot  {...this.props} onPress={this.onEndDotPress} styles={[dotStyle,endDotStyle]}/> */}
 
 </View>
 </View>
     );
+
+
 
   }
 }
@@ -198,6 +241,7 @@ activeItemIndex:null,
 hideEmptyDotComponents:false,
 paginationItemPadSize:3,
 dotAnimation:LayoutAnimation.Presets.easeInEaseOut,
+// dotAnimation:LayoutAnimation.Presets.spring,
 }
 //NOT WORKING (I dont know why)
 Pagination.PropTypes={

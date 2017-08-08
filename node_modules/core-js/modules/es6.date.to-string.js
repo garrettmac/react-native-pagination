@@ -1,11 +1,10 @@
 var DateProto    = Date.prototype
   , INVALID_DATE = 'Invalid Date'
   , TO_STRING    = 'toString'
-  , $toString    = DateProto[TO_STRING]
-  , getTime      = DateProto.getTime;
+  , $toString    = DateProto[TO_STRING];
 if(new Date(NaN) + '' != INVALID_DATE){
-  require('./_redefine')(DateProto, TO_STRING, function toString(){
-    var value = getTime.call(this);
+  require('./$.redefine')(DateProto, TO_STRING, function toString(){
+    var value = +this;
     return value === value ? $toString.call(this) : INVALID_DATE;
   });
 }

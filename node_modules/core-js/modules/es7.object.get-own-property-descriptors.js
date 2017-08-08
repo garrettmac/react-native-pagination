@@ -1,19 +1,23 @@
-// https://github.com/tc39/proposal-object-getownpropertydescriptors
-var $export        = require('./_export')
-  , ownKeys        = require('./_own-keys')
-  , toIObject      = require('./_to-iobject')
-  , gOPD           = require('./_object-gopd')
-  , createProperty = require('./_create-property');
+// https://gist.github.com/WebReflection/9353781
+var $          = require('./$')
+  , $export    = require('./$.export')
+  , ownKeys    = require('./$.own-keys')
+  , toIObject  = require('./$.to-iobject')
+  , createDesc = require('./$.property-desc');
 
 $export($export.S, 'Object', {
   getOwnPropertyDescriptors: function getOwnPropertyDescriptors(object){
     var O       = toIObject(object)
-      , getDesc = gOPD.f
+      , setDesc = $.setDesc
+      , getDesc = $.getDesc
       , keys    = ownKeys(O)
       , result  = {}
       , i       = 0
-      , key;
-    while(keys.length > i)createProperty(result, key = keys[i++], getDesc(O, key));
-    return result;
+      , key, D;
+    while(keys.length > i){
+      D = getDesc(O, key = keys[i++]);
+      if(key in result)setDesc(result, key, createDesc(0, D));
+      else result[key] = D;
+    } return result;
   }
 });

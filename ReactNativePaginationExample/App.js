@@ -29,9 +29,8 @@ export default class App extends Component {
 
     this.state = {
       // Component: HorizontalAdvancedFlatList,
-      // Component: HorizontalPagedFlatListExample,
-      // Component: HorizontalBasicListView,
-      Component: null,
+      Component: HorizontalPagedFlatListExample,
+      // Component: null,
       showHeader:true,
     };
   }

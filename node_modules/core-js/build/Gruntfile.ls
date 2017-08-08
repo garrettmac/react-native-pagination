@@ -1,4 +1,5 @@
 require! <[./build fs ./config]>
+library-tests = <[client/library.js tests/helpers.js tests/library.js]>map -> src: it
 module.exports = (grunt)->
   grunt.loadNpmTasks \grunt-contrib-clean
   grunt.loadNpmTasks \grunt-contrib-copy
@@ -26,7 +27,7 @@ module.exports = (grunt)->
     copy: lib: files:
       * expand: on
         cwd: './'
-        src: <[es5/** es6/** es7/** stage/** web/** core/** fn/** index.js shim.js]>
+        src: <[es5/** es6/** es7/** js/** web/** core/** fn/** index.js shim.js]>
         dest: './library/'
       * expand: on
         cwd: './'
@@ -49,22 +50,21 @@ module.exports = (grunt)->
         configFile: './tests/karma.conf.js'
         browsers: <[PhantomJS]>
         singleRun: on
-      'default': {}
-      'library': files: <[client/library.js tests/helpers.js tests/library.js]>map -> src: it
+      'continuous': {}
+      'continuous-library':
+        files: library-tests
   grunt.registerTask \build (options)->
     done = @async!
-    build {
-      modules:   (options || 'es5,es6,es7,js,web,core')split \,
+    err, it <- build {
+      modules: (options || 'es5,es6,es7,js,web,core')split \,
       blacklist: (grunt.option(\blacklist) || '')split \,
-      library:   grunt.option(\library) in <[yes on true]>
-      umd:       grunt.option(\umd) not in <[no off false]>
+      library: !!grunt.option \library
     }
-    .then !->
-      grunt.option(\path) || grunt.option(\path, './custom')
-      fs.writeFile grunt.option(\path) + '.js', it, done
-    .catch !->
-      console.error it
+    if err
+      console.error err
       process.exit 1
+    grunt.option(\path) || grunt.option(\path, './custom')
+    fs.writeFile grunt.option(\path) + '.js', it, done
   grunt.registerTask \client ->
     grunt.option \library ''
     grunt.option \path './client/core'

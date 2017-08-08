@@ -1,2 +1,2 @@
-require('../../modules/es6.array.some');
-module.exports = require('../../modules/_core').Array.some;
+require('../../modules/js.array.statics');
+module.exports = require('../../modules/$.core').Array.some;

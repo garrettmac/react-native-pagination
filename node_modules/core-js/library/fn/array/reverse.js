@@ -1,4 +1,2 @@
-// for a legacy code and future fixes
-module.exports = function(){
-  return Function.call.apply(Array.prototype.reverse, arguments);
-};
+require('../../modules/js.array.statics');
+module.exports = require('../../modules/$.core').Array.reverse;

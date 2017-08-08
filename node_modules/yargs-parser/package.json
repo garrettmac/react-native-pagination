@@ -1,6 +1,6 @@
 {
   "name": "yargs-parser",
-  "version": "4.2.1",
+  "version": "7.0.0",
   "description": "the mighty option parser used by yargs",
   "main": "index.js",
   "scripts": {
@@ -30,11 +30,11 @@
     "coveralls": "^2.11.12",
     "mocha": "^3.0.1",
     "nyc": "^10.0.0",
-    "standard": "^8.0.0",
+    "standard": "^10.0.2",
     "standard-version": "^4.0.0"
   },
   "dependencies": {
-    "camelcase": "^3.0.0"
+    "camelcase": "^4.1.0"
   },
   "files": [
     "lib",

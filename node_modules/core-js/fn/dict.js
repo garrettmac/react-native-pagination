@@ -1,2 +1,2 @@
 require('../modules/core.dict');
-module.exports = require('../modules/_core').Dict;
+module.exports = require('../modules/$.core').Dict;

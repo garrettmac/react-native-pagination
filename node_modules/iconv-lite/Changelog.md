@@ -1,4 +1,38 @@
 
+# 0.4.18 / 2017-06-13
+
+  * Fixed CESU-8 regression in Node v8.
+
+
+# 0.4.17 / 2017-04-22
+
+ * Updated typescript definition file to support Angular 2 AoT mode (#153 by @larssn)
+
+
+# 0.4.16 / 2017-04-22
+
+ * Added support for React Native (#150)
+ * Changed iso8859-1 encoding to usine internal 'binary' encoding, as it's the same thing (#147 by @mscdex)
+ * Fixed typo in Readme (#138 by @jiangzhuo)
+ * Fixed build for Node v6.10+ by making correct version comparison
+ * Added a warning if iconv-lite is loaded not as utf-8 (see #142)
+
+
+# 0.4.15 / 2016-11-21
+
+ * Fixed typescript type definition (#137)
+
+
+# 0.4.14 / 2016-11-20
+
+ * Preparation for v1.0
+ * Added Node v6 and latest Node versions to Travis CI test rig
+ * Deprecated Node v0.8 support
+ * Typescript typings (@larssn)
+ * Fix encoding of Euro character in GB 18030 (inspired by @lygstate)
+ * Add ms prefix to dbcs windows encodings (@rokoroku)
+
+
 # 0.4.13 / 2015-10-01
 
  * Fix silly mistake in deprecation notice.
