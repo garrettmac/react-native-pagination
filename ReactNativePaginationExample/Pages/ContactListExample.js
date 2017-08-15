@@ -16,9 +16,12 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import {MockPersonList} from '../FakerMocks';
 import Pagination from '../react-native-pagination';
-import ContactItem from './widgets/ContactItem';
+// import {getMoviesFromApi} from './ListItems';
 
-export default class VerticalBasicFlatList extends Component {
+
+
+import ContactItem from './widgets/ContactItem';
+export default class ContactListExample extends Component {
 
 
   state = {
@@ -44,7 +47,7 @@ export default class VerticalBasicFlatList extends Component {
        index={item.id}
        id={item.key}
        onPressItem={this._onPressItem}
-      //  selected={!!this.state.selected.get(item.id)}
+       selected={!!this.state.selected.get(item.id)}
        name={item.name}
        avatar={item.avatar}
        description={item.email}
@@ -52,18 +55,8 @@ export default class VerticalBasicFlatList extends Component {
        createTagColor
      />)
  };
- _renderIteme = ({item, separators}) => {
-   console.log(" item: ",item);
- return (
- <TouchableHighlight
-   onPress={() => this._onPress(item)}
-   onShowUnderlay={separators.highlight}
-   onHideUnderlay={separators.unhighlight}>
-   <View style={{backgroundColor: 'white'}}>
-     <Text>{item.title}}</Text>
-   </View>
- </TouchableHighlight>)
-}
+
+
 
  //need this
  onViewableItemsChanged = ({ viewableItems, changed }) => {
@@ -86,20 +79,25 @@ export default class VerticalBasicFlatList extends Component {
             onViewableItemsChanged={this.onViewableItemsChanged.bind(this)}//need this
           />
     <Pagination
-      // horizontal
-      dotThemeLight
+      debugMode
+      dotIconNameActive={"contacts"}
+      dotTextColor={"red"}
       dotSwapAxis
-      dotIconFamily="FontAwesome"
-      dotIconHame="FontAwesome"
-      // dotPositionSwap
-      dotStyle={{marginRight:10}}
-      dotEmptyHide
-      dotIconHide
+      dotPositionSwap
+      dotTextColorActive={"green"}
+      dotTextColorNotActive={"red"}
+      dotTextColorEmpty={"blue"}
+      dotIconColorActive={"green"}
+      dotIconColorNotActive={"red"}
+      dotIconColorEmpty={"blue"}
+      // dotThemeLight //<--use with backgroundColor:"grey"
       listRef={this.refs}//to allow React Native Pagination to scroll to item when clicked  (so add "ref={r=>this.refs=r}" to your list)
       paginationVisibleItems={this.state.viewableItems}//needs to track what the user sees
       paginationItems={this.state.items}//pass the same list as data
       paginationItemPadSize={3} //num of items to pad above and bellow your visable items
+
     />
+
       </View>
     );
   }
@@ -108,7 +106,7 @@ export default class VerticalBasicFlatList extends Component {
 const s = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:"#1a2530",
+    // backgroundColor:"grey",
   },
   pagination:{
      backgroundColor:"rgba(0,0,0,0)",
@@ -130,6 +128,6 @@ const s = StyleSheet.create({
 
 
 
-VerticalBasicFlatList.defaultProps = {
+ContactListExample.defaultProps = {
   data:MockPersonList
 }

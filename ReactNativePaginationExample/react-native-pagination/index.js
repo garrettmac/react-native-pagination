@@ -25,11 +25,29 @@ import PropTypes from 'prop-types';
 
 //helper functions
 
-
+let showLogs=true;
+var CustomLayoutSpring = {
+    duration: 400,
+    create: {
+      type: LayoutAnimation.Types.spring,
+      property: LayoutAnimation.Properties.scaleXY,
+      springDamping: 0.7,
+    },
+    update: {
+      type: LayoutAnimation.Types.spring,
+      springDamping: 0.7,
+    },
+  };
 
 // export default class Pagination extends Component {
 class Pagination extends Component {
-  render() {
+  state={dots:[]}
+  // componentWillUpdate(nextProps, nextState) {
+  componentWillReceiveProps(nextProps) {
+// console.log(" nextProps: ",nextProps.paginationVisibleItems);
+
+
+
     let {
       iconFamily,
       textStyle,
@@ -43,7 +61,7 @@ class Pagination extends Component {
       nextText,
       nextStyle,
       paginationItemPadSize,
-      paginationVisibleItems,
+
     paginationItems,
     horizontal,
     startDotStyle,
@@ -52,17 +70,19 @@ class Pagination extends Component {
     dotAnimation,
     paginationStyle,
     pagingEnabled,
+    renderDot,
      onPressPaginationDot,
     // showStartingJumpDot,showEndingJumpDot,endingJumpSize,startingJumpSize,
 paginationDot,
     hideEmptyDots,
-    } = this.props
+    // } = this.props
+    } = nextProps
     // const Dot = this.props.paginationDot || Dot
     let paginationDotCallback=this.props.paginationDotCallback||function(){}
     let startDotCallback=this.props.startDotCallback||function(){}
     let endDotCallback=this.props.endDotCallback||function(){}
-console.log(" this.props: ",this.props);
-console.log(" paginationVisibleItems: ",paginationVisibleItems);
+if(showLogs)console.log(" this.props: ",this.props);
+
     const startPaginationDot=this.props.startPaginationDot||Dot
     const startJumpPaginationDot=this.props.startJumpPaginationDot||Dot
     const endPaginationDot=this.props.endPaginationDot||Dot
@@ -77,7 +97,18 @@ paginationItems=paginationItems.map((item,i) => {
   return item
 })
 // paginationVisibleItemsIndexList this list of index that you want to remove or you'll see two active icon buttons
-// let paginationVisibleItemsIndexList=[]
+let paginationVisibleItemsIndexList=[]
+let paginationVisibleItems=[]
+ if(pagingEnabled){
+   console.log("PRPL NEXT: ",nextProps.paginationVisibleItems);
+   console.log("PRPL this: ",this.props.paginationVisibleItems);
+   if(nextProps.paginationVisibleItems.length==2)paginationVisibleItems=this.props.paginationVisibleItems
+   else if(this.props.paginationVisibleItems.length==2)paginationVisibleItems=nextProps.paginationVisibleItems
+// if(!paginationVisibleItems)paginationVisibleItems=nextProps.paginationVisibleItems
+if(!paginationVisibleItems.length)paginationVisibleItems=nextProps.paginationVisibleItems
+ }else{
+paginationVisibleItems=nextProps.paginationVisibleItems
+ }
 //  if(pagingEnabled){
 //      let indexMap=paginationVisibleItems.map(i=>i.index)
 //    //fix issue where it says two visable list items are active when only one should be
@@ -92,9 +123,11 @@ paginationItems=paginationItems.map((item,i) => {
 //
 //   paginationVisibleItemsIndexList=paginationVisibleItems.map(i=>i.index)
 // }
-paginationVisibleItemsIndexList=paginationVisibleItems.map(i=>i.index)
+if(paginationVisibleItems.length)paginationVisibleItemsIndexList=paginationVisibleItems.map(i=>i.index)
 
-
+console.log(" this.props.paginationVisibleItems: ",this.props.paginationVisibleItems);
+console.log(" nextProps.paginationVisibleItems: ",nextProps.paginationVisibleItems);
+console.log(" paginationVisibleItems: ",paginationVisibleItems);
  //gets max and min pads. should look something like [0, -1, -2, 2, 3, 4] if [0,1] are viewable and paginationItemPadSize is 3
 const getVisibleArrayIndexes= (paginationVisibleItems,paginationVisibleItemsIndexList, paginationItemPadSize)=>{
  let preIniquePaddedIndexList=[..._.times(paginationItemPadSize,i=>_.min(paginationVisibleItemsIndexList)-(i+1)),..._.times(paginationItemPadSize,i=>_.max(paginationVisibleItemsIndexList)+(i+1))]
@@ -108,7 +141,7 @@ const getVisibleArrayIndexes= (paginationVisibleItems,paginationVisibleItemsInde
 
  let paginationVisableItemsIndexArray=getVisibleArrayIndexes(paginationVisibleItems,paginationVisibleItemsIndexList,paginationItemPadSize)
 
-
+console.log(" paginationVisibleItems: ",paginationVisibleItems);
 let paginationVisiblePadItems= paginationVisableItemsIndexArray.map((o,i) => {
    return {index:_.get(paginationItems,`[${o}].paginationIndexId`),key:_.get(paginationItems,`[${o}].paginationIndexId`),item:_.get(paginationItems,`[${o}]`,{}),isViewable:false}
 })
@@ -116,7 +149,7 @@ let paginationVisiblePadItems= paginationVisableItemsIndexArray.map((o,i) => {
 
 
  let flatListPaginationItems=_.sortBy([...paginationVisibleItems,...paginationVisiblePadItems],"index")
-// console.log("flatListPaginationItems : ",flatListPaginationItems);
+if(showLogs)console.log("flatListPaginationItems : ",flatListPaginationItems);
 if(debugMode){
   let paginationItemsIndexList=paginationItems.map(i=>i.index)
   let allDotsIndexList=flatListPaginationItems.map(i=>i.index)
@@ -129,18 +162,37 @@ if(debugMode){
 
   let ADI_ISVIEWABLE=`%c each "paginationVisibleItems dots" "isViewable" attribute:\n                      ${ALL_DOTS_INDEXES} \n`
   let AID=`%c all "paginationItems"'s':       ${paginationItemsIndexList} \n`
-  console.log('\n\n%cGarrett Mac\'s React Native Pagination'+"%c \ndebugMode: ON\n"+___+ADBY+ADI+ANDI+___+ADI_ISVIEWABLE+___+AID, 'color: #01a699','color: #f99137','color: #f99137','color: #a94920','color: #00a7f8','color: #3b539a','color: #32db64','color: #00c59e','color: #3b539a','color: #488aff');
+  if(showLogs)console.log('\n\n%cGarrett Mac\'s React Native Pagination'+"%c \ndebugMode: ON\n"+___+ADBY+ADI+ANDI+___+ADI_ISVIEWABLE+___+AID, 'color: #01a699','color: #f99137','color: #f99137','color: #a94920','color: #00a7f8','color: #3b539a','color: #32db64','color: #00c59e','color: #3b539a','color: #488aff');
 }
 
 
 
-let verticalStyle={height,alignItems:"center", justifyContent: 'space-between', position:"absolute",top:0,margin:0,bottom:0,right:0,bottom:0,padding:0,flex:1,}
-let horizontalStyle={width,alignItems:"center", justifyContent: 'space-between', position:"absolute",margin:0,bottom:10,left:0,right:0,padding:0,flex:1,}
 
-if(horizontal===true)PaginationContainerStyle=horizontalStyle
-else if(paginationStyle)PaginationContainerStyle=paginationStyle
-else PaginationContainerStyle=verticalStyle
+// let dots=[]
+console.log(" flatListPaginationItems: ",flatListPaginationItems);
+// flatListPaginationItems.map((item,i) => {
+// // paginationVisibleItems.map((item,i) => {
+//     // LayoutAnimation.configureNext(dotAnimation);
+//     // LayoutAnimation.configureNext(CustomLayoutSpring);
+//
+// return renderDot(item,i)
+// // let dot=React.Children.map(renderDot(item,i), child =>  React.cloneElement(child, {  horizontal}))
+// // return React.Children.map(renderDot(item,i), child =>  React.cloneElement(child, { key:`asdfsdf${i}`, horizontal}))
+// // dots.concat(dot)
+// // dots.push(dot)
+// // let dots=renderDot(item,i)
+// })
 
+// console.log(" dots: ",dots);
+// this.setState({dots})
+this.setState({dots:flatListPaginationItems})
+}
+// flatListPaginationItems.map((item,i) => {
+//
+// })
+// paginationItems.map((item,key) => {
+//   return renderDot(item,i)
+// })
 
 // const childrenWithProps = React.Children.map(this.props.children,
 //     (child) => React.cloneElement(child, {
@@ -149,9 +201,18 @@ else PaginationContainerStyle=verticalStyle
 //    );
 //
 //    return <div>{childrenWithProps}</div>
+render() {
+let {style,horizontal,renderDot,dotAnimation}=this.props
+let {dots}=this.state
+  let horizontalStyle={width,alignItems:"center", justifyContent: 'space-between', position:"absolute",margin:0,bottom:10,left:0,right:0,padding:0,flex:1,}
+
+
+  if(horizontal===true)style=horizontalStyle
+  else if(paginationStyle)style=paginationStyle
+
 
     return (
-      <View style={[PaginationContainerStyle,containerStyle]}>
+      <View style={[style]}>
         <View style={[{
           flex: 1,
           marginTop:(horizontal===true)?0:20,
@@ -165,48 +226,14 @@ else PaginationContainerStyle=verticalStyle
 
 
 
-    {/* <Dot StartDot {...this.props}  onPress={this.onStartDotPress} styles={[dotStyle,startDotStyle]}/> */}
-      {startPaginationDot &&
-        startPaginationDot
-      }
+{/* {dots} */}
+{dots.map((item,i) => {
+  // item.isViewable=!item.isViewable
+  // LayoutAnimation.configureNext(CustomLayoutSpring);
+  LayoutAnimation.configureNext(dotAnimation);
+return React.Children.map(renderDot(item,i), child =>  React.cloneElement(child, { key:`asdfsdf${i}`, horizontal}))
 
-    {startJumpPaginationDot &&
-      startJumpPaginationDot
-    }
-
-{/* {showStartingJumpDot &&
-    <Dot jumpItems={flatListPaginationItems} endingJumpSize={(endingJumpSize)?endingJumpSize:5} {...this.props} styles={[dotStyle,endDotStyle]}/>
-  } */}
-  {flatListPaginationItems.map((item,i) => {
-    console.log(" item: ",item);
-  LayoutAnimation.configureNext(dotAnimation)
-      return (<View style={{flex:1}} key={i}>
-
-
-
-{/*
- React.Children.map(this.props.children, child =>  React.cloneElement(child, {  doSomething: this.doSomething})
-   */}
-   {item.isViewable &&
-        React.cloneElement(viewablePaginationDot, { onPress:()=>this.props.paginationDotCallback(item,i), item,i})
-   }
-{!item.isViewable &&
-     React.cloneElement(paginationDot, { onPress:()=>this.props.paginationDotCallback(item,i), item,i})
-}
-
-        {/*
-            {!paginationDot &&
-                <Dot {...this.props} item={item} key={`paginationDot${i}`}/>
-            }
-             */}
-            </View>)
-    })}
-
-
-    {endPaginationDot &&
-      endPaginationDot
-    }
-    {/* <Dot EndDot  {...this.props} onPress={this.onEndDotPress} styles={[dotStyle,endDotStyle]}/> */}
+})}
 
 </View>
 </View>
@@ -230,7 +257,7 @@ Pagination.defaultProps={
 // containerStyle:{flex: 1,backgroundColor:"red",width,height:null},
 containerStyle:null,
 // textStyle:{color:"rgba(0,0,0,0.5)",textAlign: "center",},
-
+style:{height,alignItems:"center", justifyContent: 'space-between', position:"absolute",top:0,margin:0,bottom:0,right:0,bottom:0,padding:0,flex:1,},
 
 paginationVisibleItems:[],
 paginationItems:[],
@@ -240,8 +267,8 @@ hideEmptyDots:false,
 activeItemIndex:null,
 hideEmptyDotComponents:false,
 paginationItemPadSize:3,
-dotAnimation:LayoutAnimation.Presets.easeInEaseOut,
-// dotAnimation:LayoutAnimation.Presets.spring,
+// dotAnimation:LayoutAnimation.Presets.easeInEaseOut,
+dotAnimation:LayoutAnimation.Presets.spring,
 }
 //NOT WORKING (I dont know why)
 Pagination.PropTypes={

@@ -3,304 +3,366 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
+  Text,Animated,
   TouchableOpacity,
 } from 'react-native';
 
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import Icon from './Icon';
+let showLogs=true;
 
-
+//
 export default class Dot extends Component {
-
-
-  render() {
-    let {
-      disableDotOnPressNavigation,
-      disableStartDotOnPressNavigation,
-      disableEndDotOnPressNavigation,
-      dotOnPress,
-      startDotOnPress,
-      endDotOnPress,
-        item,
-        dotThemeLight,
-        onPress,
-        textStyle,
-
-        //dots
-        StartDot,EndDot,
-        //dots styles
-        dotStyle,startDotStyle,endDotStyle,
-        dotIconStyle,startDotIconStyle,endDotIconStyle,//add to docs
-        //start/finish dot Icon
-        startDotIconName,endDotIconName,
-        startDotIconSize,endDotIconSize,
-        startDotIconColor,endDotIconColor,
-        //dot text
-        startDotFontSize,endDotFontSize,
-        startDotTextColor,endDotTextColor,
-        startDotText,endDotText,
-        //dot position
-        dotSwapAxis,startDotSwapAxis,endDotSwapAxis,
-        horizontal,
-        dotIconFamily,startDotIconFamily,endDotIconFamily,
-
-        dotPositionSwap,startDotPositionSwap,endDotPositionSwap,
-        //dot section visablity
-        dotIconHide,startDotIconHide,endDotIconHide,
-        dotTextHide,startDotTextHide,endDotTextHide,
-dotEmptyHide,
-
-        //pagination dots only
-        dotIconNameNotActive,dotIconNameActive,dotIconNameEmpty,
-        dotIconSizeNotActive,dotIconSizeActive,dotIconSizeEmpty,
-        dotIconColorNotActive,dotIconColorActive,dotIconColorEmpty,
-        dotFontSizeNotActive,dotFontSizeActive,dotFontSizeEmpty,
-        dotTextColorNotActive,dotTextColorActive,dotTextColorEmpty,
-
-        showStartingJumpDot,showEndingJumpDot,
-        jumpItems,
-    endingJumpSize,
-startingJumpSize,
-      } = this.props
-
-
-    let dotIconName,dotIconSize,dotIconColor,dotFontSize
-
-    if(dotThemeLight){
-      dotIconColorActive="rgba(255,255,255,.5)"
-      dotIconColorNotActive="rgba(255,255,255,.4)"
-      dotIconColorEmpty="rgba(255,255,255,.2)"
-
-      dotTextColorActive="rgba(255,255,255,.5)"
-      dotTextColorNotActive="rgba(255,255,255,.4)"
-      dotTextColorEmpty="rgba(255,255,255,.2)"
-    }
-
-
-    let onPressDot = (item) => {
-      if(!disableDotOnPressNavigation){try {this.props.listRef.scrollToItem(item)} catch (e) {console.log(" e: ",e)}}
-      if(dotOnPress)dotOnPress(item)
-    }
-
-if(!dotIconSizeNotActive)dotIconSizeNotActive=10
-if(!dotIconSizeActive)dotIconSizeActive=15
-if(!dotIconSizeEmpty)dotIconSizeEmpty=20
-
-
-// console.warn(_.get(item,"index",false));
-    //setup dots icon
-    if(_.get(item,'isViewable',false)===true)dotIconName=dotIconNameActive
-    else dotIconName=dotIconNameNotActive
-    if(_.get(item,"index",true)===true){
-      dotIconHide=dotEmptyHide
-      dotIconName=dotIconNameEmpty
+  constructor(props){
+  	super(props);
+  	this.state = {};
+    this.shouldUpdate=false
+    this.AnimatedValue=new Animated.Value(0)
   }
-    // if(dotTextHide)dotTextHide=true
-// console.warn(" item.index: ",_.has(item,"index"),_.has(item,"index"));
-    if(_.get(item,'isViewable',false)===true)dotIconSize=dotIconSizeActive
-    else dotIconSize=dotIconSizeNotActive
-    if(_.get(item,"index",true)===true)dotIconSize=dotIconSizeEmpty
 
-    if(_.get(item,'isViewable',false)===true)dotIconColor=dotIconColorActive
-    else dotIconColor=dotIconColorNotActive
-    if(_.get(item,"index",true)===true)dotIconColor=dotIconColorEmpty
+  componentWillReceiveProps(nextProps) {
+    // console.log(" this.props: ",this.props);
+    console.log(" change: ",nextProps.text+" "+this.props.text+" "+nextProps.isViewable);
 
-    //setup dots font
-    if(_.get(item,'isViewable',false)===true)dotFontSize=dotFontSizeActive
-    else dotFontSize=dotFontSizeNotActive
-    if(_.get(item,"index",true)===true)dotFontSize=dotFontSizeEmpty
+  // componentDidReceiveProps(nextProps) {
+//before update use -> this.props
+//after update use -> nextProps
+	    // if(this.props.animateOnClick||nextProps.animateOnClick) {
+			// 	console.warn("animateOnClick");
+			// 	this.shouldUpdate=true
+			// 	this.AnimatedValue.setValue(0);
+			// if(this.props !==nextProps) {
+			// if(this.props.isViewable !==nextProps.isViewable)this.AnimatedValue.setValue(0);
+			//if(nextProps.isViewable)
 
-    if(_.get(item,'isViewable',false)===true)dotTextColor=dotTextColorActive
-    else dotTextColor=dotTextColorNotActive
-    if(_.get(item,"index",true)===true)dotTextColor=dotTextColorEmpty
+      if(nextProps.isViewable==true) {
+      // if(this.props.name&&this.props.isViewable !==nextProps.isViewable) {
+        this.shouldUpdate=true
+        // this.AnimatedValue.setValue(0);
+      }else{
+        this.AnimatedValue.setValue(0);
+          this.shouldUpdate=false
+      }
 
+
+      // }
+    }
+  render() {
+      let {
+  hideEmptyDots,
+  iconFamily,
+  color,
+  name,
+  onPress,
+  navOnPress,
+  text,
+
+  horizontal,
+
+iconStyle,
+  dotStyle,
+  style,
+  StartDot,
+  dotIconHide,
+
+  textStyle,
+EndDot,
+item,
+size,
+dotSwapAxis,
+dotPositionSwap,
+
+
+   } = this.props
+
+//
+//   render() {
+//     let {
+//       disableDotOnPressNavigation,
+//       disableStartDotOnPressNavigation,
+//       disableEndDotOnPressNavigation,
+//       dotOnPress,
+//       startDotOnPress,
+//       endDotOnPress,
+//         item,
+//         dotThemeLight,
+//         onPress,
+//         textStyle,
+//
+//         //dots
+//         StartDot,EndDot,
+//         //dots styles
+//         dotStyle,startDotStyle,endDotStyle,
+//         dotIconStyle,startDotIconStyle,endDotIconStyle,//add to docs
+//         //start/finish dot Icon
+//         startDotIconName,endDotIconName,
+//         startDotIconSize,endDotIconSize,
+//         startDotIconColor,endDotIconColor,
+//         //dot text
+//         startDotFontSize,endDotFontSize,
+//         startDotTextColor,endDotTextColor,
+//         startDotText,endDotText,
+//         //dot position
+//         dotSwapAxis,startDotSwapAxis,endDotSwapAxis,
+//         horizontal,
+//         dotIconFamily,startDotIconFamily,endDotIconFamily,
+//
+//         dotPositionSwap,startDotPositionSwap,endDotPositionSwap,
+//         //dot section visablity
+//         dotIconHide,startDotIconHide,endDotIconHide,
+//         dotTextHide,startDotTextHide,endDotTextHide,
+//         dotEmptyHide,
+//
+//         //pagination dots only
+//         dotIconNameNotActive,dotIconNameActive,dotIconNameEmpty,
+//         dotIconSizeNotActive,dotIconSizeActive,dotIconSizeEmpty,
+//         dotIconColorNotActive,dotIconColorActive,dotIconColorEmpty,
+//         dotFontSizeNotActive,dotFontSizeActive,dotFontSizeEmpty,
+//         dotTextColorNotActive,dotTextColorActive,dotTextColorEmpty,
+//
+//         showStartingJumpDot,showEndingJumpDot,
+//         jumpItems,
+//     endingJumpSize,
+// startingJumpSize,
+//       } = this.props
+//
+//
+//     let dotIconName,dotIconSize,dotIconColor,dotFontSize
+//
+//     if(dotThemeLight){
+//       dotIconColorActive="rgba(255,255,255,.5)"
+//       dotIconColorNotActive="rgba(255,255,255,.4)"
+//       dotIconColorEmpty="rgba(255,255,255,.2)"
+//
+//       dotTextColorActive="rgba(255,255,255,.5)"
+//       dotTextColorNotActive="rgba(255,255,255,.4)"
+//       dotTextColorEmpty="rgba(255,255,255,.2)"
+//     }
+//
+//
+//     let onPressDot = (item) => {
+//       if(!disableDotOnPressNavigation){try {this.props.listRef.scrollToItem(item)} catch (e) {console.log(" e: ",e)}}
+//       if(dotOnPress)dotOnPress(item)
+//     }
+//
+// if(!dotIconSizeNotActive)dotIconSizeNotActive=10
+// if(!dotIconSizeActive)dotIconSizeActive=15
+// if(!dotIconSizeEmpty)dotIconSizeEmpty=20
+//
+//
+// if(showLogs)console.log(_.get(item,"index",false));
+//     //setup dots icon
+//     if(_.get(item,'isViewable',false)===true)dotIconName=dotIconNameActive
+//     else dotIconName=dotIconNameNotActive
+//     if(_.get(item,"index",true)===true){
+//       dotIconHide=dotEmptyHide
+//       dotIconName=dotIconNameEmpty
+//   }
+//     // if(dotTextHide)dotTextHide=true
+// if(showLogs)console.log(" item.index: ",_.has(item,"index"),_.has(item,"index"));
+//     if(_.get(item,'isViewable',false)===true)dotIconSize=dotIconSizeActive
+//     else dotIconSize=dotIconSizeNotActive
+//     if(_.get(item,"index",true)===true)dotIconSize=dotIconSizeEmpty
+//
+//     if(_.get(item,'isViewable',false)===true)dotIconColor=dotIconColorActive
+//     else dotIconColor=dotIconColorNotActive
+//     if(_.get(item,"index",true)===true)dotIconColor=dotIconColorEmpty
+//
+//     //setup dots font
+//     if(_.get(item,'isViewable',false)===true)dotFontSize=dotFontSizeActive
+//     else dotFontSize=dotFontSizeNotActive
+//     if(_.get(item,"index",true)===true)dotFontSize=dotFontSizeEmpty
+//
+//     if(_.get(item,'isViewable',false)===true)dotTextColor=dotTextColorActive
+//     else dotTextColor=dotTextColorNotActive
+//     if(_.get(item,"index",true)===true)dotTextColor=dotTextColorEmpty
+//
     dotSwapAxis=!dotSwapAxis
 if(horizontal==true){
   dotPositionSwap=!dotPositionSwap
 }
-
+//
     if(StartDot){
-      dotIconHide=false//reset
-
-      //style
-      //console.log(" horizontal: ",horizontal);
-      if(startDotStyle)dotStyle=startDotStyle
-      if(startDotIconStyle)dotIconStyle=startDotIconStyle
-
-
-      if(horizontal===true)dotIconName="chevron-left"
-      if(horizontal===false)dotIconName="chevron-up"
-      if(startDotIconName)dotIconName=startDotIconName
-
-      if(startDotIconSize)dotIconSize=startDotIconSize
-      if(startDotIconFamily)dotIconFamily=startDotIconFamily
-      if(startDotIconColor)dotIconColor=startDotIconColor
-
-      if(startDotFontSize)dotFontSize=startDotFontSize
-      if(startDotTextHide)dotTextHide=true
-      if(startDotTextColor)dotTextColor=startDotTextColor
-      //positioning
-      if(startDotIconHide)dotIconHide=true
+//       dotIconHide=false//reset
+//
+//       //style
+//       //console.log(" horizontal: ",horizontal);
+//       if(startDotStyle)dotStyle=startDotStyle
+//       if(startDotIconStyle)dotIconStyle=startDotIconStyle
+//
+//
+//       if(horizontal===true)dotIconName="chevron-left"
+//       if(horizontal===false)dotIconName="chevron-up"
+//       if(startDotIconName)dotIconName=startDotIconName
+//
+//       if(startDotIconSize)dotIconSize=startDotIconSize
+//       if(startDotIconFamily)dotIconFamily=startDotIconFamily
+//       if(startDotIconColor)dotIconColor=startDotIconColor
+//
+//       if(startDotFontSize)dotFontSize=startDotFontSize
+//       if(startDotTextHide)dotTextHide=true
+//       if(startDotTextColor)dotTextColor=startDotTextColor
+//       //positioning
+//       if(startDotIconHide)dotIconHide=true
       if(startDotSwapAxis)dotSwapAxis=!dotSwapAxis
-      if(startDotPositionSwap)dotPositionSwap=!dotPositionSwap
-
-      onPressDot = (item) => {
-         if(!disableStartDotOnPressNavigation){try {this.props.listRef.scrollToOffset({x:0,y:0,amimated:true})} catch (e) {console.log(" e: ",e);}}
-         if(startDotOnPress)startDotOnPress(item)
-
-       }
+//       if(startDotPositionSwap)dotPositionSwap=!dotPositionSwap
+//
+//       onPressDot = (item) => {
+//          if(!disableStartDotOnPressNavigation){try {this.props.listRef.scrollToOffset({x:0,y:0,amimated:true})} catch (e) {console.log(" e: ",e);}}
+//          if(startDotOnPress)startDotOnPress(item)
+//
+//        }
     }
     if(EndDot){
-      if(endDotStyle)dotStyle=endDotStyle
-      if(!endDotText)dotTextHide=true
-      dotIconHide=false//reset
-      if(endDotIconStyle)dotIconStyle=endDotIconStyle
-
-      if(horizontal===true)dotIconName="chevron-right"
-      if(horizontal===false)dotIconName="chevron-down"
-      if(endDotIconName)dotIconName=endDotIconName
-
-      if(endDotIconFamily)dotIconFamily=endDotIconFamily
-      if(endDotIconSize)dotIconSize=endDotIconSize
-      if(endDotIconColor)dotIconColor=endDotIconColor
-
-      if(endDotTextHide)dotTextHide=true
-      if(endDotFontSize)dotFontSize=endDotFontSize
-      if(endDotTextColor)dotTextColor=endDotTextColor
-      //positioning
-      if(endDotIconHide)dotIconHide=true
+//       if(endDotStyle)dotStyle=endDotStyle
+//       if(!endDotText)dotTextHide=true
+//       dotIconHide=false//reset
+//       if(endDotIconStyle)dotIconStyle=endDotIconStyle
+//
+//       if(horizontal===true)dotIconName="chevron-right"
+//       if(horizontal===false)dotIconName="chevron-down"
+//       if(endDotIconName)dotIconName=endDotIconName
+//
+//       if(endDotIconFamily)dotIconFamily=endDotIconFamily
+//       if(endDotIconSize)dotIconSize=endDotIconSize
+//       if(endDotIconColor)dotIconColor=endDotIconColor
+//
+//       if(endDotTextHide)dotTextHide=true
+//       if(endDotFontSize)dotFontSize=endDotFontSize
+//       if(endDotTextColor)dotTextColor=endDotTextColor
+//       //positioning
+//       if(endDotIconHide)dotIconHide=true
       if(endDotSwapAxis)dotSwapAxis=!dotSwapAxis
       if(endDotPositionSwap)dotPositionSwap=!dotPositionSwap
-
-
-      // console.warn(" dotIconFamily: ",dotIconFamily);
-
-      onPressDot = (item) => {
-
-         this.props.listRef.scrollToEnd()
-
-// if(!disableEndDotOnPressNavigation){try {this.props.listRef.scrollToItem(jumpItems[1])} catch (e) {console.log(" e: ",e);}}
-
-
-       if(endDotOnPress)endDotOnPress(item)
+//
+//
+// if(showLogs)console.log(" dotIconFamily: ",dotIconFamily);
+//
+//       onPressDot = (item) => {
+//
+//          this.props.listRef.scrollToEnd()
+//
+// // if(!disableEndDotOnPressNavigation){try {this.props.listRef.scrollToItem(jumpItems[1])} catch (e) {console.log(" e: ",e);}}
+//
+//
+//        if(endDotOnPress)endDotOnPress(item)
      }
+//     }
+//
+
+    const _paginationIcon = (o) => {
+      const {name,size,color,iconFamily}=this.props
+      return
+      //if((_.isUndefined(o,'index'))&&!EndDot&&!startingJumpSize&&!endingJumpSize&&!StartDot)return
+      //return <Icon name={dotIconName}  size={dotIconSize} color={dotIconColor} iconFamily={dotIconFamily}/>
     }
+//
+//
+//
 
-    const text = (o) => {
-
-      if(!o)return ""
-      if(_.has(o,'item.paginationDotText'))return o.item.paginationDotText
-      // console.warn(_.isUndefined(o,'index'),_.get(o,'index'));
-
-      //  if(StartDot)return startDotText
-      //  else if(EndDot)return endDotText
-      //  else if(jumpItems)return 5
-      //  else if(showEndingJumpDot)return 5
-        if(_.isNumber(_.get(o,'index',false))) return ` ${o.index+1} `
-       else return ""
-
-    }
-    const icon = (o) => {
-      if((_.isUndefined(o,'index'))&&!EndDot&&!startingJumpSize&&!endingJumpSize&&!StartDot)return
-      return <Icon name={dotIconName}  size={dotIconSize} color={dotIconColor} iconFamily={dotIconFamily}/>
-    }
-
-
-
+	if(this.shouldUpdate)
+  Animated.timing(this.AnimatedValue, {toValue: (this.AnimatedValue._value==1)?0:1,duration: 500}).start()
 
     return (
 
-      <TouchableOpacity onPress={()=>onPressDot(item)}
-       style={[{flex:1,flexDirection:(horizontal==(dotSwapAxis)?true:false)?"column":"row",justifyContent: "center",alignItems: "center"},dotStyle,]}>
-       <View style={{ flexDirection:(horizontal!==(dotSwapAxis)?true:false)?"row":"column",backgroundColor:"transparent",justifyContent: "center",alignItems: "center"}}>
 
-         {(!dotIconHide && dotPositionSwap) &&
-           <View style={[dotIconStyle]}>
-             {icon(item)}
-             </View>
+      <TouchableOpacity onPress={onPress}
+       style={[{flex:1,transform: [
+                                    {
+                                      scale: this.AnimatedValue.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [1, 1],
+                                      }),
+                                    },
+                                  ],flexDirection:(horizontal==(dotSwapAxis)?true:false)?"column":"row",justifyContent: "center",alignItems: "center"},style]}>
+       {/* <View style={{ flexDirection:(horizontal!==(dotSwapAxis)?true:false)?"row":"column",backgroundColor:"transparent",justifyContent: "center",alignItems: "center"}}> */}
+
+         {(name && dotPositionSwap) &&
+           <Icon name={name} iconStyle={iconStyle} size={size} color={color} iconFamily={iconFamily}/>
          }
-    {!dotTextHide &&
-      <Text style={[{textAlign: "center",
-        fontWeight:(_.get(item,'isViewable',false)===true)?"600":"500",
 
-        fontSize:dotFontSize},{color:dotTextColor},textStyle]}>
-      {text(item)}
+      <Text style={[{textAlign: "center",
+        fontWeight:(_.get(item,'isViewable',false)===true)?"600":"500",},textStyle]}>
+      {text}
     </Text>
-    }
-</View>
+
+{/* </View> */}
 <View style={{flexDirection:(horizontal!==(dotSwapAxis)?true:false)?"row":"column"}}>
 
-{(!dotIconHide && !dotPositionSwap) &&
-  <View style={[dotIconStyle]}>
-    {icon(item)}
-    </View>
+{(name && !dotPositionSwap) &&
+<Icon name={name} iconStyle={iconStyle} size={size} color={color} iconFamily={iconFamily}/>
 }
 </View>
 
 
   </TouchableOpacity>
+
     );
   }
-  onPress(item,disableDotOnPressNavigation){
-    console.log(" item: ",item);
-    console.log(" this.props: ",this.props.listRef);
-  // scrollTo(ref="FlatListRef",x=0,y=0){
-  }
+//   onPress(item,disableDotOnPressNavigation){
+//     console.log(" item: ",item);
+//     console.log(" this.props: ",this.props.listRef);
+//   // scrollTo(ref="FlatListRef",x=0,y=0){
+//   }
 }
-
-//item:{index:null,},
+//
+// //item:{index:null,},
 Dot.defaultProps={
-  dotIconNameEmpty:"close",
-  dotIconNameActive:"checkbox-blank-circle",
-  dotIconNameNotActive:"checkbox-blank-circle-outline",
-  dotEmptyHide:false,
-  //
-  // dotIconSizeNotActive:10,
+//   dotIconNameEmpty:"close",
+//   dotIconNameActive:"checkbox-blank-circle",
+//   dotIconNameNotActive:"checkbox-blank-circle-outline",
+//   dotEmptyHide:false,
+//   //
+//   // dotIconSizeNotActive:10,
   // dotIconSizeActive:15,
-  // dotIconSizeEmpty:20,
+  size:15,
+//   // dotIconSizeEmpty:20,
+//
+//
+isActive:false,
+item:{},
+dotFontSize:15,
 
-
-
-  dotFontSizeNotActive:9,
-  dotFontSizeActive:11,
-  dotFontSizeEmpty:9,
-
-  startDotFontSize:11,
-  endDotFontSize:11,
-
-  dotIconColorNotActive:"rgba(0,0,0,.5)",
-  dotIconColorActive:"rgba(0,0,0,.3)",
-  dotIconColorEmpty:"rgba(0,0,0,.2)",
-
-  dotTextColorNotActive:"rgba(0,0,0,.5)",
-  dotTextColorActive:"rgba(0,0,0,.3)",
-  dotTextColorEmpty:"rgba(0,0,0,.2)",
-
-  dotThemeLight:false,
-
-//for start and finish dots
-// startDotStyle:{},
-// endDotStyle:{},
-dotStyle:{flex:1,backgroundColor:'rgba(0,0,0,0)',justifyContent:"center",alignItems:'center',},
-
-
-// startDotIconName:"chevron-up",
-// endDotIconName:"chevron-down",
+textStyle:{},
+iconStyle:{},
+//   dotFontSizeNotActive:9,
+//   dotFontSizeActive:11,
+//   dotFontSizeEmpty:9,
+//
+//   startDotFontSize:11,
+//   endDotFontSize:11,
+//
+//   dotIconColorNotActive:"rgba(0,0,0,.5)",
+//   dotIconColorActive:"rgba(0,0,0,.3)",
+//   dotIconColorEmpty:"rgba(0,0,0,.2)",
+//
+//   dotTextColorNotActive:"rgba(0,0,0,.5)",
+//   dotTextColorActive:"rgba(0,0,0,.3)",
+//   dotTextColorEmpty:"rgba(0,0,0,.2)",
+//
+//   dotThemeLight:false,
+//
+// //for start and finish dots
+// // startDotStyle:{},
+// // endDotStyle:{},
+style:{flex:1,backgroundColor:'rgba(0,0,0,0)',justifyContent:"center",alignItems:'center',},
+//
+//
+// // startDotIconName:"chevron-up",
+// // endDotIconName:"chevron-down",
 dotSwapAxis:false,
 dotIconHide:false,
-dotIconStyle:{},
+// dotIconStyle:{},
 // dotPositionSwap:true,
 dotPositionSwap:false,
-// startDotStyle:{alignItems:"center"},
-// endDotStyle:{alignItems:"center"},
-
-}
-
+// // startDotStyle:{alignItems:"center"},
+// // endDotStyle:{alignItems:"center"},
 //
-// Dot.PropTypes={
-// item:{
-//   index:null
-// }
-// }
+}
+//
+// //
+// // Dot.PropTypes={
+// // item:{
+// //   index:null
+// // }

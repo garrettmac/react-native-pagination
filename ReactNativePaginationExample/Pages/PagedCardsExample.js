@@ -11,11 +11,11 @@ import {AppRegistry,StyleSheet,
   Text,View,FlatList,} from 'react-native';
 //get here [TODO ADD URL]
 import TweetItem from './widgets/TweetItem';
-import Pagination,{Icon} from '../react-native-pagination';
+import Pagination,{Icon,Dot} from '../react-native-pagination';
 import _ from 'lodash';// if you dont have this then gtfo
 import {MockTweetList} from '../FakerMocks';
 
-export default class HorizontalPagedFlatListExample extends Component {
+export default class PagedCardsExample extends Component {
 
   constructor(props){
      super(props);
@@ -23,6 +23,8 @@ export default class HorizontalPagedFlatListExample extends Component {
         items: MockTweetList,
         // selected: (new Map(): Map<string, boolean>),
       };
+      this.onPressDot=this.onPressDot.bind(this)
+      this.renderDot=this.renderDot.bind(this)
     }
   //render list seen here [TODO ADD URL]
   _renderItem = ({item}) => {
@@ -45,7 +47,29 @@ export default class HorizontalPagedFlatListExample extends Component {
   // REQUIRED for ReactNativePagination to work correctly
   onViewableItemsChanged = ({ viewableItems, changed }) => this.setState({viewableItems})
 
+onPressDot=(item)=>console.log(" onPressDot:item ",item);
+
+renderDot(o,i){
+  // console.log(" ##### o: ",o);
+  return (<Dot
+    // key={`paginationDot-${i}`}
+    //hideEmptyDots
+    iconFamily={"Ionicons"}
+    color={o.isViewable?"rgba(255,255,255,0.5)":"rgba(0,0,0,0.5)"}
+    name={o.isViewable?"logo-twitter":"logo-facebook"}
+    onPress={this.onPressDot}
+    isViewable={o.isViewable}
+    size={o.isViewable?20:15}
+    textStyle={{fontSize:o.isViewable?10:5}}
+    navOnPress
+
+    text={o.index+1}
+    //text={o.item.type}
+
+    style={{margin:1,backgroundColor:"transparent",justifyContent: "center",alignItems: "center",}}/>)
+}
 render() {
+  // console.log(" this.state.viewableItems: ",this.state.viewableItems.map(o=>o.index))
   return (
     <View style={[s.container]}>
       <FlatList
@@ -70,29 +94,10 @@ render() {
         //dotIconName="ios-close"
         hideEmptyDots
         dotEmptyHide
+        debugMode
 
-        paginationDotCallback={(item,i)=>{
-          console.log(" item: ",item);
-          console.log(" i: ",i);
 
-        }}
-        startDotCallback={(item,i)=>{
-          console.log(" item: ",item);
-          console.log(" i: ",i);
-
-        }}
-        endDotCallback={(item,i)=>{
-          console.log(" item: ",item);
-          console.log(" i: ",i);
-        }}
-        paginationDot={<TouchableOpacity style={{margin:1,backgroundColor:"transparent",justifyContent: "center",alignItems: "center",}}>
-        <Icon size={20} iconFamily={"Ionicons"} color={"rgba(0,0,0,0.5)"} name="logo-facebook"/>
-        </TouchableOpacity>}
-
-        viewablePaginationDot={<TouchableOpacity onPressPaginationDot={(item,i)=>console.log("viewablePaginationDot",item,i)} style={{margin:1,backgroundColor:"transparent",justifyContent: "center",alignItems: "center",}}>
-        <Icon size={20} color={"white"} iconFamily={"Ionicons"} color={"rgba(255,255,255,0.9)"} name="logo-twitter"/>
-        </TouchableOpacity>}
-        
+        renderDot={this.renderDot}
         //dotIconFamily="Ionicons"
         //dotIconNameNotActive={"logo-twitter"}
         //dotIconNameActive={"logo-twitter"}

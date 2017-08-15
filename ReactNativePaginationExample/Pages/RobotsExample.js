@@ -18,7 +18,7 @@ let ITEM_HEIGHT=100
 
 
 
-export default class HorizontalAdvancedFlatList extends Component {
+export default class RobotsExample extends Component {
 constructor(props){
    super(props);
     this.state = {

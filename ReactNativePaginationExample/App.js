@@ -10,13 +10,13 @@ import {
 } from 'react-native';
 const {width, height} = Dimensions.get('window');
 
-  import HorizontalAdvancedFlatList from './Pages/HorizontalAdvancedFlatList';
-  import HorizontalPagedFlatListExample from './Pages/HorizontalPagedFlatListExample';
+  import RobotsExample from './Pages/RobotsExample';
+  import PagedCardsExample from './Pages/PagedCardsExample';
   // import HorizontalBasicListView from './Pages/HorizontalBasicListView';
   // import HorizontalBasicSectionList from './Pages/HorizontalBasicSectionList';
 
-  import VerticalAdvancedFlatList from './Pages/VerticalAdvancedFlatList';
-  import VerticalBasicFlatList from './Pages/VerticalBasicFlatList';
+  import ContactListExample from './Pages/ContactListExample';
+  import ContactListExampleLightTheme from './Pages/ContactListExampleLightTheme';
   // import VerticalBasicListView from './Pages/VerticalBasicListView';
   // import VerticalBasicSectionList from './Pages/VerticalBasicSectionList';
 
@@ -28,8 +28,8 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      // Component: HorizontalAdvancedFlatList,
-      Component: HorizontalPagedFlatListExample,
+      // Component: RobotsExample,
+      Component: PagedCardsExample,
       // Component: null,
       showHeader:true,
     };
@@ -111,13 +111,13 @@ export default class App extends Component {
   render() {
     return this.renderExamples([
       // [<component>, <component title>,<color>]
-      [HorizontalAdvancedFlatList, 'Horizontal Advanced FlatList Example',"rgba(0,166,155,.8)"],
-      [HorizontalPagedFlatListExample, 'Horizontal Paged Example',"rgba(0,136,155,.8)"],
+      [RobotsExample, 'Horizontal Advanced FlatList Example',"rgba(0,166,155,.8)"],
+      [PagedCardsExample, 'Horizontal Paged Example',"rgba(0,136,155,.8)"],
       // [HorizontalBasicListView , 'Horizontal Basic ListView Example',"rgba(0,106,155,.8)"],
       // [HorizontalBasicSectionList , 'Horizontal Basic SectionList Example',"rgba(0,76,155,.8)"],
 
-      [VerticalAdvancedFlatList , 'Vertical FlatList Example',"rgba(166,0,155,.8)"],
-      [VerticalBasicFlatList , 'Vertical FlatList Example \n     (Dots Light Theme)',"rgba(166,0,125,.8)"],
+      [ContactListExample , 'Vertical FlatList Example',"rgba(166,0,155,.8)"],
+      [ContactListExampleLightTheme , 'Vertical FlatList Example \n     (Dots Light Theme)',"rgba(166,0,125,.8)"],
       // [VerticalBasicListView , 'Vertical Basic ListView Example',"rgba(166,0,95,.8)"],
       // [VerticalBasicSectionList , 'Vertical Basic SectionList Example',"rgba(166,0,65,.8)"],
     ]
