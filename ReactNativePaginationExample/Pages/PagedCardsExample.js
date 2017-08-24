@@ -7,7 +7,7 @@
 
 import React, { Component } from 'react';
 import {AppRegistry,StyleSheet,
-  TouchableOpacity,
+  TouchableOpacity,Image,Animated,
   Text,View,FlatList,} from 'react-native';
 //get here [TODO ADD URL]
 import TweetItem from './widgets/TweetItem';
@@ -25,6 +25,8 @@ export default class PagedCardsExample extends Component {
       };
       this.onPressDot=this.onPressDot.bind(this)
       this.renderDot=this.renderDot.bind(this)
+
+      this.AnimatedValue=new Animated.Value(0)
     }
   //render list seen here [TODO ADD URL]
   _renderItem = ({item}) => {
@@ -49,18 +51,41 @@ export default class PagedCardsExample extends Component {
 
 onPressDot=(item)=>console.log(" onPressDot:item ",item);
 
+	componentWillReceiveProps(nextProps) {
+    this.AnimatedValue.setValue(0);
+  }
 renderDot(o,i){
   // console.log(" ##### o: ",o);
+
+    // Animated.timing(this.AnimatedValue, {toValue: (o.isViewable)?1:0,duration: 500}).start()
+  let dotComponent=(<Animated.Image resizeMode="center" style={{
+    // width: o.isViewable?30:15,
+    width: 30,
+    // height: o.isViewable?30:15,
+    height: 30,
+    // transform: [
+    //                      {
+    //                        scale: this.AnimatedValue.interpolate({
+    //                          inputRange: [0, 0.6, 1],
+    //                          outputRange: [1, 1.5, 1],
+    //                        }),
+    //                      },
+    //                    ],
+    borderRadius: o.isViewable?15:7.5,}} source={{uri:`https://robohash.org/r${o.isViewable}?size=350x350&set=set1`}}/>)
+
   return (<Dot
     // key={`paginationDot-${i}`}
     //hideEmptyDots
     iconFamily={"Ionicons"}
     color={o.isViewable?"rgba(255,255,255,0.5)":"rgba(0,0,0,0.5)"}
     name={o.isViewable?"logo-twitter":"logo-facebook"}
+    //dotComponent={dotComponent}
+    //dotComponentContainerStyle={{}}
+
     onPress={this.onPressDot}
     isViewable={o.isViewable}
     size={o.isViewable?20:15}
-    textStyle={{fontSize:o.isViewable?10:5}}
+    textStyle={{color:"white",fontSize:o.isViewable?15:10}}
     navOnPress
 
     text={o.index+1}

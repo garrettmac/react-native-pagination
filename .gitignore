@@ -13,6 +13,8 @@ res
 dist/test/
 coverage/
 ReactNativePaginationExample/node_modules
+ReactNativePaginationExample/.DS_Store
+ReactNativePaginationExample/.npm*
 
 
 #build tools

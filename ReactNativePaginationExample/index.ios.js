@@ -1,6 +1,7 @@
 import React from 'react';
 import {AppRegistry} from 'react-native';
 import App from './App.js';
+// import App from './Playground';
 AppRegistry.registerComponent('ReactNativePaginationExample', () => App);
 
 /*<Pagination

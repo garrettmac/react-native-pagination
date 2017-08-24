@@ -41,11 +41,12 @@ var CustomLayoutSpring = {
 
 // export default class Pagination extends Component {
 class Pagination extends Component {
-  state={dots:[]}
-  // componentWillUpdate(nextProps, nextState) {
-  componentWillReceiveProps(nextProps) {
+  // state={dots:[]}
+  dots=[]
+  // componentWillUpdate(this.props, nextState) {
+  // componentWillReceiveProps(nextProps) {
 // console.log(" nextProps: ",nextProps.paginationVisibleItems);
-
+render(){
 
 
     let {
@@ -75,8 +76,8 @@ class Pagination extends Component {
     // showStartingJumpDot,showEndingJumpDot,endingJumpSize,startingJumpSize,
 paginationDot,
     hideEmptyDots,
+    } = this.props
     // } = this.props
-    } = nextProps
     // const Dot = this.props.paginationDot || Dot
     let paginationDotCallback=this.props.paginationDotCallback||function(){}
     let startDotCallback=this.props.startDotCallback||function(){}
@@ -100,33 +101,33 @@ paginationItems=paginationItems.map((item,i) => {
 let paginationVisibleItemsIndexList=[]
 let paginationVisibleItems=[]
  if(pagingEnabled){
-   console.log("PRPL NEXT: ",nextProps.paginationVisibleItems);
+   console.log("PRPL NEXT: ",this.props.paginationVisibleItems);
    console.log("PRPL this: ",this.props.paginationVisibleItems);
-   if(nextProps.paginationVisibleItems.length==2)paginationVisibleItems=this.props.paginationVisibleItems
-   else if(this.props.paginationVisibleItems.length==2)paginationVisibleItems=nextProps.paginationVisibleItems
-// if(!paginationVisibleItems)paginationVisibleItems=nextProps.paginationVisibleItems
-if(!paginationVisibleItems.length)paginationVisibleItems=nextProps.paginationVisibleItems
+   if(this.props.paginationVisibleItems.length==2)paginationVisibleItems=this.props.paginationVisibleItems
+   else if(this.props.paginationVisibleItems.length==2)paginationVisibleItems=this.props.paginationVisibleItems
+// if(!paginationVisibleItems)paginationVisibleItems=this.props.paginationVisibleItems
+if(!paginationVisibleItems.length)paginationVisibleItems=this.props.paginationVisibleItems
  }else{
-paginationVisibleItems=nextProps.paginationVisibleItems
+paginationVisibleItems=this.props.paginationVisibleItems
  }
-//  if(pagingEnabled){
-//      let indexMap=paginationVisibleItems.map(i=>i.index)
-//    //fix issue where it says two visable list items are active when only one should be
-//    if(indexMap.length>1){
-//    paginationVisibleItems=paginationVisibleItems.map((o) => {
-//      if(o.index===_.min(indexMap)){return {index:_.get(o,`index`),key:_.get(o,`key`),item:_.get(o,`item`,{}),isViewable:false}}
-//      else return o
-//    })
-//   }
-//   paginationVisibleItemsIndexList=paginationVisibleItems
-// }else{
-//
-//   paginationVisibleItemsIndexList=paginationVisibleItems.map(i=>i.index)
-// }
+ if(pagingEnabled){
+     let indexMap=paginationVisibleItems.map(i=>i.index)
+   //fix issue where it says two visable list items are active when only one should be
+   if(indexMap.length>1){
+   paginationVisibleItems=paginationVisibleItems.map((o) => {
+     if(o.index===_.max(indexMap)){return {index:_.get(o,`index`),key:_.get(o,`key`),item:_.get(o,`item`,{}),isViewable:false}}
+     else return o
+   })
+  }
+  paginationVisibleItemsIndexList=paginationVisibleItems
+}else{
+
+  paginationVisibleItemsIndexList=paginationVisibleItems.map(i=>i.index)
+}
 if(paginationVisibleItems.length)paginationVisibleItemsIndexList=paginationVisibleItems.map(i=>i.index)
 
 console.log(" this.props.paginationVisibleItems: ",this.props.paginationVisibleItems);
-console.log(" nextProps.paginationVisibleItems: ",nextProps.paginationVisibleItems);
+console.log(" this.props.paginationVisibleItems: ",this.props.paginationVisibleItems);
 console.log(" paginationVisibleItems: ",paginationVisibleItems);
  //gets max and min pads. should look something like [0, -1, -2, 2, 3, 4] if [0,1] are viewable and paginationItemPadSize is 3
 const getVisibleArrayIndexes= (paginationVisibleItems,paginationVisibleItemsIndexList, paginationItemPadSize)=>{
@@ -185,27 +186,29 @@ console.log(" flatListPaginationItems: ",flatListPaginationItems);
 
 // console.log(" dots: ",dots);
 // this.setState({dots})
-this.setState({dots:flatListPaginationItems})
-}
-// flatListPaginationItems.map((item,i) => {
-//
-// })
-// paginationItems.map((item,key) => {
-//   return renderDot(item,i)
-// })
+// this.dots=flatListPaginationItems
+// this.setState({dots:flatListPaginationItems})
+// }
+/*flatListPaginationItems.map((item,i) => {
 
-// const childrenWithProps = React.Children.map(this.props.children,
-//     (child) => React.cloneElement(child, {
-//       doSomething: this.doSomething
-//     })
-//    );
-//
-//    return <div>{childrenWithProps}</div>
-render() {
-let {style,horizontal,renderDot,dotAnimation}=this.props
-let {dots}=this.state
+})
+paginationItems.map((item,key) => {
+  return renderDot(item,i)
+})
+
+const childrenWithProps = React.Children.map(this.props.children,
+    (child) => React.cloneElement(child, {
+      doSomething: this.doSomething
+    })
+   );
+
+   return <div>{childrenWithProps}</div>*/
+// render() {
+// let {style,horizontal,renderDot,dotAnimation}=this.props
+// let {dots}=this.state
   let horizontalStyle={width,alignItems:"center", justifyContent: 'space-between', position:"absolute",margin:0,bottom:10,left:0,right:0,padding:0,flex:1,}
-
+let dots=[]
+dots=this.dots
 
   if(horizontal===true)style=horizontalStyle
   else if(paginationStyle)style=paginationStyle
@@ -227,14 +230,22 @@ let {dots}=this.state
 
 
 {/* {dots} */}
-{dots.map((item,i) => {
+{/* {dots.map((item,i) => {
   // item.isViewable=!item.isViewable
   // LayoutAnimation.configureNext(CustomLayoutSpring);
   LayoutAnimation.configureNext(dotAnimation);
 return React.Children.map(renderDot(item,i), child =>  React.cloneElement(child, { key:`asdfsdf${i}`, horizontal}))
 
-})}
+})} */}
+{flatListPaginationItems.map((item,i) => {
 
+
+LayoutAnimation.configureNext(dotAnimation)
+    return (<View style={{flex:1}} key={i}>
+       {React.Children.map(renderDot(item,i), child =>  React.cloneElement(child, { key:`asdfsdf${i}`, horizontal}))}
+
+          </View>)
+  })}
 </View>
 </View>
     );

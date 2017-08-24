@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import {
   View,
   Text,Animated,
+  LayoutAnimation,
   TouchableOpacity,
 } from 'react-native';
 
@@ -21,9 +22,9 @@ export default class Dot extends Component {
     this.AnimatedValue=new Animated.Value(0)
   }
 
-  componentWillReceiveProps(nextProps) {
+  // componentWillReceiveProps(nextProps) {
     // console.log(" this.props: ",this.props);
-    console.log(" change: ",nextProps.text+" "+this.props.text+" "+nextProps.isViewable);
+    // console.log(" change: ",nextProps.text+" "+this.props.text+" "+nextProps.isViewable);
 
   // componentDidReceiveProps(nextProps) {
 //before update use -> this.props
@@ -36,18 +37,18 @@ export default class Dot extends Component {
 			// if(this.props.isViewable !==nextProps.isViewable)this.AnimatedValue.setValue(0);
 			//if(nextProps.isViewable)
 
-      if(nextProps.isViewable==true) {
-      // if(this.props.name&&this.props.isViewable !==nextProps.isViewable) {
-        this.shouldUpdate=true
-        // this.AnimatedValue.setValue(0);
-      }else{
-        this.AnimatedValue.setValue(0);
-          this.shouldUpdate=false
-      }
-
-
+//       if(nextProps.isViewable==true) {
+//       // if(this.props.name&&this.props.isViewable !==nextProps.isViewable) {
+//         this.shouldUpdate=true
+//         // this.AnimatedValue.setValue(0);
+//       }else{
+//         this.AnimatedValue.setValue(0);
+//           this.shouldUpdate=false
+//       }
+// this.shouldUpdate=true
+// this.AnimatedValue.setValue(0)
       // }
-    }
+    // }
   render() {
       let {
   hideEmptyDots,
@@ -72,6 +73,7 @@ item,
 size,
 dotSwapAxis,
 dotPositionSwap,
+dotComponent,
 
 
    } = this.props
@@ -261,25 +263,23 @@ if(horizontal==true){
 //
 //
 
-	if(this.shouldUpdate)
-  Animated.timing(this.AnimatedValue, {toValue: (this.AnimatedValue._value==1)?0:1,duration: 500}).start()
+	//if(this.shouldUpdate)
 
+// console.log(" val: ",val);
+// LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
+  // Animated.timing(this.AnimatedValue, {toValue: 1,duration: 500}).start()
     return (
 
 
       <TouchableOpacity onPress={onPress}
-       style={[{flex:1,transform: [
-                                    {
-                                      scale: this.AnimatedValue.interpolate({
-                                        inputRange: [0, 1],
-                                        outputRange: [1, 1],
-                                      }),
-                                    },
-                                  ],flexDirection:(horizontal==(dotSwapAxis)?true:false)?"column":"row",justifyContent: "center",alignItems: "center"},style]}>
+       style={[{flex:1,flexDirection:(horizontal==(dotSwapAxis)?true:false)?"column":"row",justifyContent: "center",alignItems: "center"},style]}>
        {/* <View style={{ flexDirection:(horizontal!==(dotSwapAxis)?true:false)?"row":"column",backgroundColor:"transparent",justifyContent: "center",alignItems: "center"}}> */}
 
          {(name && dotPositionSwap) &&
            <Icon name={name} iconStyle={iconStyle} size={size} color={color} iconFamily={iconFamily}/>
+         }
+         {(dotComponent && dotPositionSwap) &&
+           <View>{dotComponent}</View>
          }
 
       <Text style={[{textAlign: "center",
@@ -292,6 +292,9 @@ if(horizontal==true){
 
 {(name && !dotPositionSwap) &&
 <Icon name={name} iconStyle={iconStyle} size={size} color={color} iconFamily={iconFamily}/>
+}
+{(dotComponent && !dotPositionSwap) &&
+  <View>{dotComponent}</View>
 }
 </View>
 
