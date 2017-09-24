@@ -1,16 +1,25 @@
 {
   "name": "react-native-pagination",
-  "version": "1.2.5",
+  "version": "0.0.0-development",
   "description": "The best Pagination component for React Native.",
   "main": "react-native-pagination/index.js",
   "dependencies": {
     "react-native-vector-icons": "^4.3.0"
   },
-  "devDependencies": {},
-  "scripts": {},
+  "devDependencies": {
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.0.0",
+    "semantic-release": "^8.0.3"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest -watch",
+    "commit": "git-cz",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/garrettmac/react-native-pagination.git"
+    "url": "https://github.com/garrettmac/react-native-pagination.git"
   },
   "keywords": [
     "react",
@@ -34,6 +43,11 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/garrettmac/react-native-pagination/issues"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
   },
   "homepage": "https://github.com/garrettmac/react-native-pagination#readme"
 }
