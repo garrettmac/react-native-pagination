@@ -1,0 +1,45 @@
+{
+  "name": "react-native-pagination",
+  "version": "1.5.5",
+  "description": "The best Pagination component for React Native.",
+  "main": "react-native-pagination/index.js",
+  "dependencies": {
+    "react-native-vector-icons": "^4.3.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.5",
+    "eslint": "^5.0.0",
+    "eslint-plugin-react": "^7.9.1"
+  },
+  "scripts": {
+    "eslint": "eslint --config .eslintrc.js react-native-pagination/* --fix && eslint --config .eslintrc.js ReactNativePaginationExample --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/garrettmac/react-native-pagination.git"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "pagination",
+    "scroll",
+    "tabs",
+    "list",
+    "flatlist",
+    "native",
+    "listview",
+    "flatlist",
+    "sectionlist",
+    "react-component",
+    "react-native-component",
+    "list",
+    "ui",
+    "profile-page"
+  ],
+  "author": "Garrett Mac <garrett@vyga.io> (http://vyga.io)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/garrettmac/react-native-pagination/issues"
+  },
+  "homepage": "https://github.com/garrettmac/react-native-pagination#readme"
+}
