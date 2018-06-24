@@ -2,7 +2,7 @@
 .DS_Store
 logs
 
-node_modules
+node_modules/
 
 ReactNativePaginationExample/react-native-pagination
 ReactNativePaginationExample/node_modules

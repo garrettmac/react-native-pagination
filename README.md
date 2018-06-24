@@ -166,7 +166,7 @@ export default class ReactNativePaginationExample extends Component {
     //create each list item
   _renderItem = ({item}) => {
     return (<ContactItem index={item.id}
-        onPressItem={this.onPressItem.bind(this)}
+        onPressItem={this.onPressItem}
         name={item.name}
         avatar={item.avatar}
         description={item.email}
@@ -178,7 +178,7 @@ export default class ReactNativePaginationExample extends Component {
   onPressItem = (item) => console.log("onPressItem:item ",item);
 
   //map to some od. We use the "id" attribute of each item in our list created in our MockPersonList
-  _keyExtractor = (item, index) => item.id;
+  _keyExtractor = (item, index) => item.id.toString();
 
   // REQUIRED for ReactNativePagination to work correctly
   onViewableItemsChanged = ({ viewableItems, changed }) =>this.setState({viewableItems})
@@ -191,7 +191,7 @@ export default class ReactNativePaginationExample extends Component {
             ref={r=>this.refs=r}//create refrence point to enable scrolling
             keyExtractor={this._keyExtractor}//map your keys to whatever unique ids the have (mine is a "id" prop)
             renderItem={this._renderItem}//render each item
-            onViewableItemsChanged={this.onViewableItemsChanged.bind(this)}//need this
+            onViewableItemsChanged={this.onViewableItemsChanged}//need this
           />
 
           <Pagination

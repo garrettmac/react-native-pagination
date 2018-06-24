@@ -46,7 +46,7 @@ export default class Icon extends Component {
 Icon.defaultProps={
   iconSet:"MaterialCommunityIcons",
 }
-Icon.PropTypes={
+Icon.propTypes={
     name:PropTypes.string,
     size:PropTypes.number,
     color:PropTypes.string,

@@ -47,13 +47,8 @@ import PropTypes from 'prop-types';
 
 // export default class Pagination extends Component {
 class Pagination extends Component {
-constructor(props){
-	super(props);
-	this.state = {};
-  this.renderDot=this.renderDot.bind(this)
-}
-
-renderDot(o,i){
+  state = {}
+renderDot =(o,i) =>{
   let {paginationDotStyle,showEmptyDots,iconSet,lightTheme,onPress,paginationItems}=this.props
   let color="rgba(0,0,0,0.5)"
   if(lightTheme){

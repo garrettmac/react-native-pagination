@@ -1,6 +1,21 @@
 {
 
-  "parser": "babel-eslint",
+  "parser": "babel-eslint",  
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "plugins": [
+    "react"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "globals": {
+    "__DEV__": true
+  },
   "env": {
     "browser": false,
     "es6": true,
@@ -9,6 +24,10 @@
 
   "rules": {
     "quotes": [2, "single"],
+    "indent": 0,
+    "jsx-quotes": [2, "prefer-double"],
+    "react/jsx-indent":[2, "tab"],
+    "no-unused-vars": 2,
     "eol-last": [0],
     "no-mixed-requires": [0],
     "no-underscore-dangle": [0]

@@ -19,35 +19,9 @@ import renderer from 'react-test-renderer';
 
 
   describe('HorizontalBasicFlatList Components', function() {
-    // it('Renders Pagination Class!', () => {const tree = renderer.create(<Pagination/>);});
-    // test('Flat List Visable', () => {
-    //   expect(sum(1, 2)).toBe(3);
-    // });
-//     exports[`Todo component renders the todo correctly renders correctly 1`] = `
-// <div
-//   className="todo  todo-1">
-//   <p
-//     className="toggle-todo"
-//     onClick={[Function]}>
-//     Buy Milk
-//   </p>
-//   <a
-//     className="delete-todo"
-//     href="#"
-//     onClick={[Function]}>
-//     Delete
-//   </a>
-// </div>
-// `;
+
     const component = renderer.create(    <View >
-          {/* <FlatList
-            horizontal
-             pagingEnabled
-            data={[]}
-            //keyExtractor={this._keyExtractor}//map your keys to whatever unique ids the have (mine is a "id" prop)
-            //renderItem={this._renderItem}
-            //onViewableItemsChanged={this.onViewableItemsChanged.bind(this)}//need this
-          /> */}
+         
           <Pagination
             horizontal
             // dotThemeLight //<--use with backgroundColor:"grey"
