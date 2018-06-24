@@ -30,12 +30,7 @@
 </p>
 
 # React Native Pagination
-# Version 2
 
-To install version one run 
-```zsh
-yarn add git://github.com/garrettmac/react-native-pagination.git#v1
-```
 
 
 ## Roadmap
