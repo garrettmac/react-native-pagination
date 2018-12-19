@@ -46,6 +46,7 @@ class Pagination extends Component {
       endDotStyle,
       debugMode,
       dotAnimation,
+      dotAnimationType,
       paginationStyle,
       pagingEnabled,
       // ShowStartingJumpDot,showEndingJumpDot,endingJumpSize,startingJumpSize,
@@ -159,7 +160,9 @@ class Pagination extends Component {
     <Dot jumpItems={flatListPaginationItems} endingJumpSize={(endingJumpSize)?endingJumpSize:5} {...this.props} styles={[dotStyle,endDotStyle]}/>
   } */}
           {flatListPaginationItems.map((item, i) => {
-            LayoutAnimation.configureNext(dotAnimation);
+            if(dotAnimation){
+              LayoutAnimation.configureNext(dotAnimationType);
+            }
             return (<View key={i} style={{flex:1}}>
               {!DotComponent &&
                 <Dot {...this.props} key={`paginationDot${i}`} item={item} />
@@ -199,7 +202,8 @@ Pagination.defaultProps = {
   activeItemIndex: null,
   hideEmptyDotComponents: false,
   paginationItemPadSize: 3,
-  dotAnimation: LayoutAnimation.Presets.easeInEaseOut
+  dotAnimation:true,
+  dotAnimationType: LayoutAnimation.Presets.easeInEaseOut
 };
 // NOT WORKING (I dont know why)
 Pagination.propTypes = {
