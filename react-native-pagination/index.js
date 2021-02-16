@@ -11,10 +11,6 @@ import {
   Text,
   TouchableOpacity, View
 } from 'react-native';
-import _ from 'lodash';
-_.mixin({ compactObject: (o) => _.each(o, (v, k) => {
-  if (!v) delete o[k];
-}) });
 import Icon from './components/Icon';
 import Dot from './components/Dot';
 const { width, height } = Dimensions.get('window');
@@ -23,6 +19,12 @@ import PropTypes from 'prop-types';
  * Helper functions
  * Export default class Pagination extends Component {
  */
+const sortBy = (list,key) => {
+  return list.concat().sort((a, b) => (a[key] > b[key]) ? 1 : ((b[key] > a[key]) ? -1 : 0));
+};
+// The native sort modifies the array in place. `_.orderBy` and `_.sortBy` do not, so we use `.concat()` to
+// copy the array, then sort.
+//fruits.concat().sort(sortBy("name"));
 class Pagination extends Component {
   render() {
     let {
@@ -66,9 +68,9 @@ class Pagination extends Component {
       // Fix issue where it says two visable list items are active when only one should be
       if (paginationVisibleItemsIndexList.length > 1) {
         paginationVisibleItems = paginationVisibleItems.map((o) => {
-          if (o.index === _.min(paginationVisibleItemsIndexList)) return { index: _.get(o, 'index'),
-            key: _.get(o, 'key'),
-            item: _.get(o, 'item', {}),
+          if (o.index === Math.min(...paginationVisibleItemsIndexList)) return { index: o?.index,
+            key: o?.key,
+            item: o?.item ?? {},
             isViewable: false };
           return o;
         });
@@ -76,28 +78,28 @@ class Pagination extends Component {
     // Gets max and min pads. should look something like [0, -1, -2, 2, 3, 4] if [0,1] are viewable and paginationItemPadSize is 3
     const getVisibleArrayIndexes = (paginationVisibleItems, paginationVisibleItemsIndexList, paginationItemPadSize) => {
             const preIniquePaddedIndexList = [
-                    ..._.times(paginationItemPadSize, (i) => _.min(paginationVisibleItemsIndexList) - (i + 1)),
-                    ..._.times(paginationItemPadSize, (i) => _.max(paginationVisibleItemsIndexList) + (i + 1))
+                    ...Array.from({length: paginationItemPadSize}, (_,i) => Math.min(...paginationVisibleItemsIndexList) - (i + 1)),
+                    ...Array.from({length: paginationItemPadSize}, (_,i) => Math.max(...paginationVisibleItemsIndexList) + (i + 1))
                   ],
                   uniquePaddedIndexList = preIniquePaddedIndexList.map((num, i) => {
-                    if (num < 0) return _.max(paginationVisibleItemsIndexList) + (num *= -1);
+                    if (num < 0) return Math.max(...paginationVisibleItemsIndexList) + (num *= -1);
                     return num;
                   });
-            return _.uniq(uniquePaddedIndexList);
+            return [...new Set(uniquePaddedIndexList)];
           },
           paginationVisableItemsIndexArray = getVisibleArrayIndexes(paginationVisibleItems, paginationVisibleItemsIndexList, paginationItemPadSize),
-          paginationVisiblePadItems = paginationVisableItemsIndexArray.map((o, i) => ({ index: _.get(paginationItems, `[${o}].paginationIndexId`),
-            key: _.get(paginationItems, `[${o}].paginationIndexId`),
-            item: _.get(paginationItems, `[${o}]`, {}),
+          paginationVisiblePadItems = paginationVisableItemsIndexArray.map((o, i) => ({ index: paginationItems?.[o]?.paginationIndexId,
+            key: paginationItems?.[o]?.paginationIndexId,
+            item: paginationItems?.[o] ?? {},
             isViewable: false })),
-          flatListPaginationItems = _.sortBy([
+          flatListPaginationItems = sortBy([
             ...paginationVisibleItems,
             ...paginationVisiblePadItems
           ], 'index');
     if (debugMode) {
       const paginationItemsIndexList = paginationItems.map((i) => i.index),
             allDotsIndexList = flatListPaginationItems.map((i) => i.index),
-            NOT_ACTIVE_DOTS_INDEXES = _.sortBy(paginationVisiblePadItems.map((i) => i.index)),
+            NOT_ACTIVE_DOTS_INDEXES = sortBy(paginationVisiblePadItems.map((i) => i.index)),
             ALL_DOTS_INDEXES = flatListPaginationItems.map((i) => i.isViewable),
             ___ = '%c __________________________________________\n',
             ADBY = `%c all paginationVisibleItems dots:              ${allDotsIndexList} \n`,
@@ -132,12 +134,12 @@ class Pagination extends Component {
     else if (paginationStyle)PaginationContainerStyle = paginationStyle;
     else PaginationContainerStyle = verticalStyle;
     return (
-        <View style={[
+      <View style={[
         PaginationContainerStyle,
         containerStyle
       ]}
       >
-          <View style={[
+        <View style={[
           { flex: 1,
             marginTop: horizontal === true ? 0 : 20,
             marginBottom: horizontal === true ? 0 : 20,
@@ -150,39 +152,38 @@ class Pagination extends Component {
             alignItems: 'center' }
         ]}
         >
-                <Dot
-            StartDot {...this.props} onPress={this.onStartDotPress} styles={[
+          <Dot
+              StartDot {...this.props} onPress={this.onStartDotPress} styles={[
               dotStyle,
               startDotStyle
             ]}
           />
-                {/* {showStartingJumpDot &&
+          {/* {showStartingJumpDot &&
     <Dot jumpItems={flatListPaginationItems} endingJumpSize={(endingJumpSize)?endingJumpSize:5} {...this.props} styles={[dotStyle,endDotStyle]}/>
   } */}
-          {flatListPaginationItems.map((item, i) => {
-            if(dotAnimation){
+              {flatListPaginationItems.map((item, i) => {
+            if (dotAnimation)
               LayoutAnimation.configureNext(dotAnimationType);
-            }
             return (<View key={i} style={{flex:1}}>
-              {!DotComponent &&
-                <Dot {...this.props} key={`paginationDot${i}`} item={item} />
+                {!DotComponent &&
+              <Dot {...this.props} key={`paginationDot${i}`} item={item} />
               }
-              {DotComponent &&
-                <DotComponent {...this.props} key={`paginationDot${i}`} />
+                {DotComponent &&
+              <DotComponent {...this.props} key={`paginationDot${i}`} />
               }
             </View>)
           })}
-                {/* {showEndingJumpDot &&
+          {/* {showEndingJumpDot &&
       <Dot jumpItems={flatListPaginationItems} startingJumpSize={(startingJumpSize)?startingJumpSize:5} {...this.props} styles={[dotStyle,endDotStyle]}/>
     } */}
-          <Dot
-                EndDot {...this.props} onPress={this.onEndDotPress} styles={[
+              <Dot
+            EndDot {...this.props} onPress={this.onEndDotPress} styles={[
               dotStyle,
               endDotStyle
             ]}
           />
+          </View>
         </View>
-      </View>
     );
   }
 }

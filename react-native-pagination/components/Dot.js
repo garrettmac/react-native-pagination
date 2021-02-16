@@ -5,9 +5,10 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 import Icon from './Icon';
+const isUndefined=(value) => typeof value === 'undefined'
+const isNumber=value=> typeof value === 'number' && isFinite(value);
 export default class Dot extends Component {
   render() {
     let {
@@ -78,9 +79,9 @@ export default class Dot extends Component {
      * Console.warn(_.get(item,"index",false));
      * Setup dots icon
      */
-    if (_.get(item, 'isViewable', false) === true)dotIconName = dotIconNameActive;
+    if (item?.isViewable ?? false === true)dotIconName = dotIconNameActive;
     else dotIconName = dotIconNameNotActive;
-    if (_.get(item, 'index', true) === true) {
+    if (item?.index ?? true === true) {
       dotIconHide = dotEmptyHide;
       dotIconName = dotIconNameEmpty;
     }
@@ -88,19 +89,19 @@ export default class Dot extends Component {
      * If(dotTextHide)dotTextHide=true
      * console.warn(" item.index: ",_.has(item,"index"),_.has(item,"index"));
      */
-    if (_.get(item, 'isViewable', false) === true)dotIconSize = dotIconSizeActive;
+    if (item?.isViewable ?? false === true)dotIconSize = dotIconSizeActive;
     else dotIconSize = dotIconSizeNotActive;
-    if (_.get(item, 'index', true) === true)dotIconSize = dotIconSizeEmpty;
-    if (_.get(item, 'isViewable', false) === true)dotIconColor = dotIconColorActive;
+    if (item?.index ?? true === true)dotIconSize = dotIconSizeEmpty;
+    if (item?.isViewable ?? false === true)dotIconColor = dotIconColorActive;
     else dotIconColor = dotIconColorNotActive;
-    if (_.get(item, 'index', true) === true)dotIconColor = dotIconColorEmpty;
+    if (item?.index ?? true === true)dotIconColor = dotIconColorEmpty;
     // Setup dots font
-    if (_.get(item, 'isViewable', false) === true)dotFontSize = dotFontSizeActive;
+    if (item?.isViewable ?? false === true)dotFontSize = dotFontSizeActive;
     else dotFontSize = dotFontSizeNotActive;
-    if (_.get(item, 'index', true) === true)dotFontSize = dotFontSizeEmpty;
-    if (_.get(item, 'isViewable', false) === true)dotTextColor = dotTextColorActive;
+    if (item?.index ?? true === true)dotFontSize = dotFontSizeEmpty;
+    if (item?.isViewable ?? false === true)dotTextColor = dotTextColorActive;
     else dotTextColor = dotTextColorNotActive;
-    if (_.get(item, 'index', true) === true)dotTextColor = dotTextColorEmpty;
+    if (item?.index ?? true === true)dotTextColor = dotTextColorEmpty;
     dotSwapAxis = !dotSwapAxis;
     if (horizontal == true) dotPositionSwap = !dotPositionSwap;
     if (StartDot) {
@@ -162,7 +163,7 @@ export default class Dot extends Component {
     }
     const text = (o) => {
             if (!o) return '';
-            if (_.has(o, 'item.paginationDotText')) return o.item.paginationDotText;
+            if (o?.item?.paginationDotText) return o.item.paginationDotText;
             // Console.warn(_.isUndefined(o,'index'),_.get(o,'index'));
             /*
              *  If(StartDot)return startDotText
@@ -170,11 +171,11 @@ export default class Dot extends Component {
              *  else if(jumpItems)return 5
              *  else if(showEndingJumpDot)return 5
              */
-            if (_.isNumber(_.get(o, 'index', false))) return ` ${o.index + 1} `;
+            if (isNumber(o?.index ?? false)) return ` ${o.index + 1} `;
             return '';
           },
           icon = (o) => {
-            if (_.isUndefined(o, 'index') && !EndDot && !startingJumpSize && !endingJumpSize && !StartDot) return;
+            if (isUndefined(o?.index) && !EndDot && !startingJumpSize && !endingJumpSize && !StartDot) return;
             return <Icon name={dotIconName} size={dotIconSize} color={dotIconColor} iconFamily={dotIconFamily} />;
           };
     return (
@@ -193,38 +194,33 @@ export default class Dot extends Component {
           justifyContent: 'center',
           alignItems: 'center' }}
         >
-                {!dotIconHide && dotPositionSwap &&
-              (<View style={[ dotIconStyle ]}>
+          {!dotIconHide && dotPositionSwap &&
+            (<View style={[ dotIconStyle ]}>
                 {icon(item)}
-              </View>)
+            </View>)
           }
           {!dotTextHide &&
-                (<Text style={[
-                  { textAlign: 'center',
-                    fontWeight: _.get(item, 'isViewable', false) === true ? '600' : '500',
-                    fontSize: dotFontSize },
-                  { color: dotTextColor },
-                  textStyle
-                ]}
-                >
+              (<Text style={[
+                { textAlign: 'center',
+                  fontWeight: item?.isViewable ?? false === true ? '600' : '500',
+                  fontSize: dotFontSize },
+                { color: dotTextColor },
+                textStyle
+              ]}
+              >
                   {text(item)}
-                </Text>)
+              </Text>)
           }
             </View>
         <View style={{ flexDirection: horizontal !== dotSwapAxis ? 'row' : 'column' }}>
           {!dotIconHide && !dotPositionSwap &&
-            <View style={[ dotIconStyle ]}>
-            {icon(item)}
-          </View>
+        (<View style={[ dotIconStyle ]}>
+          {icon(item)}
+        </View>)
           }
             </View>
       </TouchableOpacity>
     );
-  }
-  onPress(item, disableDotOnPressNavigation) {
-    console.log(' item: ', item);
-    console.log(' this.props: ', this.props.listRef);
-  // ScrollTo(ref="FlatListRef",x=0,y=0){
   }
 }
 // Item:{index:null,},
