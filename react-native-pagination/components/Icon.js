@@ -1,5 +1,5 @@
 /* @flow */
-import React, { Component } from "react";
+import React from "react";
 import Entypo from "react-native-vector-icons/Entypo";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -12,25 +12,25 @@ import Zocial from "react-native-vector-icons/Zocial";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import PropTypes from "prop-types";
 
-export default class Icon extends Component {
-  render() {
-    const { iconFamily, name, size, color } = this.props;
-    let Icon = null;
-    if (iconFamily === "Entypo") Icon = Entypo;
-    else if (iconFamily === "EvilIcons") Icon = EvilIcons;
-    else if (iconFamily === "FontAwesome") Icon = FontAwesome;
-    else if (iconFamily === "Foundation") Icon = Foundation;
-    else if (iconFamily === "Ionicons") Icon = Ionicons;
-    else if (iconFamily === "SimpleLineIcons") Icon = SimpleLineIcons;
-    else if (iconFamily === "MaterialIcons") Icon = MaterialIcons;
-    else if (iconFamily === "MaterialCommunityIcons")
-      Icon = MaterialCommunityIcons;
-    else if (iconFamily === "Octicons") Icon = Octicons;
-    else if (iconFamily === "Zocial") Icon = Zocial;
-    else Icon = MaterialCommunityIcons;
-    return <Icon name={name} size={size} color={color} />;
-  }
-}
+const Icon = ({ iconFamily, name, size, color }) => {
+  const  = props;
+  let Icon = null;
+  if (iconFamily === "Entypo") Icon = Entypo;
+  else if (iconFamily === "EvilIcons") Icon = EvilIcons;
+  else if (iconFamily === "FontAwesome") Icon = FontAwesome;
+  else if (iconFamily === "Foundation") Icon = Foundation;
+  else if (iconFamily === "Ionicons") Icon = Ionicons;
+  else if (iconFamily === "SimpleLineIcons") Icon = SimpleLineIcons;
+  else if (iconFamily === "MaterialIcons") Icon = MaterialIcons;
+  else if (iconFamily === "MaterialCommunityIcons")
+    Icon = MaterialCommunityIcons;
+  else if (iconFamily === "Octicons") Icon = Octicons;
+  else if (iconFamily === "Zocial") Icon = Zocial;
+  else Icon = MaterialCommunityIcons;
+  return <Icon name={name} size={size} color={color} />;
+};
+
+export default Icon;
 Icon.defaultProps = {
   iconFamily: "MaterialCommunityIcons",
 };
@@ -38,4 +38,14 @@ Icon.propTypes = {
   name: PropTypes.string,
   size: PropTypes.number,
   color: PropTypes.string,
+  iconFamily: PropTypes.oneOf("Entypo",
+    "EvilIcons",
+    "FontAwesome",
+    "Foundation",
+    "Ionicons",
+    "SimpleLineIcons",
+    "MaterialIcons",
+    "MaterialCommunityIcons",
+    "Octicons",
+    "Zocial")
 };
