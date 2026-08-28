@@ -128,8 +128,8 @@ class Pagination extends Component {
           right: 0,
           padding: 0,
           flex: 1 };
-    if (horizontal === true)PaginationContainerStyle = horizontalStyle;
-    else if (paginationStyle)PaginationContainerStyle = paginationStyle;
+    if (paginationStyle)PaginationContainerStyle = paginationStyle;
+    else if (horizontal === true)PaginationContainerStyle = horizontalStyle;
     else PaginationContainerStyle = verticalStyle;
     return (
         <View style={[
